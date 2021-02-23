@@ -7,13 +7,15 @@
  */
 
 import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import MainTabScreen from './screens/MainTabScreen';
 import MyProfile from './screens/MyProfile';
 import Setting from './screens/Setting';
-import Cart from './screens/Cart';
+// import Cart from './screens/Cart';
+import Login from './login/Login';
 //import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import { DrawerContent} from './screens/DrawerContent';
@@ -30,8 +32,10 @@ const App = () => {
         <Drawer.Screen name="Home" component={MainTabScreen} />
         <Drawer.Screen name="MyProfile" component={MyProfile} />
         <Drawer.Screen name="Setting" component={Setting} />
-        <Drawer.Screen name="Cart" component={Cart} />
+        <Drawer.Screen name="Cart" component={Login} />
       </Drawer.Navigator>
+
+
     </NavigationContainer>
   );
 }

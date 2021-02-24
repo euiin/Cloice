@@ -89,7 +89,7 @@ export default function MyProfile({navigation}) {
                       name='bell'
                       color='#DFDFDF' backgroundColor="#ffffff"
                       style={{padding:10, fontSize:10}} // 크기 키울 것
-                      onPress={()=>{}}
+                    //   onPress={()=>{}}
                       />
                       <View style={{flex:3,padding:10,flexDirection:'column', alignItems:'center'}}>
                           <Image source={require('../android/app/src/assets/fonts/김민희.jpg')}

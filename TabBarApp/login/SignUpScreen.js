@@ -43,7 +43,6 @@ const SignUpScreen = ({navigation}) => {
         terms4: false,
         termssms: false,
         termsemail: false,
-        // isValidUser: check_validemail && 'check_emaildup' && 'check_userpw' && 'check_validnick' && 'check_nickdup' && 'terms1' && 'terms2' && 'terms3' && ('userGender'!=''),
     })
 
     const checkEmailForm = (val) => {
@@ -53,14 +52,12 @@ const SignUpScreen = ({navigation}) => {
                 ...data,
                 email: val,
                 check_validemail: true,
-                // isValidUser: true
             });
         } else {
             setData({
                 ...data,
                 email: val,
                 check_validemail: false,
-                // isValidUser: false
             });
         }
     }
@@ -155,6 +152,8 @@ const SignUpScreen = ({navigation}) => {
                 terms2: false,
                 terms3: false,
                 terms4: false,
+                termssms: false,
+                termsemail: false,
             });
         }
         else {
@@ -165,6 +164,8 @@ const SignUpScreen = ({navigation}) => {
                 terms2: true,
                 terms3: true,
                 terms4: true,
+                termssms: true,
+                termsemail: true,
             });
         }
     }
@@ -224,26 +225,11 @@ const SignUpScreen = ({navigation}) => {
         });
     }
 
-    const checkValidUser = () => {
-        if (data.check_validemail && data.check_emaildup && data.check_userpw && data.check_validnick && data.check_nickdup && data.terms1 && data.terms2 && data.terms3 && (data.userGender!='')) {
-                setData({
-                ...data,
-                isValidUser: true,
-            });
-            // console.log("this is validuser")
-            // console.log(data.isValidUser)
-            goAlert()
-        }
-        else {
-            
-        }
-    }
+    const isValidUser = (data.check_validemail && data.check_emaildup && data.check_userpw && data.check_validnick && data.check_nickdup && data.terms1 && data.terms2 && data.terms3 && (data.userGender!=''))
 
-    const check = (data.check_validemail && data.check_emaildup && data.check_userpw && data.check_validnick && data.check_nickdup && data.terms1 && data.terms2 && data.terms3 && (data.userGender!=''))
-
-    const goAlert = () =>
+    const goAlert = () => {
       Alert.alert(
-        "~~님, Cloice 가입이 완료되었습니다.",             // 첫번째 text: 타이틀 제목
+        "(data.nickname) + 님, Cloice 가입이 완료되었습니다.",             // 첫번째 text: 타이틀 제목
         "로그인을 진행해주세요.",                         // 두번째 text: 그 밑에 작은 제목
       [                              // 버튼 배열
         {
@@ -255,16 +241,7 @@ const SignUpScreen = ({navigation}) => {
       ],
       { cancelable: false }
     );
-
-    // const handleValidUser = () => {
-    //     if (data.isValidUser) {navigation.navigate('LoginScreen')}
-    //     else 
-    // }
-
-    
-    
-    console.log("hi")
-    // console.log(data.check_validemail, data.check_emaildup, data.check_userpw, data.check_validnick, data.check_nickdup, data.terms1, data.terms2, data.terms3, data.userGender)
+    }
 
     return (   /*리턴하는 건 하나로 묶어줘야 함*/
         <>
@@ -722,9 +699,9 @@ const SignUpScreen = ({navigation}) => {
 
             
             <View style={{alignItems:'center'}}>
-                <TouchableOpacity disabled={!check}  //disabled:true면 안 눌림.
-                    style={styles.finalbutton}
-                    onPress={console.log(check)}
+                <TouchableOpacity disabled={!isValidUser}  //disabled:true면 안 눌림.
+                    style={isValidUser? styles.validbutton : styles.unvalidbutton}
+                    onPress = {goAlert}
                 >
                 <Text style={{  
                         fontFamily: 'NanumSquareB',
@@ -744,7 +721,7 @@ const SignUpScreen = ({navigation}) => {
 export default SignUpScreen;
 
 const {height} = Dimensions.get("screen");
-const wwidth = Dimensions.get("screen").width;
+// const wwidth = Dimensions.get("screen").width;
 const height_logo = height * 0.1;
 
 const styles = StyleSheet.create({
@@ -770,16 +747,19 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     minilogo: {
-        width: height_logo*0.3,
-        height: height_logo*0.3,
+        width: height_logo*0.5,
+        height: '100%',
         paddingLeft: 5,
-        marginBottom: 8,  //이렇게 해?
+        paddingTop: 8,
+        // backgroundColor: 'pink',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     minilogo2: {
-        width: height_logo*0.3,
-        height: height_logo*0.3,
-        marginTop: 5,
-        // marginRight: 0,  //이렇게 해?
+        width: height_logo*0.4,
+        height: height_logo*0.4,
+        padding: 6,
+        // backgroundColor: 'pink',
     },
     maintext :{
         fontFamily: 'NanumSquareB',
@@ -903,7 +883,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginLeft: 5,
     },
-    finalbutton: {
+    validbutton: {
         alignItems: 'center',
         justifyContent: 'center',
         width: height_logo*3.5,
@@ -919,7 +899,24 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.23,
         shadowRadius: 2.62,
-
+        elevation: 4,
+    },
+    unvalidbutton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: height_logo*3.5,
+        height: 48,
+        marginTop: 5,
+        marginBottom: 35,
+        backgroundColor: '#DFDFDF',
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
         elevation: 4,
     },
     datePickerStyle: {

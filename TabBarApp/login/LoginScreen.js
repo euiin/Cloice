@@ -131,11 +131,11 @@ const LoginScreen = ({navigation}) => {
                     </TouchableOpacity>
                 
                 <View style={styles.sign}>
-                    <Text style={[styles.text, {marginRight: 50}]}>아이디 / 비밀번호 찾기</Text>
+                    <Text style={[styles.text, {marginRight: 50, height: 40, textAlignVertical: 'center'}]}>아이디 / 비밀번호 찾기</Text>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('SignUpScreen')}
                     >
-                        <Text style={styles.text}>회원가입</Text>
+                        <Text style={[styles.text, {height: 40, textAlignVertical: 'center' }]}>회원가입</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -201,9 +201,10 @@ const styles = StyleSheet.create({
         fontFamily: 'DancingScript',   //이거 볼드로 어케하지?
         color: '#99d1e9',
         fontSize: 56,
-        // fontWeight: "100"
         marginBottom: 20,
         marginTop: 100,
+        textShadowColor: '#99d1e9',
+        textShadowRadius: 8,   //이상한 흐릿한 느낌 ;;;;
         // paddingTop: 50,
     },
     logo: {
@@ -254,9 +255,9 @@ const styles = StyleSheet.create({
     sign: {
         flexDirection: 'row',
         width: '100%',
-        // alignContent: 'center',
+        alignContent: 'center',
         justifyContent: 'center',  //내부 컴포넌트 좌우 중앙 정렬
-        paddingTop: 40,
+        paddingTop: 20,
     },
     box: {
         flexDirection: 'row',

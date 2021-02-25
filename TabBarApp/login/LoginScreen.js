@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Button, Dimensions, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import Axios from 'axios';
+import { StyleSheet, View, Text, TextInput, Button, Dimensions, Image, TouchableOpacity, KeyboardAvoidingView, ToastAndroid } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 
@@ -12,6 +13,30 @@ const LoginScreen = ({navigation}) => {
         secureTextEntry: true,
         // isValidUser: false
     })
+
+    //로그인 정보 전달 함수
+    const loginHandler = () => {
+        console.log("로그인 버튼 누름");
+        console.log("email: ", data.email);
+        Axios.post("http://10.0.2.2:3333/login", {
+            email: data.email,
+            password: data.password,
+        }).then((response) => {
+            if(response.data.message) {
+                ToastAndroid.showWithGravity("등록되지 않은 계정입니다.",
+                                    ToastAndroid.SHORT,
+                                    ToastAndroid.CENTER);
+            } else {
+                navigation.navigate("Home");
+            }
+        }).catch((error) => {
+            ToastAndroid.showWithGravity("에러 발생",
+                                            ToastAndroid.SHORT,
+                                            ToastAndroid.CENTER);
+            console.log("에러:", error);
+            throw error;
+        });
+    }
 
     const checkEmailForm = (val) => {
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -45,12 +70,6 @@ const LoginScreen = ({navigation}) => {
             secureTextEntry: !data.secureTextEntry
         });
     }
-
-    // const loginHandle = (email, password) => {
-
-    // }
-
-    // android:windowSoftInputMode="adjustPan"
 
     return (
         <View style={styles.container}>
@@ -119,7 +138,7 @@ const LoginScreen = ({navigation}) => {
 
                 <TouchableOpacity
                     style={styles.button}  //로그인 버튼에 그림자 넣기
-                    onPress={() => {loginHandle (data.email, data.password)}}
+                    onPress={loginHandler}
                     >
                     <Text style={{  
                         fontFamily: 'NanumSquareB',

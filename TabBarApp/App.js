@@ -18,13 +18,13 @@ import Setting from './screens/Setting';
 import Login from './login/Login';
 //import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import { DrawerContent} from './screens/DrawerContent';
+import { DrawerContent } from './screens/DrawerContent';
 
 const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Drawer.Navigator drawerContent = {props => <DrawerContent {...props}/>}
       initialRouteName="Home" // 동영상에서는 없애줌
       drawerPosition= "right" //drawer가 오른쪽에 있어서 왼쪽으로 잡아당기면 열린다.

@@ -37,8 +37,8 @@ const LoginScreen = ({navigation}) => {
         }).then((response) => {
             if(response.data.message) {
                 ToastAndroid.showWithGravity("등록되지 않은 계정입니다.",
-                                    ToastAndroid.SHORT,
-                                    ToastAndroid.CENTER);
+                                                ToastAndroid.SHORT,
+                                                ToastAndroid.CENTER);
             } else {
                 //로그인 상태 반영 후에 메인화면으로 이동(스택 초기화)
                 // navigation.dispatch(resetNavigation);

@@ -25,11 +25,12 @@ const DetailsScreen = ({navigation}) => {
     );
   };
 
-  export default DetailsScreen;
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1, 
-      alignItems: 'center', 
-      justifyContent: 'center'
-    },
-  });
+export default DetailsScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  },
+});

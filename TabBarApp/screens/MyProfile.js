@@ -1,5 +1,5 @@
 import React ,{ Component } from 'react';
-import { View, Text, Button, Image, StyleSheet, ScrollView,TouchableHighlight,Dimensions, SafeAreaView } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, ScrollView, Dimensions, SafeAreaView } from 'react-native';
 
 import {Container, Content, Header, Left, Body, Right} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

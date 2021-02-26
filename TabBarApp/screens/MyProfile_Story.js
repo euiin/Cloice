@@ -1,6 +1,5 @@
 import React  from 'react';
 import { View, Text, Button, Image, StyleSheet, ScrollView,TouchableOpacity} from 'react-native';
-import { useNavigation } from '@react-navigation/native'; 
 
 const MyProfile_Story = ({navigation}) => {
     return (

@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SIcon from 'react-native-vector-icons/SimpleLineIcons';
 import IIcon from 'react-native-vector-icons/Ionicons';
 
-export function DrawerContent(props) {
+export function DrawerContent(props, { loginStatus }) {
     return(// caption은 작은 글씨로(나중에 포인트 설정할때 해보자)
     //flexDirection:'row' 해야 그림 옆에 글씨가 들어간다.!!
         <View style={{flex:1}}> 
@@ -72,7 +72,13 @@ export function DrawerContent(props) {
                             />
                         )}
                         label="장바구니"
-                        onPress={()=>{props.navigation.navigate('Cart')}} // 일단, 눌렀을때 아무것도 안하는거
+                        onPress={()=>{
+                            if(loginStatus) {
+
+                            } else {
+                                props.navigation.navigate('Cart')
+                            }
+                        }} // 일단, 눌렀을때 아무것도 안하는거
                     /> 
                     <DrawerItem
                         icon={({size}) => (

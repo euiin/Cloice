@@ -15,7 +15,7 @@ const HomeStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
 const ClosetStack = createStackNavigator();
 
-const MainTabScreen=() =>(
+const MainTabScreen = () => (
     <Tab.Navigator
       initialRouteName="Home"
       activeColor="#e91e63"

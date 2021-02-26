@@ -35,7 +35,6 @@ app.post('/register', (req, res) => {
     const gender = req.body.gender;
 
     //res.send를 무조건 해줘야지 then 함수에서 응답을 할 수 있다.
-
     db.query("INSERT INTO users (email, password, nickname, gender) VALUES (?,?,?,?)", [email, password, nickname, gender], (err, result) => {
         if(err) {
             console.log(err);
@@ -65,6 +64,50 @@ app.post("/login", (req, res) => {
             } else {
                 console.log("로그인 실패");
                 res.send({ message: "Wrong email/password combination" });
+            }
+    })
+})
+
+//닉네임 중복확인
+app.post("/dupemail", (req, res) => {
+    const email = req.body.email;
+
+    db.query(
+        "SELECT * FROM users WHERE email = ?",
+        [email],
+        (err, result) => {
+            if(err) {
+                res.send({ err: err })   
+            }
+            
+            if(result.length > 0) {
+                res.send({ message: "중복된 이메일" });
+                console.log("중복된 이메일");
+            } else {
+                res.send(result);
+                console.log("이메일 생성 가능");
+            }
+    })
+})
+
+//닉네임 중복확인
+app.post("/dupnick", (req, res) => {
+    const nickname = req.body.nickname;
+
+    db.query(
+        "SELECT * FROM users WHERE nickname = ?",
+        [nickname],
+        (err, result) => {
+            if(err) {
+                res.send({ err: err })   
+            }
+            
+            if(result.length > 0) {
+                res.send({ message: "중복된 닉네임" });
+                console.log("중복된 닉네임");
+            } else {
+                res.send(result);
+                console.log("닉네임 생성 가능");
             }
     })
 })

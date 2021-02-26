@@ -23,6 +23,7 @@ import { DrawerContent } from './screens/DrawerContent';
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+
   return (
     <NavigationContainer independent={true}>
       <Drawer.Navigator drawerContent = {props => <DrawerContent {...props}/>}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,9 @@ import {
   Dimensions,
   TouchableOpacity,
   Alert,
-} from 'react-native'
+  ToastAndroid
+} from 'react-native';
+import Axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -25,12 +27,12 @@ const SignUpScreen = ({navigation}) => {
         password: '',
         nickname: '',
         check_validemail: false,
-        check_emaildup: true,  //DB에서 중복된 거 있으면 true로 변경하기 어케 ??? 이거 바꾸기!!!!!!!!!!!!
+        check_emaildup: false,  //DB에서 중복된 거 있으면 true로 변경하기 어케 ??? 이거 바꾸기!!!!!!!!!!!!
         check_validpw: false,
         check_userpw: false,
         secureTextEntry: true,
         check_validnick: false,
-        check_nickdup: true,  //이거 바꾸기!!!!!!!!!!!!!11
+        check_nickdup: false,  //이거 바꾸기!!!!!!!!!!!!!11
         userGender: '',
         femaleButton: 'grey',
         maleButton: 'grey',
@@ -47,13 +49,33 @@ const SignUpScreen = ({navigation}) => {
 
     const checkEmailForm = (val) => {
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (reg.test(val) === true ) {
-            setData({
-                ...data,
+        if (reg.test(val) === true) {
+            Axios.post("http://10.0.2.2:3333/dupemail", {
                 email: val,
-                check_validemail: true,
+            }).then((response) => {
+                if(response.data.message) {
+                    //중복된 이메일 있음
+                    setData({
+                        ...data,
+                        email: val,
+                        check_validemail: true,
+                        check_emaildup: false,
+                    });
+                } else {
+                    //중복된 이메일 없음
+                    setData({
+                        ...data,
+                        email: val,
+                        check_validemail: true,
+                        check_emaildup: true,
+                    });
+                }
+            }).catch((error) => {
+                console.log("에러:", error);
+                throw error;
             });
         } else {
+            //이메일 형식이 틀린경우
             setData({
                 ...data,
                 email: val,
@@ -110,12 +132,32 @@ const SignUpScreen = ({navigation}) => {
 
     const checkValidNick = (val) => {
         if (val.length>=2 && val.length<=10) {
-            setData({
-                ...data,
+            Axios.post("http://10.0.2.2:3333/dupnick", {
                 nickname: val,
-                check_validnick: true,
+            }).then((response) => {
+                if(response.data.message) {
+                    //중복된 닉네임 있음
+                    setData({
+                        ...data,
+                        nickname: val,
+                        check_nickdup: false,
+                        check_validnick: true,
+                    });
+                } else {
+                    //중복된 닉네임 없음
+                    setData({
+                        ...data,
+                        nickname: val,
+                        check_nickdup: true,
+                        check_validnick: true,
+                    });
+                }
+            }).catch((error) => {
+                console.log("에러:", error);
+                throw error;
             });
         } else {
+            //형식에 맞지 않는 닉네임
             setData({
                 ...data,
                 nickname: val,
@@ -227,20 +269,43 @@ const SignUpScreen = ({navigation}) => {
 
     const isValidUser = (data.check_validemail && data.check_emaildup && data.check_userpw && data.check_validnick && data.check_nickdup && data.terms1 && data.terms2 && data.terms3 && (data.userGender!=''))
 
-    const goAlert = () => {
-      Alert.alert(
-        "(data.nickname) + 님, Cloice 가입이 완료되었습니다.",             // 첫번째 text: 타이틀 제목
-        "로그인을 진행해주세요.",                         // 두번째 text: 그 밑에 작은 제목
-      [                              // 버튼 배열
-        {
-          text: "네",                              // 버튼 제목
-          onPress: () => navigation.navigate('LoginScreen'),     //onPress 이벤트시 콘솔창에 로그를 찍는다
-          style: "cancel"
-        },
-        // { text: "네", onPress: () => console.log("그렇다는데") }, //버튼 제목
-      ],
-      { cancelable: false }
-    );
+    const registerHandler = () => {
+        console.log("회원 가입 버튼 누름")
+        //회원정보 DB에 등록하기
+        Axios.post("http://10.0.2.2:3333/register", {
+            email: data.email,
+            password: data.password,
+            nickname: data.nickname,
+            gender: data.userGender
+        }).then((response) => {
+            if(response.data.message) {
+                ToastAndroid.showWithGravity("회원 가입 실패",
+                                    ToastAndroid.SHORT,
+                                    ToastAndroid.CENTER);
+                console.log("로그인 실패!")
+            } else {
+                console.log("로그인 성공!")
+                Alert.alert(
+                    "(data.nickname) + 님, Cloice 가입이 완료되었습니다.",             // 첫번째 text: 타이틀 제목
+                    "로그인을 진행해주세요.",                         // 두번째 text: 그 밑에 작은 제목
+                [                              // 버튼 배열
+                    {
+                    text: "네",                              // 버튼 제목
+                    onPress: () => navigation.navigate('LoginScreen'),     //onPress 이벤트시 콘솔창에 로그를 찍는다
+                    style: "cancel"
+                    },
+                    // { text: "네", onPress: () => console.log("그렇다는데") }, //버튼 제목
+                ],
+                { cancelable: false }
+                );
+            }
+        }).catch((error) => {
+            ToastAndroid.showWithGravity("에러 발생",
+                                            ToastAndroid.SHORT,
+                                            ToastAndroid.CENTER);
+            console.log("에러:", error);
+            throw error;
+        });
     }
 
     return (   /*리턴하는 건 하나로 묶어줘야 함*/
@@ -289,14 +354,23 @@ const SignUpScreen = ({navigation}) => {
                 
                 {data.email != '' ?
                     data.check_validemail ?   //애니메이션 바꾸기
-                        (<Animatable.View animation= "bounceIn" style={[styles.alignsub, {marginTop: 5, marginLeft: 5}]}>
+                        data.check_emaildup ?
+                            (<Animatable.View animation= "bounceIn" style={[styles.alignsub, {marginTop: 5, marginLeft: 5}]}>
+                                <Feather
+                                name="check"
+                                color="#99d1e9"
+                                size={20}
+                                />
+                            <Text style={[styles.notice, {color: '#99d1e9'}]}>사용할 수 있는 이메일입니다.</Text>
+                            </Animatable.View>)
+                        : (<Animatable.View animation= "bounceIn" style={[styles.alignsub, {marginTop: 5, marginLeft: 5}]}>
                             <Feather
-                            name="check"
-                            color="#99d1e9"
+                            name="x"
+                            color="red"
                             size={20}
                             />
-                        <Text style={[styles.notice, {color: '#99d1e9'}]}>사용할 수 있는 이메일입니다.</Text>
-                        </Animatable.View>)
+                            <Text style={[styles.notice, {color: 'red'}]}>이미 가입된 이메일 입니다.</Text>
+                            </Animatable.View>)
                     : (<Animatable.View animation= "bounceIn" style={[styles.alignsub, {marginTop: 5, marginLeft: 5}]}>
                         <Feather
                         name="x"
@@ -308,8 +382,6 @@ const SignUpScreen = ({navigation}) => {
                 : null
                 }
                 
-                
-
                 <View style={styles.alignsub}>
                     <Text style={styles.subtitle}>비밀번호</Text>
                     <FontAwesome
@@ -418,15 +490,25 @@ const SignUpScreen = ({navigation}) => {
                 />
 
                 {data.nickname != '' ?
-                    data.check_validnick ?   //애니메이션 바꾸기
-                        (<Animatable.View animation= "bounceIn" style={[styles.alignsub, {marginTop: 5, marginLeft: 5}]}>
-                            <Feather
-                            name="check"
-                            color="#99d1e9"
-                            size={20}
-                            />
-                        <Text style={[styles.notice, {color: '#99d1e9'}]}>중복처리하기. 한글은 어떻게 입력?</Text>
-                        </Animatable.View>)
+                    (data.check_validnick ?   //애니메이션 바꾸기
+                        (data.check_nickdup ?
+                            (<Animatable.View animation= "bounceIn" style={[styles.alignsub, {marginTop: 5, marginLeft: 5}]}>
+                                <Feather
+                                name="check"
+                                color="#99d1e9"
+                                size={20}
+                                />
+                            <Text style={[styles.notice, {color: '#99d1e9'}]}>사용가능한 닉네임입니다.</Text>
+                            </Animatable.View>)
+                            : (<Animatable.View animation= "bounceIn" style={[styles.alignsub, {marginTop: 5, marginLeft: 5}]}>
+                                <Feather
+                                name="x"
+                                color="red"
+                                size={20}
+                                />
+                                <Text style={[styles.notice, {color: 'red'}]}>중복된 닉네임입니다.</Text>
+                                </Animatable.View>
+                            ))
                     : (<Animatable.View animation= "bounceIn" style={[styles.alignsub, {marginTop: 5, marginLeft: 5}]}>
                         <Feather
                         name="x"
@@ -434,7 +516,7 @@ const SignUpScreen = ({navigation}) => {
                         size={20}
                         />
                         <Text style={[styles.notice, {color: 'red'}]}>2~10자리 이내의 닉네임을 입력해주세요.</Text>
-                        </Animatable.View>)
+                        </Animatable.View>))
                 : null
                 }   
 
@@ -701,7 +783,7 @@ const SignUpScreen = ({navigation}) => {
             <View style={{alignItems:'center'}}>
                 <TouchableOpacity disabled={!isValidUser}  //disabled:true면 안 눌림.
                     style={isValidUser? styles.validbutton : styles.unvalidbutton}
-                    onPress = {goAlert}
+                    onPress = {registerHandler}
                 >
                 <Text style={{  
                         fontFamily: 'NanumSquareB',

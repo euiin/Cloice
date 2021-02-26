@@ -1,9 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Button, Dimensions, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import Axios from 'axios';
+import { StyleSheet, View, Text, TextInput, Button, Dimensions, Image, TouchableOpacity, KeyboardAvoidingView, ToastAndroid } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 
+//navigation stack을 reset하기 위함.
+import { CommonActions } from '@react-navigation/native'
+
 const LoginScreen = ({navigation}) => {
+    //로그인 상태 반영하고, 스택을 초기화한다.
+    const resetNavigation = CommonActions.reset({
+        index: 1,
+        routes: [
+            {
+                name: 'Home',
+                params: { loginStatus: true, },
+            },
+        ],
+    })
 
     const [data, setData] = React.useState({
         email: '',
@@ -12,6 +26,32 @@ const LoginScreen = ({navigation}) => {
         secureTextEntry: true,
         // isValidUser: false
     })
+
+    //로그인 정보 전달 함수
+    const loginHandler = () => {
+        console.log("로그인 버튼 누름");
+        console.log("email: ", data.email);
+        Axios.post("http://10.0.2.2:3333/login", {
+            email: data.email,
+            password: data.password,
+        }).then((response) => {
+            if(response.data.message) {
+                ToastAndroid.showWithGravity("등록되지 않은 계정입니다.",
+                                    ToastAndroid.SHORT,
+                                    ToastAndroid.CENTER);
+            } else {
+                //로그인 상태 반영 후에 메인화면으로 이동(스택 초기화)
+                // navigation.dispatch(resetNavigation);
+                navigation.navigate('Home');
+            }
+        }).catch((error) => {
+            ToastAndroid.showWithGravity("에러 발생",
+                                            ToastAndroid.SHORT,
+                                            ToastAndroid.CENTER);
+            console.log("에러:", error);
+            throw error;
+        });
+    }
 
     const checkEmailForm = (val) => {
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -45,12 +85,6 @@ const LoginScreen = ({navigation}) => {
             secureTextEntry: !data.secureTextEntry
         });
     }
-
-    // const loginHandle = (email, password) => {
-
-    // }
-
-    // android:windowSoftInputMode="adjustPan"
 
     return (
         <View style={styles.container}>
@@ -119,7 +153,7 @@ const LoginScreen = ({navigation}) => {
 
                 <TouchableOpacity
                     style={styles.button}  //로그인 버튼에 그림자 넣기
-                    onPress={() => {loginHandle (data.email, data.password)}}
+                    onPress={loginHandler}
                     >
                     <Text style={{  
                         fontFamily: 'NanumSquareB',

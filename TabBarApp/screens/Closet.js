@@ -106,6 +106,10 @@ const Closet = ({navigation}) => {
             </ScrollView>
           </View>      
         </ScrollView>
+        <Image
+                    source={require('../assets/pngs/finallogo.png')}
+                    style={styles.logo}
+                />
       </View>
       //bottom Tab
       );

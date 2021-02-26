@@ -1,68 +1,132 @@
 import React from 'react';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import {
+  Image
+} from 'react-native'
+// import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IIcon from 'react-native-vector-icons/Ionicons';
+import { icons, COLORS } from '../components';
 
 import HomeScreen from './HomeScreen';
 import DetailsScreen from './DetailsScreen';
 import Closet from './Closet';
 import ProfileScreen from './ProfileScreen';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
+
 
 const HomeStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
 const ClosetStack = createStackNavigator();
 
-const MainTabScreen = () => (
+const MainTabScreen = () => {
+  const tabOptions = {
+    showLabel: false,
+    style: {
+        height: "10%",
+        backgroundColor: '#99d1e9'
+    }
+  }
+
+  return (
     <Tab.Navigator
-      initialRouteName="Home"
-      activeColor="#e91e63"
-      barStyle={{ backgroundColor: 'tomato' }}
+      tabBarOptions = { tabOptions }
+      screenOptions = {({ route }) => ({
+        tabBarIcon: ({ focused }) => {
+            switch (route.name) {
+                case "Home":
+                    return (
+                        focused ? 
+                        <Image 
+                            source = {icons.homeButtonTrue}
+                            resizeMode = "contain"
+                            style = {{
+                                tintColor: COLORS.white,
+                                width: "68%",
+                                height: "68%"
+                            }}
+                        /> :
+                        <Image 
+                            source = {icons.homeButtonFalse}
+                            resizeMode = "contain"
+                            style = {{
+                                tintColor: COLORS.white,
+                                width: "68%",
+                                height: "68%"
+                            }}
+                        />
+                    )
+                case "Add":
+                    return (
+                        <Image 
+                            source = {icons.addButton}
+                            resizeMode = "contain"
+                            style = {{
+                                tintColor: COLORS.white,
+                                width: 50,
+                                height: 50
+                            }}
+                        />
+                    )
+                case "Closet":
+                    return (
+                        focused ? 
+                        <Image 
+                            source = {icons.closetButtonTrue}
+                            resizeMode = "contain"
+                            style = {{
+                                tintColor: COLORS.white,
+                                width: "68%",
+                                height: "68%"
+                            }}
+                        /> :
+                        <Image 
+                            source = {icons.closetButtonFalse}
+                            resizeMode = "contain"
+                            style = {{
+                                tintColor: COLORS.white,
+                                width: "68%",
+                                height: "68%"
+                            }}
+                        />
+                    )
+                case "Recommend":
+                    return (
+                        <Image 
+                            source = {icons.recommendButton}
+                            resizeMode = "contain"
+                            style = {{
+                                tintColor: COLORS.white,
+                                width: "68%",
+                                height: "68%"
+                            }}
+                        />
+                    )
+            }
+        }
+    })}
     >
       <Tab.Screen
         name="Home"
         component={HomeStackScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (
-            <Icon name="home" color={color} size={26} />
-          ),
-        }}
       />
       <Tab.Screen
-        name="Details"
+        name="Add"
         component={DetailsStackScreen}
-        options={{
-          tabBarLabel: 'Details',
-          tabBarIcon: ({ color }) => (
-            <Icon name="home" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color }) => (
-            <IIcon name="person" color={color} size={26} />
-          ),
-        }}
       />
       <Tab.Screen
         name="Closet"
+        component={ProfileScreen}
+      />
+      <Tab.Screen
+        name="Recommend"
         component={ClosetStackScreen}
-        options={{
-          tabBarLabel: '옷장',
-          tabBarIcon: ({ color }) => (
-            <Icon name="wardrobe-outline"/*aperture*/ color={color} size={26} />
-          ),
-        }}
       />
     </Tab.Navigator>
 );
+}
 
 const HomeStackScreen = ({navigation}) => (
     <HomeStack.Navigator screenOptions={{ //모든 화면에 색깔 적용

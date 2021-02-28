@@ -1,13 +1,22 @@
 import React from 'react';
 import {
     Text,
+    FlatList,
+    Image
 } from 'react-native';
 
-const AddPostScreen = () => {
+const AddPostScreen = ({ navigation }) => {
+    const [images, setImages] = React.useState([]);
+
     return (
-        <Text>
-            게시물 추가 화면
-        </Text>
+        <View>
+            <FlatList
+                data = {images}
+                renderItem = {({ item }) => {
+                    <Image source={{uri: item.url}} />
+                }}
+            />
+        </View>
     );
 }
 

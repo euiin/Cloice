@@ -4,6 +4,7 @@ export const addButton = require("../assets/pngs/addButton.png");
 export const closetButtonTrue = require("../assets/pngs/closetButtonTrue.png");
 export const closetButtonFalse = require("../assets/pngs/closetButtonFalse.png");
 export const recommendButton = require("../assets/pngs/recommendButton.png");
+export const addClothButton = require("../assets/pngs/addClothButton.png");
 
 export default {
     homeButtonTrue,
@@ -12,4 +13,5 @@ export default {
     closetButtonTrue,
     closetButtonFalse,
     recommendButton,
+    addClothButton,
 }

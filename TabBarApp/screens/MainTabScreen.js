@@ -13,6 +13,7 @@ import HomeScreen from './HomeScreen';
 import AddPostScreen from './AddPostScreen';
 import Closet from './Closet';
 import RecommendScreen from './RecommendScreen';
+import addClothes from './addClothes';
 
 const Tab = createBottomTabNavigator();
 
@@ -197,9 +198,11 @@ const AddPostStackScreen = ({navigation}) => {
   );
 };
 
-const ClosetStackScreen = ({navigation}) => {
+const ClosetStackScreen = ({ navigation }) => {
   return (
-    <ClosetStack.Navigator screenOptions={{ //모든 화면에 색깔 적용
+    <ClosetStack.Navigator 
+      initialRouteName="Closet"
+      screenOptions={{ //모든 화면에 색깔 적용
       headerStyle: {
         backgroundColor: '#ffffff',//바탕 색깔
         borderBottomWidth: 3,
@@ -228,6 +231,7 @@ const ClosetStackScreen = ({navigation}) => {
           </IIcon.Button>
         )
       }} />
+      <ClosetStack.Screen name="addClothes" component = {addClothes}/>
     </ClosetStack.Navigator>
   );
 }

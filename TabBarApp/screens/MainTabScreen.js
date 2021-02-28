@@ -13,6 +13,8 @@ import HomeScreen from './HomeScreen';
 import AddPostScreen from './AddPostScreen';
 import Closet from './Closet';
 import RecommendScreen from './RecommendScreen';
+import ClosetSangeui from './ClosetSangeui';
+import MyProfile from './MyProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -228,9 +230,29 @@ const ClosetStackScreen = ({navigation}) => {
           </IIcon.Button>
         )
       }} />
+      <ClosetStack.Screen name = "ClosetSangeui" component = {ClosetSangeui}  options={{
+        title: 'Cloice',
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontFamily: 'DancingScript',
+          fontSize: 30
+        },
+        headerRight: () => (
+          <Icon.Button name="menu" color='#000000' size={25} 
+          backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+          </Icon.Button>
+        ),
+        headerLeft: () => (
+          <IIcon.Button name="search" color='#000000' size={25} 
+          backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+          </IIcon.Button>
+        )
+      }} />
+      <ClosetStack.Screen name = "MyProfile" component = {MyProfile}/>
     </ClosetStack.Navigator>
   );
 }
+
 
 const RecommendStackScreen = ({navigation}) => {
   return (

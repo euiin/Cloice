@@ -1,10 +1,28 @@
 import React from 'react';
-import { View, Image, Text, Button, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-
+import { View, Image, Text, Button, StyleSheet, TouchableOpacity, ScrollView,FlatList } from 'react-native';
+import SangeuiStory from './ClosetSangeuiStory'
 import EIcon from 'react-native-vector-icons/Entypo';
 
 
-const Closet = ({navigation}) => {
+const Item = ({ title }) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
+
+
+function Closet ({navigation}) {
+  const renderItem = ({ item }) => (
+      <View>
+        <TouchableOpacity>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Image source={item.src} style={[styles.storyimage]} />
+        </View>
+        </TouchableOpacity>   
+      </View>
+  
+
+    );
     return (
       //header Tab
       <View style={{paddingLeft:16, paddingRight:16, backgroundColor: '#FCFCFC'}}>
@@ -16,40 +34,42 @@ const Closet = ({navigation}) => {
             </TouchableOpacity> 
             <Text style={{fontSize:20}}>민희님의 옷장</Text>                       
           </View>      
-          <View style={[styles.closets]}>
+          <View style={[styles.closets], {backgroundColor: '#FFFFFF'}}>
             <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
-              onPress={() => navigation.navigate("Closet_sangeui")}>
+              onPress={() => navigation.navigate("ClosetSangeui")}>
               <Text style={{fontSize:20}}>상의 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />
             </TouchableOpacity>
-            <ScrollView horizontal={true}>
-              <Image source={require('../android/app/src/assets/fonts/예일.png')} style={[styles.storyimage]}/>
-              <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-              <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-              <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-              <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-              <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-              <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-              <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-              <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            </ScrollView>
+            <FlatList
+              horizontal={true} 
+              showsHorizontalScrollIndicator={false} 
+              data={SangeuiStory} 
+              renderItem={renderItem} 
+              keyExtractor={item => item.id} 
+              // numColumns={3}   horizontal 없을 때 쓰자!! ex) 피드                      
+            />
           </View>
+
           <View style={[styles.closets]}>
-          <Text style={{fontSize:20}}>하의 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
-            <ScrollView horizontal={true}>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            </ScrollView>
+            <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
+              onPress={() => {}}>
+              <Text style={{fontSize:20}}>하의 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
+              <EIcon name='plus' 
+              style={{padding:10, fontSize: 28 }}
+              />
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true} 
+              showsHorizontalScrollIndicator={false} 
+              data={SangeuiStory}
+              renderItem={renderItem}
+              keyExtractor={item => item.id} 
+              // numColumns={3}   horizontal 없을 때 쓰자!! ex) 피드                      
+            />
           </View>
+
           <View style={[styles.closets]}>
           <Text style={{fontSize:20}}>아우터 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
             <ScrollView horizontal={true}>

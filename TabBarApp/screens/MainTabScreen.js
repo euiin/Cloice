@@ -9,6 +9,11 @@ import HomeStackScreen from './StackScreens/HomeStackScreen';
 import ClosetStackScreen from './StackScreens/ClosetStackScreen';
 import AddPostStackScreen from './StackScreens/AddPostStackScreen';
 import RecommendStackScreen from './StackScreens/RecommendStackScreen';
+import HomeScreen from './HomeScreen';
+import AddPostScreen from './AddPostScreen';
+import Closet from './Closet';
+import RecommendScreen from './RecommendScreen';
+import addClothes from './addClothes';
 
 const Tab = createBottomTabNavigator();
 
@@ -116,6 +121,44 @@ const MainTabScreen = () => {
         component={RecommendStackScreen}
       />
     </Tab.Navigator>
+  );
+};
+
+const ClosetStackScreen = ({ navigation }) => {
+  return (
+    <ClosetStack.Navigator 
+      initialRouteName="Closet"
+      screenOptions={{ //모든 화면에 색깔 적용
+      headerStyle: {
+        backgroundColor: '#ffffff',//바탕 색깔
+        borderBottomWidth: 3,
+        borderBottomColor: '#99D1E9'
+      },
+      headerTintColor: '#000000',//글자색깔
+      headerTitleStyle: {
+        //fontWeight: 'bold'
+      }
+    }}>
+      <ClosetStack.Screen name="Closet" component={Closet} options={{ //home 화면에만 색깔 적용
+        title: 'Cloice',
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontFamily: 'DancingScript',
+          fontSize: 30
+        },
+        headerRight: () => (
+          <Icon.Button name="menu" color='#000000' size={25} 
+          backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+          </Icon.Button>
+        ),
+        headerLeft: () => (
+          <IIcon.Button name="search" color='#000000' size={25} 
+          backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+          </IIcon.Button>
+        )
+      }} />
+      <ClosetStack.Screen name="addClothes" component = {addClothes}/>
+    </ClosetStack.Navigator>
   );
 }
 

@@ -2,6 +2,9 @@ import React from 'react';
 import { View, Image, Text, Button, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
 import EIcon from 'react-native-vector-icons/Entypo';
+import addClothes from './addClothes';
+import { FloatingAction } from 'react-native-floating-action';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 const Closet = ({navigation}) => {
@@ -107,10 +110,15 @@ const Closet = ({navigation}) => {
             </ScrollView>
           </View>      
         </ScrollView>
-        <Image
-                    source={require('../assets/pngs/finallogo.png')}
-                    style={styles.logo}
-                />
+        <View style={styles.fixed}>
+          <TouchableOpacity onPress={() => {navigation.navigate('addClothes')}}>
+            <Image
+                source={require('../assets/pngs/addClothes.png')}
+                style={styles.addbutton}
+            />
+          </TouchableOpacity>
+          
+        </View>
       </View>
       //bottom Tab
       );
@@ -134,5 +142,20 @@ const styles = StyleSheet.create({
       height:90, 
       borderRadius:52, 
       marginHorizontal:7
-  },
+    },
+    addbutton: {
+      width: 64,
+      height: 64,
+      resizeMode: 'contain',  //그림자 넣기
+      // marginBottom: 500,
+    },
+    fixed: {
+      position: 'absolute',
+      // top: 100,
+      // left: 0,
+      right: 16,
+      bottom: 16, //하단탭 기준 16 offset 자동으로 됨.
+    },
+    
+
   });

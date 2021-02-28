@@ -14,6 +14,8 @@ import AddPostScreen from './AddPostScreen';
 import Closet from './Closet';
 import RecommendScreen from './RecommendScreen';
 import addClothes from './addClothes';
+import ClosetSangeui from './ClosetSangeui';
+import MyProfile from './MyProfile';
 
 const Tab = createBottomTabNavigator();
 

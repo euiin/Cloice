@@ -13,7 +13,6 @@ import HomeScreen from './HomeScreen';
 import AddPostScreen from './AddPostScreen';
 import Closet from './Closet';
 import RecommendScreen from './RecommendScreen';
-import addClothes from './addClothes';
 
 const Tab = createBottomTabNavigator();
 

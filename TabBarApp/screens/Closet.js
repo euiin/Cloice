@@ -1,11 +1,47 @@
 import React from 'react';
-import { View, Image, Text, Button, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Image, Text, Button, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 
 import EIcon from 'react-native-vector-icons/Entypo';
-import addClothes from './addClothes';
 import { FloatingAction } from 'react-native-floating-action';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 
+const actions = [{
+  text: '갤러리에서 추가',
+  icon: <AntDesign
+          name="picture"
+          color="#99d1e9"
+          size={26}
+        />,
+  name: 'bt_gallery',
+  position: 1,  //이 숫자가 위에서부터 순서
+  buttonSize: 40,
+  color: 'white',
+}, {
+  text: '카메라에서 추가',
+  icon: <Ionicons
+          name="camera"
+          color="#99d1e9"
+          size={26}
+        />,
+  name: 'bt_camera',
+  position: 2,
+  buttonSize: 40,
+  color: 'white',
+}, {
+  text: '쇼핑몰에서 추가',
+  icon: <Feather
+          name="shopping-bag"
+          color="#99d1e9"
+          size={26}
+        />,
+  name: 'bt_shopping',
+  position: 3,
+  buttonSize: 40,
+  color: 'white',
+}];
 
 const Closet = ({navigation}) => {
     return (
@@ -17,7 +53,10 @@ const Closet = ({navigation}) => {
             <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} 
             style={{width:80,height:80, borderRadius:52, marginRight:10}}/>
             </TouchableOpacity> 
-            <Text style={{fontSize:20}}>민희님의 옷장</Text>                       
+            <Text style={{fontSize:20}}>민희님의 옷장</Text>
+            <TouchableOpacity onPress={()=>{ navigation.navigate("editClothes1")}}>
+              <Text>mini test</Text>
+            </TouchableOpacity>                       
           </View>      
           <View style={[styles.closets]}>
             <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
@@ -110,15 +149,17 @@ const Closet = ({navigation}) => {
             </ScrollView>
           </View>      
         </ScrollView>
-        <View style={styles.fixed}>
-          <TouchableOpacity onPress={() => {navigation.navigate('addClothes')}}>
-            <Image
-                source={require('../assets/pngs/addClothes.png')}
-                style={styles.addbutton}
-            />
-          </TouchableOpacity>
-          
-        </View>
+
+        <FloatingAction
+          floatingIcon= {require('../assets/pngs/addClothes.png')}
+          iconWidth= {64}
+          iconHeight= {64}
+          buttonSize ={64}
+          actions={actions}
+          onPressItem={name => {
+            Alert.alert("Icon pressed", `the icon ${name} was pressed`);
+          }}
+        />
       </View>
       //bottom Tab
       );
@@ -130,6 +171,9 @@ const styles = StyleSheet.create({
       flex: 1, 
       alignItems: 'center', 
       justifyContent: 'center'
+    },
+    container2: {
+      flex: 1,
     },
     closets:{
       paddingTop:11, 

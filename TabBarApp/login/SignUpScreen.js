@@ -8,7 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Alert,
-  ToastAndroid
+  ToastAndroid,
 } from 'react-native';
 import Axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -532,7 +532,7 @@ const SignUpScreen = ({navigation}) => {
                 <View style={{alignItems: 'center'}}>
                     <ButtonGroup
                         buttons = {genderbuttons}
-                        selectedBackgroundColor="pink"   //클릭했을 때 색깔 어케 바꿈???
+                        selectedButtonStyle={{backgroundColor: "#99d1e9"}}
                         selectedIndex={data.selectedIndex}
                         containerStyle = {[{
                             width: '100%',

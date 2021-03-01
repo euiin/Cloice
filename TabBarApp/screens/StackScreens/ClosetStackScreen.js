@@ -4,10 +4,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IIcon from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 
 import Closet from '../Closet';
-import addClothes from '../addClothes';
 import SangeuiFeed from '../ClosetScreens/SangeuiFeed';
+import editClothes1 from '../editClothes1';
+import editClothes2 from '../editClothes2';
+import editClothes3 from '../editClothes3';
 
 const ClosetStack = createStackNavigator();
 
@@ -42,8 +45,62 @@ const ClosetStackScreen = ({navigation}) => {
             </IIcon.Button>
           )
         }} />
-        <ClosetStack.Screen name="addClothes" component = {addClothes}/>
         <ClosetStack.Screen name="SangeuiFeed" component = {SangeuiFeed}/>
+        <ClosetStack.Screen name="editClothes1" component = {editClothes1} options={{
+          title: '옷 추가',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'NanumSquarB',
+            fontSize: 20,
+          },
+          
+          headerLeft: () => (
+            <Feather.Button
+              name="chevron-left"
+              color="#99d1e9"
+              size={32}
+              backgroundColor="#ffffff"
+              // onPress={() => navigation.navigate('어디루??')}
+            />
+          )
+        }}
+        />
+        <ClosetStack.Screen name="editClothes2" component = {editClothes2} options={{
+          title: '옷 추가',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'NanumSquarB',
+            fontSize: 20
+          },
+          headerLeft: () => (
+            <Feather.Button
+              name="chevron-left"
+              color="#99d1e9"
+              size={32}
+              backgroundColor="#ffffff"
+              onPress={() => navigation.navigate('editClothes1')}
+            />
+          )
+        }}
+        />
+        <ClosetStack.Screen name="editClothes3" component = {editClothes3} options={{
+          title: '옷 추가',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontFamily: 'NanumSquarB',
+            fontSize: 20
+          },
+          headerLeft: () => (
+            <Feather.Button
+              name="chevron-left"
+              color="#99d1e9"
+              size={32}
+              backgroundColor="#ffffff"
+              onPress={() => navigation.navigate('editClothes2')}
+            />
+          )
+        }}
+        />
       </ClosetStack.Navigator>
     );
 }

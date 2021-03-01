@@ -7,6 +7,7 @@ import IIcon from 'react-native-vector-icons/Ionicons';
 
 import Closet from '../Closet';
 import addClothes from '../addClothes';
+import SangeuiFeed from '../ClosetScreens/SangeuiFeed';
 
 const ClosetStack = createStackNavigator();
 
@@ -42,6 +43,7 @@ const ClosetStackScreen = ({navigation}) => {
           )
         }} />
         <ClosetStack.Screen name="addClothes" component = {addClothes}/>
+        <ClosetStack.Screen name="SangeuiFeed" component = {SangeuiFeed}/>
       </ClosetStack.Navigator>
     );
 }

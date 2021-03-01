@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, Text, Button, StyleSheet, TouchableOpacity, ScrollView,FlatList } from 'react-native';
-import SangeuiStory from './ClosetSangeuiStory'
+import SangeuiStoryData from './ClosetScreens/SangeuiStoryData'
 import EIcon from 'react-native-vector-icons/Entypo';
 import addClothes from './addClothes';
 import { FloatingAction } from 'react-native-floating-action';
@@ -23,14 +23,12 @@ function Closet ({navigation}) {
         </View>
         </TouchableOpacity>   
       </View>
-  
-
     );
     return (
       //header Tab
       <View style={{paddingLeft:16, paddingRight:16, backgroundColor: '#FCFCFC'}}>
         <ScrollView>
-          <View style={{flexDirection:'row',alignItems: 'center',paddingTop:11}}>
+          <View style={{flexDirection:'row',alignItems: 'center',paddingTop:15}}>
             <TouchableOpacity onPress={()=>{ navigation.navigate("MyProfile")}}>
             <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} 
             style={{width:80,height:80, borderRadius:52, marginRight:10}}/>
@@ -39,7 +37,7 @@ function Closet ({navigation}) {
           </View>      
           <View style={[styles.closets], {backgroundColor: '#FFFFFF'}}>
             <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
-              onPress={() => navigation.navigate("ClosetSangeui")}>
+              onPress={() => navigation.navigate("SangeuiFeed")}>
               <Text style={{fontSize:20}}>상의 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
@@ -48,7 +46,7 @@ function Closet ({navigation}) {
             <FlatList
               horizontal={true} 
               showsHorizontalScrollIndicator={false} 
-              data={SangeuiStory} 
+              data={SangeuiStoryData} 
               renderItem={renderItem} 
               keyExtractor={item => item.id} 
               // numColumns={3}   horizontal 없을 때 쓰자!! ex) 피드                      
@@ -66,7 +64,7 @@ function Closet ({navigation}) {
             <FlatList
               horizontal={true} 
               showsHorizontalScrollIndicator={false} 
-              data={SangeuiStory}
+              data={SangeuiStoryData}
               renderItem={renderItem}
               keyExtractor={item => item.id} 
               // numColumns={3}   horizontal 없을 때 쓰자!! ex) 피드                      
@@ -161,7 +159,8 @@ const styles = StyleSheet.create({
       width:90, 
       height:90, 
       borderRadius:52, 
-      marginHorizontal:7
+      marginHorizontal:7,
+      marginTop:8,
     },
     addbutton: {
       width: 64,

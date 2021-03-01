@@ -1,5 +1,5 @@
 import React ,{ Component } from 'react';
-import { View, Text, TouchableOpacity , Image, StyleSheet, ScrollView, Dimensions, FlatList } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, ScrollView, Dimensions, SafeAreaView } from 'react-native';
 
 import {Container, Content, Header, Left, Body, Right} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,43 +13,45 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
 
-const FirstRoute = () => {
-    const renderItem = ({ item,index }) => (
-        <View>
-          <TouchableOpacity>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Image source={item.src} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
-          </View>
-          </TouchableOpacity>   
-        </View>
-      );
-    return(
-    <FlatList style={{flexDirection : "column"}}
-        data={BmrkFeedData} 
-        renderItem={renderItem} 
-        keyExtractor={item => item.id} 
-        numColumns={3} />    
-    );
-}
+var images=[
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg'),
+    require('../android/app/src/assets/fonts/김민희.jpg')
+]
 
-const SecondRoute = () => {
-    const renderItem = ({ item,index }) => (
-        <View>
-          <TouchableOpacity>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Image source={item.src} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
-          </View>
-          </TouchableOpacity>   
-        </View>
-      );
-    return(
-    <FlatList style={{flexDirection : "column"}}
-        data={CodiFeedData} 
-        renderItem={renderItem} 
-        keyExtractor={item => item.id} 
-        numColumns={3} />    
-    );
-}
+const FirstRoute = () => (
+    <View style={[styles.scene, { backgroundColor: '#ff4081'}]}>
+        <Text style={{fontWeight:'bold', fontSize:50}}>anjdianjdi</Text>
+    </View>
+);
+
+const SecondRoute = () => (
+    <View style={[styles.scene, { backgroundColor: '#673ab7' }]}>
+        {images.map((image, index) => {
+            return (
+            <View key={index} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { paddingLeft: 2 } : { paddingLeft: 0 }]}>
+                <Image style={{ flex: 1, alignSelf:'stretch', width: undefined, height: undefined,}}
+                    source={image}>
+                </Image>
+            </View>
+        )
+    })}
+    </View>
+);
 
 
 export default function MyProfile({navigation}) {
@@ -139,13 +141,15 @@ export default function MyProfile({navigation}) {
                     </View>
                 </View>
                 <MyProfileStory navigation = {navigation}/>
-                <TabView //원래 View로 감싸고 있었다. 
-                    renderTabBar={renderTabBar}
-                    navigationState={{ index, routes }}
-                    renderScene={renderScene}
-                    onIndexChange={setIndex}
-                    initialLayout={initialLayout}
-                />
+                <View>
+                    <TabView
+                        renderTabBar={renderTabBar}
+                        navigationState={{ index, routes }}
+                        renderScene={renderScene}
+                        onIndexChange={setIndex}
+                        initialLayout={initialLayout}
+                    />
+                </View>
             </ScrollView>
             </View>
         </Content>

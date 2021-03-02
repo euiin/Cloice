@@ -5,10 +5,25 @@ var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
+var multer = require('multer'); 
+
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json({type:'application/json'}));
 app.use(bodyParser.urlencoded({extended:true}));
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        if(file.mimeType === 'image/jpeg' || file.mimeType === 'image/png') {
+            //이미지 업로드 성공적으로 완료되었다.
+            console.log("이미지 파일");
+            cb(null, 'uploads/images');
+        } 
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + "-" + file.originalname)
+    }
+})
 
 var db = mysql.createConnection({
     host: '192.249.18.100',
@@ -68,7 +83,7 @@ app.post("/login", (req, res) => {
     })
 })
 
-//닉네임 중복확인
+//이메일 중복확인
 app.post("/dupemail", (req, res) => {
     const email = req.body.email;
 
@@ -109,5 +124,14 @@ app.post("/dupnick", (req, res) => {
                 res.send(result);
                 console.log("닉네임 생성 가능");
             }
+    })
+})
+
+//파일 업로드 및 디비에 위치 저장
+app.post('/uploadImage', (req, res) => {
+    const base64Image = req.body.base64Image;
+
+    db.query("INSERT INTO files (file) VALUES (?)", [base64Image], (err, result) => {
+        
     })
 })

@@ -9,11 +9,6 @@ import HomeStackScreen from './StackScreens/HomeStackScreen';
 import ClosetStackScreen from './StackScreens/ClosetStackScreen';
 import AddPostStackScreen from './StackScreens/AddPostStackScreen';
 import RecommendStackScreen from './StackScreens/RecommendStackScreen';
-import HomeScreen from './HomeScreen';
-import AddPostScreen from './AddPostScreen';
-import Closet from './Closet';
-import RecommendScreen from './RecommendScreen';
-import addClothes from './addClothes';
 
 const Tab = createBottomTabNavigator();
 

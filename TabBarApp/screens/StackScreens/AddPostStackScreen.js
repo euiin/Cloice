@@ -15,7 +15,7 @@ import AddClothScreen from '../AddClothScreen';
 
 const AddPostStack = createStackNavigator();
 
-const AddPostStackScreen = ({navigation}) => {
+const AddPostStackScreen = () => {
 
   return (
     <AddPostStack.Navigator screenOptions={{ //모든 화면에 색깔 적용
@@ -27,7 +27,10 @@ const AddPostStackScreen = ({navigation}) => {
         headerTintColor: '#000000',//글자색깔
         }
       }>
-        <AddPostStack.Screen name = "AddClothScreen" component = {AddClothScreen}/>
+        <AddPostStack.Screen 
+          name = "AddClothScreen"
+          component={AddClothScreen}
+        />
     </AddPostStack.Navigator>
   );
 };

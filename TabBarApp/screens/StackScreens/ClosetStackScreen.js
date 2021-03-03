@@ -12,10 +12,12 @@ import SangeuiFeed from '../ClosetScreens/SangeuiFeed';
 import editClothes1 from '../editClothes1';
 import editClothes2 from '../editClothes2';
 import editClothes3 from '../editClothes3';
+import AddClothesStackScreen from './AddClothesStackScreen';
 
 const ClosetStack = createStackNavigator();
 
 const ClosetStackScreen = ({navigation}) => {
+  
     return (
       <NavigationContainer independent={true}>
         <ClosetStack.Navigator screenOptions={{ //모든 화면에 색깔 적용
@@ -47,65 +49,10 @@ const ClosetStackScreen = ({navigation}) => {
             </IIcon.Button>
           )
         }} />
-          <ClosetStack.Screen name="SangeuiFeed" component = {SangeuiFeed}/>
-          <ClosetStack.Screen name="editClothes1" component = {editClothes1} options={{
-            title: '옷 추가',
-            headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontFamily: 'NanumSquarB',
-              fontSize: 20,
-            },
-            
-            headerLeft: () => (
-              <Feather.Button
-                name="chevron-left"
-                color="#99d1e9"
-                size={32}
-                backgroundColor="#ffffff"
-                // onPress={() => navigation.navigate('어디루??')}
-              />
-            )
-          }}
-          />
-          <ClosetStack.Screen name="editClothes2" component = {editClothes2} options={{
-            title: '옷 추가',
-            headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontFamily: 'NanumSquarB',
-              fontSize: 20
-            },
-            headerLeft: () => (
-              <Feather.Button
-                name="chevron-left"
-                color="#99d1e9"
-                size={32}
-                backgroundColor="#ffffff"
-                onPress={() => navigation.navigate('editClothes1')}
-              />
-            )
-          }}
-          />
-          <ClosetStack.Screen name="editClothes3" component = {editClothes3} options={{
-            title: '옷 추가',
-            headerTitleAlign: 'center',
-            headerTitleStyle: {
-              fontFamily: 'NanumSquarB',
-              fontSize: 20
-            },
-            headerLeft: () => (
-              <Feather.Button
-                name="chevron-left"
-                color="#99d1e9"
-                size={32}
-                backgroundColor="#ffffff"
-                onPress={() => navigation.navigate('editClothes2')}
-              />
-            )
-          }}
-          />
-        </ClosetStack.Navigator>
-      </NavigationContainer>
-      
+        <ClosetStack.Screen name="SangeuiFeed" component = {SangeuiFeed}/>
+        <ClosetStack.Screen name="AddClothesStackScreen" component = {AddClothesStackScreen} options={{headerShown: false}} screenOptions={{tabBarVisible: false}}/>
+        
+      </ClosetStack.Navigator>
     );
 }
 

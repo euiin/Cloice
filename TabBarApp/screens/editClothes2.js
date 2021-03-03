@@ -403,6 +403,7 @@ const editClothes2 = ({ route, navigation }) => {
           bottom: 20,
         }}>
           <TouchableOpacity
+            disabled={!validnext}
             style= {validnext ? styles.NextButtonT : styles.NextButtonF}
             onPress={()=>{ navigation.navigate("editClothes3", {imageURI: imageURI})}}
             >

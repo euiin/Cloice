@@ -10,6 +10,8 @@ import Feather from 'react-native-vector-icons/Feather';
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 
+import AddClothesStackScreen from './StackScreens/AddClothesStackScreen';
+
 const actions = [{
   text: '갤러리에서 추가',
   icon: <AntDesign
@@ -96,7 +98,7 @@ function Closet ({navigation}) {
             style={{width:80,height:80, borderRadius:52, marginRight:10}}/>
             </TouchableOpacity> 
             <Text style={{fontSize:20}}>민희님의 옷장</Text>
-            {/* <TouchableOpacity onPress={()=>{ navigation.navigate("editClothes1")}}>
+            <TouchableOpacity onPress={()=>{ navigation.navigate("AddClothesStackScreen")}}>
               <Text>mini test</Text>
             </TouchableOpacity>                        */}
           </View>      

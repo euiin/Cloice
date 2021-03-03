@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text, TextInput, Alert, Image, TouchableOpacity } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import BottomSheet from 'reanimated-bottom-sheet';
+import Animated from 'react-native-reanimated';
 
 const editClothes3 = ({ route }) => {
   const { imageURI } = route.params;
@@ -43,6 +45,29 @@ const editClothes3 = ({ route }) => {
         memo: val
     });
   }
+
+  const sheetRef = React.createRef();
+  const fall = new Animated.Value(1);
+
+  const renderContent = () => (
+    <View
+      style={{
+        backgroundColor: 'yellow',
+        padding: 16,
+        height: 450,
+      }}
+    >
+
+      <Text>Swipe down to close</Text>
+      <TouchableOpacity onPress={() => {
+        console.log("버튼 눌림")
+        sheetRef.current.snapTo(1)
+        }}>
+        <Text>Click here to hide</Text>
+      </TouchableOpacity>
+      
+    </View>
+  );
 
   return (
   <>
@@ -119,12 +144,14 @@ const editClothes3 = ({ route }) => {
             <Text style={styles.subtext}>스타일</Text>
           </View>
 
+
           <TouchableOpacity style={{
             position: 'absolute',
             left: 80,
             width: 25,
             height: 25,
-            }}>
+            }}
+            onPress={()=>{ sheetRef.current.snapTo(0)}}>
             <Entypo
             name="plus"
             color="black"
@@ -198,11 +225,21 @@ const editClothes3 = ({ route }) => {
         }}>
           <TouchableOpacity
             style= {styles.NextButtonT}
-            // onPress={()=>{ navigation.navigate("colorExample")}}
+            onPress={()=>{navigation.navigate("ExampleStyle") }}
             >
             <Text style={styles.NextButtonText}>완료</Text>
           </TouchableOpacity>
         </View>
+
+        <BottomSheet
+          ref={sheetRef}
+          snapPoints={[330, 0]}
+          initialSnap={1}
+          callbackNode={fall}
+          enabledGestureInteraction={true}
+          borderRadius={10}
+          renderContent={renderContent}
+        />
 
       </View>
       </>

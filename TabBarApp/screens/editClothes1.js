@@ -7,8 +7,7 @@ const editClothes1 = ({navigation}) => {
     const [data, setData] = React.useState({
         
       })
-    
-
+       
     return (
     <>
         <View style = {styles.container}>

@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Text, TextInput, Alert, Image, TouchableOpacity } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-const editClothes3 = ({navigation}) => {
+const editClothes3 = ({ route }) => {
+  const { imageURI } = route.params;
 
   const [data, setData] = React.useState({
       name: '',
@@ -85,7 +86,7 @@ const editClothes3 = ({navigation}) => {
           justifyContent: 'center',
           marginTop: 10,
         }}>
-          <Text>사진 들어올 자리</Text>
+          <Image style = {{height: '100%', width: '100%' ,resizeMode: 'contain'}} source= {{uri: imageURI}} />
         </View>
         
         <View style={{

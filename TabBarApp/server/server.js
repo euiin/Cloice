@@ -132,6 +132,10 @@ app.post('/uploadImage', (req, res) => {
     const base64Image = req.body.base64Image;
 
     db.query("INSERT INTO files (file) VALUES (?)", [base64Image], (err, result) => {
+        if(err) {
+            res.send({ err: err })   
+        }
         
+        res.send(result);
     })
 })

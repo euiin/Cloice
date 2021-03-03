@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 const actions = [{
   text: '갤러리에서 추가',
@@ -60,6 +62,30 @@ function Closet ({navigation}) {
         </TouchableOpacity>   
       </View>
     );
+
+    const handleGallery = () => {
+      ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+        includeBase64: true,
+      }).then(image => {
+        // console.log(image);
+        navigation.navigate("editClothes1", {image: image});
+      });
+    }
+
+    const handleCamera = () => {
+      ImagePicker.openCamera({
+        width: 300,
+        height: 400,
+        cropping: true,
+        includeBase64: true
+      }).then(image => {
+        navigation.navigate("editClothes1", {image: image});
+      });
+    }
+
     return (
       //header Tab
       <View style={{paddingLeft:16, paddingRight:16, backgroundColor: '#FCFCFC'}}>
@@ -70,9 +96,9 @@ function Closet ({navigation}) {
             style={{width:80,height:80, borderRadius:52, marginRight:10}}/>
             </TouchableOpacity> 
             <Text style={{fontSize:20}}>민희님의 옷장</Text>
-            <TouchableOpacity onPress={()=>{ navigation.navigate("editClothes1")}}>
+            {/* <TouchableOpacity onPress={()=>{ navigation.navigate("editClothes1")}}>
               <Text>mini test</Text>
-            </TouchableOpacity>                       
+            </TouchableOpacity>                        */}
           </View>      
           <View style={[styles.closets], {backgroundColor: '#FFFFFF'}}>
             <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
@@ -175,7 +201,13 @@ function Closet ({navigation}) {
           buttonSize ={64}
           actions={actions}
           onPressItem={name => {
-            Alert.alert("Icon pressed", `the icon ${name} was pressed`);
+            if(name == "bt_gallery") {
+              handleGallery();
+            } else if(name == "bt_camera") {
+              handleCamera();
+            } else {
+              return;
+            }
           }}
         />
       </View>

@@ -6,7 +6,8 @@ import ImageColors from "react-native-image-colors"
 
 //여기 하단바 없애야 함.
 
-const editClothes2 = ({navigation}) => {
+const editClothes2 = ({ route, navigation }) => {
+  const { imageURI } = route.params;
 
   const [data, setData] = React.useState({
     top: false,
@@ -32,7 +33,7 @@ const editClothes2 = ({navigation}) => {
 
   React.useEffect(() => {
     const fetchColors = async () => {
-      const result = await ImageColors.getColors(sampleImage, {
+      const result = await ImageColors.getColors(imageURI, {
         fallback: '#000000',
         quality: 'low',
         pixelSpacing: 5,
@@ -50,9 +51,6 @@ const editClothes2 = ({navigation}) => {
 
     fetchColors();
   }, []);
-
-  const sampleImage = require("../assets/pngs/exampleYale.jpg")
-  const sampleImage2 = require("../assets/pngs/exampleOcean.jpg")
 
   const updateTop = () => {
     setData({
@@ -170,24 +168,19 @@ const editClothes2 = ({navigation}) => {
   }
   const validnext= (data.top|data.bottom|data.outer|data.shoes|data.hat|data.acc)&&(data.spring|data.summer|data.fall|data.winter)&&(data.color1!='')&&(data.color2!='')&&(data.color3!='')&&(data.forAll|data.forFriends|data.forMe)
 
-  const color1 = async () =>
-  async () => {
-    await ImageColors.getColors(sampleImage, {
-      fallback: "#228B22",
-    })
-  };
+  // const color1 = async () =>
+  // async () => {
+  //   await ImageColors.getColors(sampleImage, {
+  //     fallback: "#228B22",
+  //   })
+  // };
 
-  const color2 = async () => {
-    await ImageColors.getColors(sampleImage2, {
-        fallback: "#228B22",
-      })
-  };
-
-  // const color1 = ImageColors.getColors(sampleImage, {
-  //   fallback: "#228B22",
-  // })
+  // const color2 = async () => {
+  //   await ImageColors.getColors(sampleImage2, {
+  //       fallback: "#228B22",
+  //     })
+  // };
   
-
     return (
       <>
       <View style = {styles.container}>
@@ -229,8 +222,9 @@ const editClothes2 = ({navigation}) => {
           justifyContent: 'center',
           marginTop: 10,
         }}>
-          <Text>사진 들어올 자리</Text>
-            
+          <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} 
+                  source = {{uri: imageURI}} 
+          />
         </View>
         
         <View style={{
@@ -410,7 +404,7 @@ const editClothes2 = ({navigation}) => {
         }}>
           <TouchableOpacity
             style= {validnext ? styles.NextButtonT : styles.NextButtonF}
-            onPress={()=>{ navigation.navigate("editClothes3")}}
+            onPress={()=>{ navigation.navigate("editClothes3", {imageURI: imageURI})}}
             >
             <Text style={styles.NextButtonText}>다음</Text>
           </TouchableOpacity>

@@ -26,31 +26,11 @@ const AddClothScreen = ({ navigation }) => {
             Axios.post("http://10.0.2.2:3333/uploadImage", {
                 base64Image: base64Image
             }).then((response) => {
-                if(response.data.message) {
-                    
-                } else {
-                    //중복된 이메일 없음
-                    setData({
-                        ...data,
-                        email: val,
-                        check_validemail: true,
-                        check_emaildup: true,
-                    });
-                }
+                console.log(response);
             }).catch((error) => {
                 console.log("에러:", error);
                 throw error;
             });
-
-            const img = {
-                uri: response.uri,
-                type: response.type,
-                name: 
-                    response.fileName ||
-                    response.uri.substr(response.uri.lastIndexOf('/') + 1),
-            };
-
-            setImages(prevImages => prevImages.concat(img));
         });
     }
 

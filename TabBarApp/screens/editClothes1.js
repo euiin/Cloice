@@ -2,14 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Text, Alert, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const editClothes1 = ({navigation}) => {
+const editClothes1 = ({ route, navigation }) => {
+  const { image } = route.params;
+  const imageURI = "data:" + image.mime + ";base64," + image.data;
 
-    const [data, setData] = React.useState({
-        
-      })
-    
-
-    return (
+  return (
     <>
         <View style = {styles.container}>
           <Image  //dashed line 고정
@@ -42,7 +39,7 @@ const editClothes1 = ({navigation}) => {
             <Text style={styles.Text}>정보입력</Text>
             <Text style={styles.Text}>추가입력</Text>
           </View>
-  
+
           <View style={{
             height: 180,
             width: '100%',
@@ -51,7 +48,7 @@ const editClothes1 = ({navigation}) => {
             justifyContent: 'center',
             marginTop: 10,
           }}>
-            <Text>사진 들어올 자리</Text>
+            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source = {{uri: imageURI}} />
           </View>
             
           <View style={{
@@ -62,7 +59,7 @@ const editClothes1 = ({navigation}) => {
           }}>
             <TouchableOpacity
               style= {styles.NextButtonT}
-              onPress={()=>{ navigation.navigate("editClothes2")}}
+              onPress={()=>{ navigation.navigate("editClothes2", {imageURI: imageURI}) }}
               >
               <Text style={styles.NextButtonText}>다음</Text>
             </TouchableOpacity>

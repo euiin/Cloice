@@ -26,6 +26,7 @@ const Drawer = createDrawerNavigator();
 const App = () => {
 
   const [isLoading, setIsLoading] = React.useState(true);
+  const [usertoken, setUserToken] = React.useState(null);
 
   const change = () => {
     setTimeout(() => {

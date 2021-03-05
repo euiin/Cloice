@@ -102,13 +102,6 @@ const SignUpScreen = ({navigation}) => {
         }
     }
 
-    // const handlePasswordChange = (val) => {
-    //     setData({
-    //         ...data,
-    //         password: val,
-    //     });
-    // }
-
     const updateSecureTextEntry = () => {
         setData({
             ...data,
@@ -270,7 +263,6 @@ const SignUpScreen = ({navigation}) => {
     const isValidUser = (data.check_validemail && data.check_emaildup && data.check_userpw && data.check_validnick && data.check_nickdup && data.terms1 && data.terms2 && data.terms3 && (data.userGender!=''))
 
     const registerHandler = () => {
-        console.log("회원 가입 버튼 누름")
         //회원정보 DB에 등록하기
         Axios.post("http://10.0.2.2:3333/register", {
             email: data.email,
@@ -284,14 +276,13 @@ const SignUpScreen = ({navigation}) => {
                                     ToastAndroid.CENTER);
                 console.log("로그인 실패!")
             } else {
-                console.log("로그인 성공!")
                 Alert.alert(
-                    "(data.nickname) + 님, Cloice 가입이 완료되었습니다.",             // 첫번째 text: 타이틀 제목
+                    `${(data.nickname)}님! Cloice 가입이 완료되었습니다.`,             // 첫번째 text: 타이틀 제목
                     "로그인을 진행해주세요.",                         // 두번째 text: 그 밑에 작은 제목
                 [                              // 버튼 배열
                     {
                     text: "네",                              // 버튼 제목
-                    onPress: () => navigation.navigate('LoginScreen'),     //onPress 이벤트시 콘솔창에 로그를 찍는다
+                    onPress: () => navigation.goBack('LoginScreen'),     //onPress 이벤트시 콘솔창에 로그를 찍는다
                     style: "cancel"
                     },
                     // { text: "네", onPress: () => console.log("그렇다는데") }, //버튼 제목
@@ -316,7 +307,7 @@ const SignUpScreen = ({navigation}) => {
                     color="#99d1e9"
                     size={32}
                     style={styles.minilogo}
-                    onPress={() => navigation.navigate('LoginScreen')}
+                    onPress={() => navigation.pop()}
             />
             <Text style={styles.maintext}>회원가입</Text>
             <Feather    //정렬용 ㅠㅠ

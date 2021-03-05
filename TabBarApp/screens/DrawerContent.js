@@ -10,11 +10,21 @@ import {
     DrawerItem,
 } from '@react-navigation/drawer';
 
+import { AuthContext } from '../components/context';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SIcon from 'react-native-vector-icons/SimpleLineIcons';
 import IIcon from 'react-native-vector-icons/Ionicons';
 
 export function DrawerContent(props, { loginStatus }) {
+
+    const { signOut } = React.useContext(AuthContext);
+
+    const signOutHandler = () => {
+        signOut();
+        props.navigation.jumpTo("Home")
+    }
+
     return(// caption은 작은 글씨로(나중에 포인트 설정할때 해보자)
     //flexDirection:'row' 해야 그림 옆에 글씨가 들어간다.!!
         <View style={{flex:1}}> 
@@ -76,7 +86,9 @@ export function DrawerContent(props, { loginStatus }) {
                             if(loginStatus) {
 
                             } else {
-                                props.navigation.navigate('Cart')
+                                props.navigation.navigate('Cart', {
+                                    screen: "LoginScreen"
+                                })
                             }
                         }} // 일단, 눌렀을때 아무것도 안하는거
                     /> 
@@ -145,7 +157,7 @@ export function DrawerContent(props, { loginStatus }) {
                         />
                     )}
                     label="Sign OUT"
-                    onPress={()=>{}} // 일단, 눌렀을때 아무것도 안하는거
+                    onPress={signOutHandler}
                 />                    
             </Drawer.Section>          
         </View>

@@ -53,6 +53,7 @@ const SecondRoute = () => {
 
 
 export default function MyProfile({navigation}) {
+
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
       { key: 'first', title: '코디'},

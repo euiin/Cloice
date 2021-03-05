@@ -4,20 +4,11 @@ import { StyleSheet, View, Text, TextInput, Button, Dimensions, Image, Touchable
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 
-//navigation stack을 reset하기 위함.
-import { CommonActions } from '@react-navigation/native'
+import { AuthContext } from '../components/context';
 
-const LoginScreen = ({navigation}) => {
-    //로그인 상태 반영하고, 스택을 초기화한다.
-    const resetNavigation = CommonActions.reset({
-        index: 1,
-        routes: [
-            {
-                name: 'Home',
-                params: { loginStatus: true, },
-            },
-        ],
-    })
+const LoginScreen = ({ navigation }) => {
+
+    const { signIn } = React.useContext(AuthContext);
 
     const [data, setData] = React.useState({
         email: '',
@@ -29,8 +20,6 @@ const LoginScreen = ({navigation}) => {
 
     //로그인 정보 전달 함수
     const loginHandler = () => {
-        console.log("로그인 버튼 누름");
-        console.log("email: ", data.email);
         Axios.post("http://10.0.2.2:3333/login", {
             email: data.email,
             password: data.password,
@@ -40,9 +29,8 @@ const LoginScreen = ({navigation}) => {
                                                 ToastAndroid.SHORT,
                                                 ToastAndroid.CENTER);
             } else {
-                //로그인 상태 반영 후에 메인화면으로 이동(스택 초기화)
-                // navigation.dispatch(resetNavigation);
-                navigation.navigate('Home');
+                signIn(data.email);
+                navigation.navigate("Home");
             }
         }).catch((error) => {
             ToastAndroid.showWithGravity("에러 발생",
@@ -153,7 +141,7 @@ const LoginScreen = ({navigation}) => {
 
                 <TouchableOpacity
                     style={styles.button}  //로그인 버튼에 그림자 넣기
-                    onPress={loginHandler}
+                    onPress={() => {loginHandler()}}
                     >
                     <Text style={{  
                         fontFamily: 'NanumSquareB',

@@ -43,7 +43,6 @@ const editClothes1 = ({ route, navigation }) => {
           <View style={{
             height: 180,
             width: '100%',
-            backgroundColor: 'lightgrey',
             alignItems: 'center',
             justifyContent: 'center',
             marginTop: 10,

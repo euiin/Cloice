@@ -13,7 +13,9 @@ import ExampleStyle from '../ExampleStyle';
 
 const AddClothesStack = createStackNavigator();
 
-const AddClothesStackScreen = ({navigation}) => {
+const AddClothesStackScreen = ({route, navigation}) => {
+  const { image } = route.params;
+  
 
   React.useEffect(() => {
     navigation.setOptions({tabBarVisible: false })})

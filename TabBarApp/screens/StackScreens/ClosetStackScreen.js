@@ -53,6 +53,7 @@ const ClosetStackScreen = ({navigation}) => {
         <ClosetStack.Screen name="AddClothesStackScreen" component = {AddClothesStackScreen} options={{headerShown: false}} screenOptions={{tabBarVisible: false}}/>
         
       </ClosetStack.Navigator>
+      </NavigationContainer>
     );
 }
 

@@ -73,7 +73,10 @@ function Closet ({navigation}) {
         includeBase64: true,
       }).then(image => {
         // console.log(image);
-        navigation.navigate("editClothes1", {image: image});
+        navigation.navigate("AddClothesStackScreen", {
+          screen: 'editClothes1',
+          params: {image: image},
+        });
       });
     }
 
@@ -84,7 +87,10 @@ function Closet ({navigation}) {
         cropping: true,
         includeBase64: true
       }).then(image => {
-        navigation.navigate("editClothes1", {image: image});
+        navigation.navigate("AddClothesStackScreen", {
+          screen: 'editClothes1',
+          params: {image: image},
+        });
       });
     }
 
@@ -98,9 +104,7 @@ function Closet ({navigation}) {
             style={{width:80,height:80, borderRadius:52, marginRight:10}}/>
             </TouchableOpacity> 
             <Text style={{fontSize:20}}>민희님의 옷장</Text>
-            <TouchableOpacity onPress={()=>{ navigation.navigate("AddClothesStackScreen")}}>
-              <Text>mini test</Text>
-            </TouchableOpacity>                        */}
+            
           </View>      
           <View style={[styles.closets], {backgroundColor: '#FFFFFF'}}>
             <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 

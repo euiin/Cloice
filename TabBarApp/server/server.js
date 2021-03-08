@@ -12,19 +12,6 @@ app.use(cors());
 app.use(bodyParser.json({type:'application/json'}));
 app.use(bodyParser.urlencoded({extended:true}));
 
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        if(file.mimeType === 'image/jpeg' || file.mimeType === 'image/png') {
-            //이미지 업로드 성공적으로 완료되었다.
-            console.log("이미지 파일");
-            cb(null, 'uploads/images');
-        } 
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname)
-    }
-})
-
 var db = mysql.createConnection({
     host: '192.249.18.100',
     port: '3306',
@@ -75,7 +62,7 @@ app.post("/login", (req, res) => {
             
             if(result.length > 0) {
                 res.send(result);
-                console.log("로그인 성공");
+                console.log(result);
             } else {
                 console.log("로그인 실패");
                 res.send({ message: "Wrong email/password combination" });
@@ -138,4 +125,17 @@ app.post('/uploadImage', (req, res) => {
         
         res.send(result);
     })
+})
+
+app.get('/feed/:email', (req, res) => {
+    const email = req.params.email
+    db.query("SELECT * FROM users WHERE email = ?",
+    [email],
+    (err, result) => {
+        if(err) {
+            res.send({ err: err })   
+        }
+
+})
+    
 })

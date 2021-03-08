@@ -59,7 +59,7 @@ const App = () => {
 
   const authContext = React.useMemo(() => ({
       signIn: async (userEmail) => {
-        const userToken = "0313";
+        const userToken = userEmail;
         try {
           await AsyncStorage.setItem('userToken', userToken)
         } catch (e) {

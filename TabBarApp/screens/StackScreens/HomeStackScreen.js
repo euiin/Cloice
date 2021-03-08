@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IIcon from 'react-native-vector-icons/Ionicons';
 
-import HomeScreen from '../HomeScreen';
+import HomeScreen from '../HomeScreens.js/HomeScreen';
 
 const HomeStack = createStackNavigator();
 

@@ -46,7 +46,7 @@
     "react-native-screens": "2.17.1",
     "react-native-tab-view": "2.15.2",
     "react-native-vector-icons": "8.0.0",
-    "reanimated-bottom-sheet": "1.0.0-alpha.22"
+    "reanimated-bottom-sheet": "1.0.0-alpha.22",
     "react-redux": "7.2.2",
     "redux": "4.0.5"
   },

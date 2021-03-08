@@ -127,8 +127,8 @@ app.post('/uploadImage', (req, res) => {
     })
 })
 
-app.get('/feed/:email', (req, res) => {
-    const email = req.params.email
+//피드 받아오기
+app.get('/feed', (req, res) => {
     db.query("SELECT * FROM users WHERE email = ?",
     [email],
     (err, result) => {

@@ -2,6 +2,10 @@ import React from 'react';
 import { View, Text, Button, StyleSheet, StatusBar, FlatList, RefreshControl } from 'react-native';
 import Axios from 'axios';
 import Feeds from './Feeds';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+
 
 const HomeScreen = ({navigation}) => {
   const [feedList, setFeedList] = React.useState([]);
@@ -51,7 +55,32 @@ const HomeScreen = ({navigation}) => {
 
 
   return (
-    <View>
+    <>
+    <View style={styles.top}>
+      <View style={{flexDirection:'row'}}>
+        <TouchableOpacity style={styles.button}>
+          <Text>착용샷</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, {flexDirection:'row',}]}>
+          <Text>인기순</Text>
+          <AntDesign
+            name="swap"
+            size={20}
+            style={{transform: [{rotate: '270deg'}]}}
+          />
+        </TouchableOpacity>
+      </View>
+      
+      <TouchableOpacity style={{marginRight: 16, width: 24}}>
+        <SimpleLineIcons
+          name="equalizer"
+          size={24}
+          style={{transform: [{rotate: '270deg'}]}}
+        />
+      </TouchableOpacity>
+    </View>
+
+    <View style={{marginTop: 10}}>
       <FlatList
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={async () => {
@@ -61,15 +90,36 @@ const HomeScreen = ({navigation}) => {
           }} />}
         style={styles.feed}
         data={posts}
+        key={''}
         renderItem={({ item }) => renderPost(item)}
         keyExtractor={item => item.id}
-        // numColumns = {1}
+        numColumns = {2}
         showsVerticalScrollIndicator={false}/>
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  top:{
+    height: 46,
+    borderBottomWidth: 1,
+    borderBottomColor: '#dfdfdf',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  button:{
+    width: 74,
+    height: 32,
+    borderRadius: 20,
+    borderColor: '#dfdfdf',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 16,
+  },
   feed: {
       marginHorizontal: 16
   }

@@ -16,6 +16,7 @@ import RecommendScreen from './RecommendScreen';
 import addClothes from './addClothes';
 import SangeuiFeed from './ClosetScreens/SangeuiFeed';
 import MyProfile from './MyProfile';
+import MyProfileStackScreen from './StackScreens/MyProfileStackScreen';
 
 const Tab = createBottomTabNavigator();
 

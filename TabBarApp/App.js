@@ -14,12 +14,15 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import FirstScreen from './screens/FirstScreen'
 import MainTabScreen from './screens/MainTabScreen';
 import MyProfile from './screens/MyProfile';
+import MyProfileStackScreen from './screens/StackScreens/MyProfileStackScreen'
+import HomeScreen from './screens/HomeScreen'
 import Setting from './screens/Setting';
 // import Cart from './screens/Cart';
 import Login from './login/Login';
 //import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import { DrawerContent} from './screens/DrawerContent';
+import AddPostScreen from './screens/AddPostScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -46,7 +49,7 @@ const App = () => {
         drawerPosition= "right" //drawer가 오른쪽에 있어서 왼쪽으로 잡아당기면 열린다.
         >
           <Drawer.Screen name="Home" component={MainTabScreen} />
-          <Drawer.Screen name="MyProfile" component={MyProfile} />
+          <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
           <Drawer.Screen name="Setting" component={Setting} />
           <Drawer.Screen name="Cart" component={Login} />
         </Drawer.Navigator>

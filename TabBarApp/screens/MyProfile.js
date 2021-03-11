@@ -59,13 +59,14 @@ export default function MyProfile({navigation}) {
       { key: 'first', title: '코디'},
       { key: 'second', title: '북마크' },
     ]);
-  
+
     const renderScene = SceneMap({
       first: FirstRoute,
       second: SecondRoute,
     });
 
     const renderTabBar = props => (
+        <ScrollView horizontal={true} >
         <TabBar
           {...props}
           indicatorStyle={{ backgroundColor: '#99D1E9', height:4}}
@@ -77,21 +78,12 @@ export default function MyProfile({navigation}) {
           )}
           pressColor='#cgcgcg' //회색으로 할까 고민중,
         />
+        </ScrollView>
     );
   
     return (
         <Container>
-        <Header style= {{ backgroundColor: '#ffffff'}}>
-                <Left style={{flexDirection:'row', alignItems:'center'}}>
-                    <Text style={{fontWeight:'bold', fontSize:17}}>minizzang</Text>
-                    <Icon name='home' style={{paddingLeft:10, fontSize:14}}/>
-                </Left>
-                <Right style={{flexDirection:'row', alignItems:'center'}}>
-                    <Icon name='home' style={{paddingRight:10, fontSize:23}}/>
-                    <Icon name='home' style={{paddingRight:10, fontSize:23}}/>
-                    <Icon name='dots-vertical'  style={{fontSize:23}}/>
-                </Right>
-            </Header>
+
             <Content style= {{ backgroundColor: '#FCFCFC'}}>
             <View style={{ padding:16}}>
                 <ScrollView>

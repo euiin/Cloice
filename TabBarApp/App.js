@@ -5,11 +5,14 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import FirstScreen from './screens/FirstScreen'
 import MainTabScreen from './screens/MainTabScreen';
 import MyProfile from './screens/MyProfile';
+import MyProfileStackScreen from './screens/StackScreens/MyProfileStackScreen'
+import HomeScreen from './screens/HomeScreen'
 import Setting from './screens/Setting';
 import Cart from './screens/Cart';
 import Login from './login/Login';
 
 import { DrawerContent} from './screens/DrawerContent';
+import AddPostScreen from './screens/AddPostScreen';
 
 import { AuthContext } from './components/context';
 

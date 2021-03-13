@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, StatusBar, FlatList, RefreshControl } from 'react-native';
 import Axios from 'axios';
-import Feeds from './Feeds';
+import Feeds from './FeedPractice'; //이거 나중에 Feeds로 바꾸기
 
 const HomeScreen = ({navigation}) => {
   const [feedList, setFeedList] = React.useState([]);
@@ -40,7 +40,20 @@ const HomeScreen = ({navigation}) => {
 ];
 
   const getFeed = () => {
-    Axios.get('/feed?email')
+    Axios.get('/feed').then((response) => {
+      const base64Image = response.data.base64Iamge;
+      const nickname = response.data.nickname;
+      const text = response.data.text;
+      var temp = {
+        base64Image: base64Image,
+        nickname: nickname,
+        text: text
+      }
+      setFeedList(
+        [temp,
+          ...feedList,
+      ])
+    })
   }
 
   const renderPost = (item) => {
@@ -63,7 +76,7 @@ const HomeScreen = ({navigation}) => {
         data={posts}
         renderItem={({ item }) => renderPost(item)}
         keyExtractor={item => item.id}
-        // numColumns = {1}
+        // numColumns = {2}
         showsVerticalScrollIndicator={false}/>
     </View>
   );
@@ -74,6 +87,5 @@ const styles = StyleSheet.create({
       marginHorizontal: 16
   }
 });
-
 
 export default HomeScreen;

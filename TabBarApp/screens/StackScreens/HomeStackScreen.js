@@ -5,7 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IIcon from 'react-native-vector-icons/Ionicons';
 
-import HomeScreen from '../HomeScreens.js/HomeScreen';
+import HomeScreen from '../HomeScreens/HomeScreen';
+import FeedDetail from '../HomeScreens/FeedDatail'
 
 const HomeStack = createStackNavigator();
 
@@ -40,6 +41,7 @@ const HomeStackScreen = ({ navigation }) => {
             </IIcon.Button>
           )
         }} />
+        <HomeStack.Screen name="FeedDetail" component={FeedDetail} />
       </HomeStack.Navigator>
     );
 }

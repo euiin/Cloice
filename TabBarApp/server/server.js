@@ -12,6 +12,17 @@ app.use(cors());
 app.use(bodyParser.json({type:'application/json'}));
 app.use(bodyParser.urlencoded({extended:true}));
 
+const uploadImage = multer({
+    storage: multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, 'images/');
+      },
+      filename: function (req, file, cb) {
+        cb(null, file.originalname);
+      }
+    }),
+});
+
 var db = mysql.createConnection({
     host: '192.249.18.100',
     port: '3306',
@@ -62,7 +73,7 @@ app.post("/login", (req, res) => {
             
             if(result.length > 0) {
                 res.send(result);
-                console.log(result);
+                console.log(result[0].email);
             } else {
                 console.log("로그인 실패");
                 res.send({ message: "Wrong email/password combination" });
@@ -115,27 +126,49 @@ app.post("/dupnick", (req, res) => {
 })
 
 //파일 업로드 및 디비에 위치 저장
-app.post('/uploadImage', (req, res) => {
+app.post('/uploadCloth', (req, res) => {
+    const email = req.body.email;
     const base64Image = req.body.base64Image;
 
-    db.query("INSERT INTO files (file) VALUES (?)", [base64Image], (err, result) => {
+    db.query("INSERT INTO files (email, file) VALUES (?, ?)", [email, base64Image], (err, result) => {
         if(err) {
-            res.send({ err: err })   
+            res.send({ err: err });
         }
         
         res.send(result);
     })
 })
 
-//피드 받아오기
-app.get('/feed', (req, res) => {
-    db.query("SELECT * FROM users WHERE email = ?",
-    [email],
+//옷장 정보 받아오기
+app.get('/getCloset', (req, res) => {
+    db.query("SELECT * FROM files",
     (err, result) => {
         if(err) {
-            res.send({ err: err })   
+            res.send({ err: err })
         }
 
+        res.send(result)
+
+        // const base64Iamge = result[0].BASE_FILE;
+        // const nickname = result[0].NICK;
+        // const text = result[0].POST_TEXT;
+
+        // res.send({base64Iamge: base64Iamge, nickname: nickname, text: text});
+    })    
 })
-    
+
+//피드 받아오기
+app.get('/feed', (req, res) => {
+    db.query("SELECT * FROM posts",
+    (err, result) => {
+        if(err) {
+            res.send({ err: err })
+        }
+
+        const base64Iamge = result[0].BASE_FILE;
+        const nickname = result[0].NICK;
+        const text = result[0].POST_TEXT;
+
+        res.send({base64Iamge: base64Iamge, nickname: nickname, text: text});
+    })    
 })

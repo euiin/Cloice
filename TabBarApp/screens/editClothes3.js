@@ -4,11 +4,39 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
+import Axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const snapPoints = [330, 0]
 
-const editClothes3 = ({ route }) => {
+const editClothes3 = ({ navigation, route }) => {
+  const [email, setEmail] = React.useState("");
+
+  React.useEffect(() => {
+    const temp = async () => {
+      await AsyncStorage.getItem('userToken', (err, result) => {
+        setEmail(result);
+      });
+    }
+    temp();
+  })
+
   const { imageURI } = route.params;
+
+  const onPressHandler = () => {
+    Axios.post("http://10.0.2.2:3333/addCloth", {
+      email: email,
+      base64Image: imageURI,
+      // category: 
+    }).then((response) => {
+      console.log(response);
+      // navigation.navigate("다음화면");
+    }).catch((error) => {
+      console.log("에러:", error);
+      throw error;
+    });
+    
+  }
 
   const [data, setData] = React.useState({
       name: '',

@@ -7,10 +7,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
-import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-crop-picker';
-
-import AddClothesStackScreen from './StackScreens/AddClothesStackScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Axios from 'axios';
 
 const actions = [{
   text: '갤러리에서 추가',
@@ -47,14 +46,32 @@ const actions = [{
   color: 'white',
 }];
 
-const Item = ({ title }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+const Closet = ({ navigation }) => {
+  const [email, setEmail] = React.useState("");
+  const [closetData, setClosetData] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
+  const getClosetData = () => {
+    Axios.get("http://10.0.2.2:3333/getCloset", {
+      email: email,
+    }).then((response) => {
+      console.log(response);
+      // navigation.navigate("다음화면");
+    }).catch((error) => {
+      console.log("에러:", error);
+      throw error;
+    });
+  }
 
-function Closet ({navigation}) {
+  React.useEffect(() => {
+    const temp = async () => {
+      await AsyncStorage.getItem('userToken', (err, result) => {
+        setEmail(result);
+      });
+    }
+    temp();
+  })
+
   const renderItem = ({ item }) => (
       <View>
         <TouchableOpacity>
@@ -115,6 +132,12 @@ function Closet ({navigation}) {
               />
             </TouchableOpacity>
             <FlatList
+              refreshControl={
+                <RefreshControl refreshing={isLoading} onRefresh={async () => {
+                  setIsLoading(true)
+                  await getClosetData()
+                  setIsLoading(false)}}/>
+              }
               horizontal={true} 
               showsHorizontalScrollIndicator={false} 
               data={SangeuiStoryData} 
@@ -138,7 +161,7 @@ function Closet ({navigation}) {
               data={SangeuiStoryData}
               renderItem={renderItem}
               keyExtractor={item => item.id} 
-              // numColumns={3}   horizontal 없을 때 쓰자!! ex) 피드                      
+              // numColumns={3}   horizontal 없을 때 쓰자!! ex) 피드
             />
           </View>
 

@@ -2,8 +2,7 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import IIcon from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 
 import RecommendScreen from '../RecommendScreen'
 
@@ -22,7 +21,7 @@ const RecommendStackScreen = ({navigation}) => {
           //fontWeight: 'bold'
         }
       }}>
-        <RecommendStack.Screen name="Closet" component={RecommendScreen} options={{ //home 화면에만 색깔 적용
+        <RecommendStack.Screen name="Recomm1" component={RecommendScreen} options={{ //home 화면에만 색깔 적용
           title: '코디추천',
           headerTitleAlign: 'center',
           headerTitleStyle: {
@@ -30,14 +29,16 @@ const RecommendStackScreen = ({navigation}) => {
             fontSize: 20
           },
           headerRight: () => (
-            <Icon.Button name="menu" color='#000000' size={25} 
-            backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
-            </Icon.Button>
+            null
           ),
           headerLeft: () => (
-            <IIcon.Button name="search" color='#000000' size={25} 
-            backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
-            </IIcon.Button>
+            <Feather.Button
+              name="chevron-left"
+              color="#99d1e9"
+              size={32}
+              backgroundColor="#ffffff"
+              onPress={() => navigation.navigate("Closet")}
+            />
           )
         }} />
       </RecommendStack.Navigator>

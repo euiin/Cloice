@@ -6,7 +6,7 @@ import FirstScreen from './screens/FirstScreen'
 import MainTabScreen from './screens/MainTabScreen';
 import MyProfile from './screens/MyProfile';
 import MyProfileStackScreen from './screens/StackScreens/MyProfileStackScreen'
-import HomeScreen from './screens/HomeScreen'
+import HomeScreen from './screens/HomeScreens/HomeScreen'
 import Setting from './screens/Setting';
 import Cart from './screens/Cart';
 import Login from './login/Login';

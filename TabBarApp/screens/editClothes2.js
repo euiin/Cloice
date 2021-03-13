@@ -404,7 +404,7 @@ const editClothes2 = ({ route, navigation }) => {
           <TouchableOpacity
             disabled={!validnext}
             style= {validnext ? styles.NextButtonT : styles.NextButtonF}
-            onPress={()=>{ navigation.navigate("editClothes3", {imageURI: imageURI})}}
+            onPress={()=>{ navigation.navigate("editClothes3", {imageURI: imageURI, dataSet1: data})}}
             >
             <Text style={styles.NextButtonText}>다음</Text>
           </TouchableOpacity>

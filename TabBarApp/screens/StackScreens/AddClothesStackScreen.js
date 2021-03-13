@@ -9,7 +9,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import editClothes1 from '../editClothes1';
 import editClothes2 from '../editClothes2';
 import editClothes3 from '../editClothes3';
-import ExampleStyle from '../ExampleStyle';
+import editClothes4 from '../editClothes4';
 
 const AddClothesStack = createStackNavigator();
 
@@ -90,21 +90,15 @@ const AddClothesStackScreen = ({route, navigation}) => {
           )
         }}
         />
-      <AddClothesStack.Screen name="ExampleStyle" component = {ExampleStyle} options={{
-          title: '옷 추가',
+      <AddClothesStack.Screen name="editClothes4" component = {editClothes4} options={{
+          title: 'Cloice',
           headerTitleAlign: 'center',
           headerTitleStyle: {
-            fontFamily: 'NanumSquarB',
-            fontSize: 20
+            fontFamily: 'DancingScript',
+            fontSize: 30
           },
           headerLeft: () => (
-            <Feather.Button
-              name="chevron-left"
-              color="#99d1e9"
-              size={32}
-              backgroundColor="#ffffff"
-              onPress={() => navigation.navigate('editClothes3')}
-            />
+            null
           )
         }}
         />

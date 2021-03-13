@@ -1,14 +1,21 @@
 import React from 'react';
 import {
-    Text,
+    View, Text, StyleSheet
 } from 'react-native';
 
 const RecommendScreen = () => {
     return (
-        <Text>
-            추천화면
-        </Text>
+        <View style={styles.container}>
+            <Text>hello</Text>
+        </View>
     );
 }
+
+const styles=StyleSheet.create({
+    container: {
+        paddingLeft: 16,
+        paddingRight: 16,
+    },
+})
 
 export default RecommendScreen;

@@ -7,8 +7,10 @@ import Animated from 'react-native-reanimated';
 
 const snapPoints = [330, 0]
 
-const editClothes3 = ({ route }) => {
+const editClothes3 = ({ route, navigation }) => {
   const { imageURI } = route.params;
+
+  const clothesData1 = route.params.dataSet1;
 
   const [data, setData] = React.useState({
       name: '',
@@ -81,7 +83,7 @@ const editClothes3 = ({ route }) => {
     });
   }
 
-  sheetRef = React.createRef();
+  const sheetRef = React.createRef();
   const fall = new Animated.Value(1);
 
   const handleUpdateStyle = (style) => {
@@ -91,7 +93,7 @@ const editClothes3 = ({ route }) => {
   });
   }
 
-  renderContent = () => {
+  const renderContent = () => {
 
     return (
       <View
@@ -389,7 +391,7 @@ const editClothes3 = ({ route }) => {
         }}>
           <TouchableOpacity
             style= {styles.NextButtonT}
-            onPress={()=>{navigation.navigate("ExampleStyle") }}
+            onPress={()=>{navigation.navigate("editClothes4", {imageURI: imageURI, dataSet1: clothesData1 ,dataSet2: data})}}
             >
             <Text style={styles.NextButtonText}>완료</Text>
           </TouchableOpacity>

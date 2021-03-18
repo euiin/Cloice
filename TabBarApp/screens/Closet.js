@@ -52,7 +52,7 @@ const Closet = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const getClosetData = () => {
-    Axios.get("http://10.0.2.2:3333/getCloset", {
+    Axios.post("http://10.0.2.2:3333/getCloset", {
       params: {
         email: email,
       }

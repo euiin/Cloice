@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Alert, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Alert, Image, TouchableOpacity, ScrollView, BackHandler } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,14 +9,20 @@ import Animated from 'react-native-reanimated';
 const snapPoints = [330, 0]
 
 const editClothes4 = ({ route, navigation }) => {
+  const backAction = () => {
+    navigation.navigate("Closet");
+  }
+
+  React.useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
+  })
+
   const imageURI = route.params.imageURI;
 
   const clothesData1 = route.params.dataSet1;
   const clothesData2 = route.params.dataSet2;
-
-//   const [data, setData] = React.useState({
-//     category: ''
-// })
 
   const Category = () => {
     if (clothesData1.top) return ("상의")

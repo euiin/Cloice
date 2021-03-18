@@ -4,13 +4,46 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
+import Axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const snapPoints = [330, 0]
 
-const editClothes3 = ({ route, navigation }) => {
+const editClothes3 = ({ navigation, route }) => {
+  const [email, setEmail] = React.useState("");
+
+  React.useEffect(() => {
+    const temp = async () => {
+      await AsyncStorage.getItem('userToken', (err, result) => {
+        setEmail(result);
+      });
+    }
+    temp();
+  })
+
   const { imageURI } = route.params;
 
   const clothesData1 = route.params.dataSet1;
+
+  const onPressHandler = () => {
+    Axios.post("http://10.0.2.2:3333/uploadCloth", {
+      email: email,
+      base64Image: imageURI,
+      clothName: data.name,
+      brand: data.brand,
+      price: data.price,
+      st_casual: data.st_casual,
+      st_dandy: data.st_dandy,
+      st_street: data.st_street,
+      st_hiphop: data.st_hiphop,
+      memo: data.memo,
+    }).then((response) => {
+      navigation.navigate("editClothes4", {imageURI: imageURI, dataSet1: clothesData1, dataSet2: data})
+    }).catch((error) => {
+      console.log("에러:", error);
+      throw error;
+    });
+  }
 
   const [data, setData] = React.useState({
       name: '',
@@ -391,7 +424,7 @@ const editClothes3 = ({ route, navigation }) => {
         }}>
           <TouchableOpacity
             style= {styles.NextButtonT}
-            onPress={()=>{navigation.navigate("editClothes4", {imageURI: imageURI, dataSet1: clothesData1 ,dataSet2: data})}}
+            onPress={()=>{onPressHandler()}}
             >
             <Text style={styles.NextButtonText}>완료</Text>
           </TouchableOpacity>

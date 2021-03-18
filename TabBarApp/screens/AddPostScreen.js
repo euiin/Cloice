@@ -2,6 +2,8 @@ import React from 'react';
 import { Text, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
+import { DragResizeBlock,} from 'react-native-drag-resize-elements';
+
 import SangeuiPost from './AddPostScreens/SangeuiPost';
 import HaeuiPost from './AddPostScreens/HaeuiPost';
 
@@ -18,9 +20,27 @@ const tabs = [
 ];
 
 
-
 export default function AddPostScreen() {
 const [pageNo, setPageNo] = React.useState(1);
+
+// const [imageCount, setImageCount] = React.useState(0);
+
+// const [postImg, setPostImg] = React.useState({
+//   img1: '',
+//   img2: '',
+//   img3: '',
+//   img4: '',
+// })
+
+// const authContext = React.useMemo(() => ({
+//   imageHandler: (imageSrc) => {
+//     setPostImg({
+//       ...postImg,
+//       img1: imageSrc
+//     })
+//   },
+// }), [])
+
 const renderSwitch=(pageNo)=> {
   switch(pageNo) {
     case 1:
@@ -46,9 +66,15 @@ const renderSwitch=(pageNo)=> {
       <View style={{alignItems: "center",borderColor:'#dfdfdf', borderBottomWidth:1,paddingVertical:10}}>
           <Text style={{fontSize:14, color:'#707070'}}>룩북 만들기</Text>
       </View>
-      <View style={{ width:'100%', height: width-55,}}>
-
+      <View style={{ width:'100%', height: width-55,backgroundColor: 'black',}}>
+      <DragResizeBlock>
+        <View style={{width: '100%', height: '100%', backgroundColor: 'red',}}/>
+      </DragResizeBlock> 
+      <DragResizeBlock>
+        <View style={{width: '100%', height: '100%', backgroundColor: 'blue',}}/>
+      </DragResizeBlock> 
       </View>
+      <View>
       <ScrollView horizontal style={{borderColor:'#dfdfdf', borderTopWidth:1,borderBottomWidth:1}}>
       {tabs.map((tabs, index) => {
         return(
@@ -61,11 +87,11 @@ const renderSwitch=(pageNo)=> {
             onPress={()=>{setPageNo(tabs.tabNo)}
             }>
             <Text style={{fontSize:14}} key={index}>{tabs.tabLabel}</Text>
-
           </TouchableHighlight>
         )
       })}
       </ScrollView>
+      </View>
       <View >
       {renderSwitch(pageNo)}
       </View>

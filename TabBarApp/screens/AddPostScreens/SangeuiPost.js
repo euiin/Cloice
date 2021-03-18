@@ -3,13 +3,18 @@ import { View, Image, Text, Button, StyleSheet,
    TouchableOpacity, ScrollView, Dimensions, FlatList, SafeAreaView } from 'react-native';
 import SangeuiFeedData from '../ClosetScreens/SangeuiFeedData'
 
+
 const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
 
 const SangeuiPost = () => {
+  // const { imageHandler } = React.useContext(AuthContext);
+
     const renderItem = ({ item,index }) => (
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity
+           //onPress={() => {navigation.navigate('AddPostScreen', {imageURI: item.src} )} }
+           >             
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Image source={item.src} style={[{ width: (width-32) / 4 }, { height: (width-32) / 4 }, { marginBottom: 2 }, index % 4 !== 0 ? { paddingLeft: 2 } : { paddingLeft: 0 } ]} />
           </View>

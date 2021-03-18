@@ -15,7 +15,7 @@ import AddClothScreen from '../AddClothScreen';
 
 const AddPostStack = createStackNavigator();
 
-const AddPostStackScreen = () => {
+const AddPostStackScreen = ({navigation}) => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({tabBarVisible: false })})

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { Text, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
@@ -19,9 +19,11 @@ const tabs = [
   { tabLabel: '액세서리',tabNo:6,},
 ];
 
+const AddPostContext = createContext();
 
 export default function AddPostScreen() {
 const [pageNo, setPageNo] = React.useState(1);
+
 
 // const [imageCount, setImageCount] = React.useState(0);
 

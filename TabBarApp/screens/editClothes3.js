@@ -6,6 +6,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import Axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {BASE_URL} from '../components';
 
 const snapPoints = [330, 0]
 
@@ -25,8 +26,18 @@ const editClothes3 = ({ navigation, route }) => {
 
   const clothesData1 = route.params.dataSet1;
 
+  const category = () => {
+    if (clothesData1.top) return ("top");
+    else if (clothesData1.bottom) return ("bottom")
+    else if (clothesData1.outer) return ("outer")
+    else if (clothesData1.shoes) return ("shoes")
+    else if (clothesData1.hat) return ("hat")
+    else if (clothesData1.acc) return ("acc")
+  }
+
+
   const onPressHandler = () => {
-    Axios.post("http://10.0.2.2:3333/uploadCloth", {
+    Axios.post(BASE_URL+"/uploadCloth", {
       email: email,
       base64Image: imageURI,
       clothName: data.name,
@@ -37,6 +48,7 @@ const editClothes3 = ({ navigation, route }) => {
       st_street: data.st_street,
       st_hiphop: data.st_hiphop,
       memo: data.memo,
+      category: category(),
     }).then((response) => {
       navigation.navigate("editClothes4", {imageURI: imageURI, dataSet1: clothesData1, dataSet2: data})
     }).catch((error) => {

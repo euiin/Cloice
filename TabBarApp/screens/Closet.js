@@ -10,7 +10,8 @@ import Feather from 'react-native-vector-icons/Feather';
 import ImagePicker from 'react-native-image-crop-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from 'axios';
-
+import { useFocusEffect } from '@react-navigation/native';
+import { BASE_URL } from '../components';
 const actions = [{
   text: '갤러리에서 추가',
   icon: <AntDesign
@@ -52,27 +53,25 @@ const Closet = ({ navigation }) => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const getClosetData = () => {
-    Axios.post("http://10.0.2.2:3333/getCloset", {
-      params: {
+    Axios.post(BASE_URL+"/getCloset", {
         email: email,
-      }
-    }).then((response) => {
-
+      }).then((response) => {
       var arr = response.data;
-      console.log("arr의 길이는")
-      console.log(arr.length);
+      console.log("arr는")
+      console.log(arr);
 
-      // arr.forEach(item => {
-      //   setClosetData([
-      //     ...closetData,
-      //     {
-      //       id: item.file,
-      //       url: item.file,
-      //       title: item.clothName,
-      //     }
-      //   ])
-      // });
-      return arr;
+
+      arr.forEach(item => {
+        setClosetData([
+          ...closetData,
+          {
+            id: item.file,
+            url: item.file,
+            title: item.clothName,
+          }
+        ]);
+        console.log("아이템 렌더링 하였습니다.")
+      });
     }).catch((error) => {
       console.log("에러:", error);
       throw error;
@@ -81,18 +80,15 @@ const Closet = ({ navigation }) => {
 
   React.useEffect(() => {
     const temp = async () => {
-      await AsyncStorage.getItem('userToken', (err, result) => {
-        console.log("옷장에서")
-        console.log(result)
+      await AsyncStorage.getItem('userToken', async (err, result) => {
         setEmail(result);
       });
+      getClosetData();
     }
     temp();
-    const initialArr = getClosetData();
-    console.log("initial array는")
-    console.log(initialArr)
-    // setClosetData([...initialArr]);
+
   }, [])
+
 
   const renderItem = ({ item }) => (
       <View>
@@ -143,9 +139,8 @@ const Closet = ({ navigation }) => {
             style={{width:80,height:80, borderRadius:52, marginRight:10}}/>
             </TouchableOpacity> 
             <Text style={{fontSize:20}}>민희님의 옷장</Text>
-            
           </View>      
-          <View style={[styles.closets], {backgroundColor: '#FFFFFF'}}>
+          <View style={[styles.closets]}>
             <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
               onPress={() => navigation.navigate("SangeuiFeed")}>
               <Text style={{fontSize:20}}>상의 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
@@ -154,17 +149,14 @@ const Closet = ({ navigation }) => {
               />
             </TouchableOpacity>
             <FlatList
-              // refreshControl={
-              //   <RefreshControl refreshing={isLoading} onRefresh={async () => {
-              //     setIsLoading(true)
-              //     await getClosetData()
-              //     setIsLoading(false)}}/>
-              // }
               horizontal={true} 
               showsHorizontalScrollIndicator={false} 
               data={closetData} 
               renderItem={renderItem} 
-              keyExtractor={(item) => {item.id.toString()}} 
+              keyExtractor={(item) => {
+                // console.log("아이템은 ");
+                // console.log(item);
+                String(item.id)}} 
             />
           </View>
 
@@ -175,13 +167,14 @@ const Closet = ({ navigation }) => {
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />
+
             </TouchableOpacity>
             <FlatList
               horizontal={true} 
               showsHorizontalScrollIndicator={false} 
               data={closetData}
               renderItem={renderItem}
-              keyExtractor={(item) => {item.id.toString()}}
+              keyExtractor={(item) => {String(item.id)}}
               // numColumns={3}   horizontal 없을 때 쓰자!! ex) 피드
             />
           </View>

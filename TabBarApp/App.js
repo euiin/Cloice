@@ -102,10 +102,10 @@ const App = () => {
     }, 3000);
   }
 
-  React.useEffect(() => {
-    console.log("로그인 상태 바뀜.");
-    console.log("loginState.userToken은 " + loginState.userToken)
-  }, [loginState])
+  // React.useEffect(() => {
+  //   console.log("로그인 상태 바뀜.");
+  //   console.log("loginState.userToken은 " + loginState.userToken)
+  // }, [loginState])
 
   change();
 

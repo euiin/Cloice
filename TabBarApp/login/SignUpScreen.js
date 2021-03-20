@@ -19,6 +19,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ButtonGroup } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import DatePicker from 'react-native-datepicker';
+import {BASE_URL} from '../components';
 
 const SignUpScreen = ({navigation}) => {
 
@@ -50,7 +51,7 @@ const SignUpScreen = ({navigation}) => {
     const checkEmailForm = (val) => {
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if (reg.test(val) === true) {
-            Axios.post("http://10.0.2.2:3333/dupemail", {
+            Axios.post(BASE_URL+"/dupemail", {
                 email: val,
             }).then((response) => {
                 if(response.data.message) {
@@ -125,7 +126,7 @@ const SignUpScreen = ({navigation}) => {
 
     const checkValidNick = (val) => {
         if (val.length>=2 && val.length<=10) {
-            Axios.post("http://10.0.2.2:3333/dupnick", {
+            Axios.post(BASE_URL+"/dupnick", {
                 nickname: val,
             }).then((response) => {
                 if(response.data.message) {
@@ -264,7 +265,7 @@ const SignUpScreen = ({navigation}) => {
 
     const registerHandler = () => {
         //회원정보 DB에 등록하기
-        Axios.post("http://10.0.2.2:3333/register", {
+        Axios.post(BASE_URL+"/register", {
             email: data.email,
             password: data.password,
             nickname: data.nickname,

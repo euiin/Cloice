@@ -6,6 +6,8 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 const fs = require('fs');
 const mime = require('mime');
+const ip = require("ip");
+const BASE_URL = "http://192.249.18.100:80";
 
 app.use(express.json({ limit : "50mb" }));
 
@@ -26,8 +28,9 @@ db.connect(function(error){
     else console.log("connected")
 });
 
-app.listen(3333, () => {
+app.listen(80, () => {
     console.log("server connected");
+    // console.log()
 });
 
 //회원가입용
@@ -128,6 +131,7 @@ app.post('/uploadCloth', (req, res) => {
     const st_street = req.body.st_street;
     const st_hiphop = req.body.st_hiphop;
     const memo = req.body.memo;
+    const category = req.body.category;
 
     var matches = base64Image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
@@ -144,16 +148,16 @@ app.post('/uploadCloth', (req, res) => {
     let extension = mime.getExtension(type);
     let fileName = Date.now() + "." + extension;
     try {
+        console.log(__dirname);
         fs.writeFileSync("./images/" + fileName, imageBuffer, 'utf8');
         db.query(
-            "INSERT INTO files (email, file, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo) VALUES (?,?,?,?,?,?,?,?,?,?)", 
-            [email, "http://10.0.2.2:3333/server/images/" + fileName, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo], 
+            "INSERT INTO files (email, file, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category) VALUES (?,?,?,?,?,?,?,?,?,?,?)", 
+            [email, BASE_URL+"/home/teamleader/server/images/" + fileName, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category], 
             (err, result) => {
                 console.log(err)
                 if(err) {
                     res.send({ err: err });
                 }
-                
                 res.send(result);
         })
     } catch (e) {
@@ -163,8 +167,9 @@ app.post('/uploadCloth', (req, res) => {
 })
 
 //옷장 정보 받아오기
-app.get('/getCloset', (req, res) => {
-    const email = req.query.email;
+app.post('/getCloset', (req, res) => {
+    const email = req.body.email;
+    console.log(email)
 
     db.query("SELECT * FROM files WHERE email = ?",
         [email],
@@ -173,8 +178,12 @@ app.get('/getCloset', (req, res) => {
                 console.log(err);
                 res.send({ err: err });
             }
+            console.log("보내는 데이터는");
+            console.log(result);
+            console.log("입니다.")
 
             res.send(result)
+
 
             // const imageURL = result[0].BASE_FILE;
             // const nickname = result[0].NICK;

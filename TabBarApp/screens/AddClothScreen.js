@@ -11,6 +11,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IIcon from 'react-native-vector-icons/Ionicons';
 import { icons } from '../components';
+import {BASE_URL} from '../components';
 
 const AddClothScreen = ({ navigation }) => {
     const [images, setImages] = React.useState([]);
@@ -23,7 +24,7 @@ const AddClothScreen = ({ navigation }) => {
 
             const base64Image = response.base64;
 
-            Axios.post("http://10.0.2.2:3333/uploadImage", {
+            Axios.post(BASE_URL+"/uploadImage", {
                 base64Image: base64Image
             }).then((response) => {
                 console.log(response);

@@ -50,9 +50,11 @@ const actions = [{
 const Closet = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [closetData, setClosetData] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const getClosetData = () => {
+    // setTimeout(()=>{setClosetData([]);}, 500);
+    // setClosetData([]);
     Axios.post(BASE_URL+"/getCloset", {
         email: email,
       }).then((response) => {
@@ -60,41 +62,41 @@ const Closet = ({ navigation }) => {
       console.log("arr는")
       console.log(arr);
 
+      setClosetData(arr);
 
-      arr.forEach(item => {
-        setClosetData([
-          ...closetData,
-          {
-            id: item.file,
-            url: item.file,
-            title: item.clothName,
-          }
-        ]);
-        console.log("아이템 렌더링 하였습니다.")
-      });
+      // arr.forEach(item => {
+      //   setClosetData([
+      //     ...closetData,
+      //     {
+      //       id: item.file_name,
+      //       url: item.file,
+      //       title: item.clothName,
+      //     }
+      //   ]);
+      //   console.log("아이템 렌더링 하였습니다.")
+      // });
     }).catch((error) => {
       console.log("에러:", error);
       throw error;
     });
   }
 
-  React.useEffect(() => {
+  useFocusEffect(React.useCallback(() => {
     const temp = async () => {
       await AsyncStorage.getItem('userToken', async (err, result) => {
         setEmail(result);
       });
-      getClosetData();
+      // setTimeout(getClosetData, 500);
+      // getClosetData();
     }
     temp();
-
-  }, [])
-
+  }));
 
   const renderItem = ({ item }) => (
       <View>
         <TouchableOpacity>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Image source={{uri: item.url}} style={[styles.storyimage]} />
+          <Image source={{uri: item.file}} style={[styles.storyimage]} />
         </View>
         </TouchableOpacity>   
       </View>
@@ -132,7 +134,18 @@ const Closet = ({ navigation }) => {
     return (
       //header Tab
       <View style={{paddingLeft:16, paddingRight:16, backgroundColor: '#FCFCFC'}}>
-        <ScrollView>
+        <ScrollView 
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoading}
+              onRefresh={async () => {
+                setClosetData([]);
+                setIsLoading(true);
+                await getClosetData();
+                setIsLoading(false);
+              }}
+            />
+          }>
           <View style={{flexDirection:'row',alignItems: 'center',paddingTop:15}}>
             <TouchableOpacity onPress={()=>{ navigation.navigate("MyProfile")}}>
             <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} 
@@ -153,10 +166,7 @@ const Closet = ({ navigation }) => {
               showsHorizontalScrollIndicator={false} 
               data={closetData} 
               renderItem={renderItem} 
-              keyExtractor={(item) => {
-                // console.log("아이템은 ");
-                // console.log(item);
-                String(item.id)}} 
+              keyExtractor={(item) => item.id.toString()}
             />
           </View>
 
@@ -174,8 +184,7 @@ const Closet = ({ navigation }) => {
               showsHorizontalScrollIndicator={false} 
               data={closetData}
               renderItem={renderItem}
-              keyExtractor={(item) => {String(item.id)}}
-              // numColumns={3}   horizontal 없을 때 쓰자!! ex) 피드
+              keyExtractor={(item) => item.id.toString()}
             />
           </View>
 

@@ -9,6 +9,8 @@ const mime = require('mime');
 const ip = require("ip");
 const BASE_URL = "http://192.249.18.100:80";
 
+// app.use(express.static('images'));
+app.use('/images', express.static(__dirname + '/images'));
 app.use(express.json({ limit : "50mb" }));
 
 app.use(cors());
@@ -147,12 +149,13 @@ app.post('/uploadCloth', (req, res) => {
     let type = decodedImg.type;
     let extension = mime.getExtension(type);
     let fileName = Date.now() + "." + extension;
+    let date = Date.now();
     try {
         console.log(__dirname);
         fs.writeFileSync("./images/" + fileName, imageBuffer, 'utf8');
         db.query(
-            "INSERT INTO files (email, file, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category) VALUES (?,?,?,?,?,?,?,?,?,?,?)", 
-            [email, BASE_URL+"/home/teamleader/server/images/" + fileName, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category], 
+            "INSERT INTO files (email, file, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category, file_name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", 
+            [email, BASE_URL+"/images/" + fileName, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category, date], 
             (err, result) => {
                 console.log(err)
                 if(err) {
@@ -208,3 +211,4 @@ app.get('/feed', (req, res) => {
         res.send({base64Iamge: base64Iamge, nickname: nickname, text: text});
     })    
 })
+

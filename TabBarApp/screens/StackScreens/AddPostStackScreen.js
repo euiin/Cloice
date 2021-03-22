@@ -12,6 +12,8 @@ import { icons } from '../../components';
 
 import AddPostScreen from '../AddPostScreen';
 import AddClothScreen from '../AddClothScreen';
+import GalleryPost from '../AddPostScreens/GalleryPost';
+import GalleryPost2 from '../AddPostScreens/GalleryPost2';
 
 const AddPostStack = createStackNavigator();
 
@@ -33,6 +35,10 @@ const AddPostStackScreen = ({navigation}) => {
       <AddPostStack.Screen name = "AddPostScreen" component = {AddPostScreen} options={{
         title: '게시물 추가',
         headerTitleAlign: 'center'}}/>
+      <AddPostStack.Screen name="GalleryPost" component = {GalleryPost} options={{
+        title: '게시물 추가',
+        headerTitleAlign: 'center'}}/>
+      <AddPostStack.Screen name="GalleryPost2" component = {GalleryPost2}/>
     </AddPostStack.Navigator>
   );
 };

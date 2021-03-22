@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { Text, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
 
 import SangeuiPost from './AddPostScreens/SangeuiPost';
 import HaeuiPost from './AddPostScreens/HaeuiPost';
+import {AddPostContext} from './AddPostScreens/AddPostContext';
+
+import AntIcon from 'react-native-vector-icons/AntDesign';
 
 const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
@@ -20,59 +22,65 @@ const tabs = [
 ];
 
 
-export default function AddPostScreen() {
-const [pageNo, setPageNo] = React.useState(1);
+export default function AddPostScreen({navigation}) {
 
-// const [imageCount, setImageCount] = React.useState(0);
+  const [pageNo, setPageNo] = React.useState(1);
+  
+  const [selImgData,setSelImgData] = React.useState([]);
 
-// const [postImg, setPostImg] = React.useState({
-//   img1: '',
-//   img2: '',
-//   img3: '',
-//   img4: '',
-// })
-
-// const authContext = React.useMemo(() => ({
-//   imageHandler: (imageSrc) => {
-//     setPostImg({
-//       ...postImg,
-//       img1: imageSrc
-//     })
-//   },
-// }), [])
-
-const renderSwitch=(pageNo)=> {
-  switch(pageNo) {
-    case 1:
-      return <SangeuiPost/>;
-    case 2:
-      return <HaeuiPost/>;
-    case 3:
-      return <SangeuiPost/>;
-    case 4:
-      return <HaeuiPost/>;
-    case 5:
-      return <HaeuiPost/>;
-    case 6:
-      return <HaeuiPost/>;
-    default:
-      return <SangeuiPost/>;
+  const ImgData = {
+    selImgData: selImgData,
+    setSelImgData: setSelImgData
   }
-};
+
+  const renderSwitch=(pageNo)=> {
+    switch(pageNo) {
+      case 1:
+        return (
+          <AddPostContext.Provider value = {ImgData}>
+            <SangeuiPost/>
+          </AddPostContext.Provider>
+          );
+      case 2:
+        return (
+          <AddPostContext.Provider value = {ImgData}>
+            <HaeuiPost/>
+          </AddPostContext.Provider>
+          );
+      case 3:
+        return <SangeuiPost/>;
+      case 4:
+        return <HaeuiPost/>;
+      case 5:
+        return <HaeuiPost/>;
+      case 6:
+        return <HaeuiPost/>;
+      default:
+        return <SangeuiPost/>;
+    }
+  };
 
 
   return (
     <View style={{paddingHorizontal:16, backgroundColor: '#Fcfcfc'}}>
-      <View style={{alignItems: "center",borderColor:'#dfdfdf', borderBottomWidth:1,paddingVertical:10}}>
-          <Text style={{fontSize:14, color:'#707070'}}>룩북 만들기</Text>
+      <View style={{flexDirection: 'row' ,justifyContent:'space-between',borderColor:'#dfdfdf', borderBottomWidth:1,paddingVertical:10}}>
+          <View style={{ width:24, height: 24}}></View>
+          <Text style={{justifyContent:'center' ,fontSize:14, color:'#707070'}}>룩북 만들기</Text>
+          <TouchableOpacity onPress={()=> navigation.navigate("GalleryPost")}>
+            <AntIcon name="doubleright" style={{alignSelf:'flex-end'}} size={24} color={'#99D1E9'} />
+          </TouchableOpacity>
       </View>
       <View style={{ width:'100%', height: width-55,backgroundColor: 'black',}}>
-      <DragResizeBlock>
-        <View style={{width: '100%', height: '100%', backgroundColor: 'red',}}/>
-      </DragResizeBlock> 
-      <DragResizeBlock>
-        <View style={{width: '100%', height: '100%', backgroundColor: 'blue',}}/>
-      </DragResizeBlock> 
+        
+        {selImgData.map((selImgData, index) => {
+          return(
+            <DragResizeBlock //isDisabled={true} //onPress ={ () => {setSelImgData([...selImgData.slice(0, index), ...selImgData.slice(index + 1) ]) }}>
+             >
+              <Image source={selImgData.src} key={index} style={{width: '100%', height: '100%'}}/>
+            </DragResizeBlock> 
+          )
+        })}
+        
       </View>
       <View>
       <ScrollView horizontal style={{borderColor:'#dfdfdf', borderTopWidth:1,borderBottomWidth:1}}>
@@ -99,7 +107,25 @@ const renderSwitch=(pageNo)=> {
   );    
 }
 
+// const [imageCount, setImageCount] = React.useState(0);
 
+// const [postImg, setPostImg] = React.useState({
+//   img1: '',
+//   img2: '',
+//   img3: '',
+//   img4: '',
+// })
+
+// const authContext = React.useMemo(() => ({
+//   imageHandler: (imageSrc) => {
+//     setPostImg({
+//       ...postImg,
+//       img1: imageSrc
+//     })
+//   },
+// }), [])
+{/* <SangeuiPost selImgData={selImgData}/> */}
+//--------------------------------------------
 // hoho{
 //   switch({tabs.pageNo}) {
 //   case 1:

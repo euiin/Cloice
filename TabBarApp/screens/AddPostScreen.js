@@ -7,7 +7,7 @@ import SangeuiPost from './AddPostScreens/SangeuiPost';
 import HaeuiPost from './AddPostScreens/HaeuiPost';
 import {AddPostContext} from './AddPostScreens/AddPostContext';
 
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
@@ -20,15 +20,10 @@ const tabs = [
   { tabLabel: '모자',tabNo:5,},
   { tabLabel: '액세서리',tabNo:6,},
 ];
-
-const AddPostContext = createContext();
-
 export default function AddPostScreen({navigation}) {
 
   const [pageNo, setPageNo] = React.useState(1);
-  
   const [selImgData,setSelImgData] = React.useState([]);
-
   const ImgData = {
     selImgData: selImgData,
     setSelImgData: setSelImgData
@@ -64,15 +59,18 @@ export default function AddPostScreen({navigation}) {
 
   return (
     <View style={{paddingHorizontal:16, backgroundColor: '#Fcfcfc'}}>
-      <View style={{flexDirection: 'row' ,justifyContent:'space-between',borderColor:'#dfdfdf', borderBottomWidth:1,paddingVertical:10}}>
-          <View style={{ width:24, height: 24}}></View>
-          <Text style={{justifyContent:'center' ,fontSize:14, color:'#707070'}}>룩북 만들기</Text>
-          <TouchableOpacity onPress={()=> navigation.navigate("GalleryPost")}>
-            <AntIcon name="doubleright" style={{alignSelf:'flex-end'}} size={24} color={'#99D1E9'} />
-          </TouchableOpacity>
+      <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between',borderColor:'#dfdfdf', borderBottomWidth:1,paddingVertical:4}}>
+          <View style={{ width:35, height: 24,alignSelf:'flex-start'}}></View>
+          <Text style={{justifyContent:'center', fontSize:14, color:'#707070'}}>룩북 만들기</Text>
+          <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} //backgroundColor={'#fcfcfc'}
+          style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
+          onPress={()=> navigation.navigate("GalleryPostAdd1", {
+            selImgDataArr: selImgData
+          })}>
+          </MIcon.Button>
       </View>
+
       <View style={{ width:'100%', height: width-55,backgroundColor: 'black',}}>
-        
         {selImgData.map((selImgData, index) => {
           return(
             <DragResizeBlock //isDisabled={true} //onPress ={ () => {setSelImgData([...selImgData.slice(0, index), ...selImgData.slice(index + 1) ]) }}>
@@ -81,90 +79,29 @@ export default function AddPostScreen({navigation}) {
             </DragResizeBlock> 
           )
         })}
-        
+      </View>
+
+      <View>
+        <ScrollView horizontal style={{borderColor:'#dfdfdf', borderTopWidth:1,borderBottomWidth:1}}>
+        {tabs.map((tabs, index) => {
+          return(
+            <TouchableHighlight
+              activeOpacity={1}
+              underlayColor="#DDDDDD"
+              selectedBackgroundColor="pink"
+              style={{paddingHorizontal:20,paddingVertical:5,marginHorizontal:8,marginVertical:12,borderRadius: 5,
+                backgroundColor: '#ffffff',elevation: 5,shadowOffset: {width: 2, height: 4},}}
+              onPress={()=>{setPageNo(tabs.tabNo)}
+              }>
+              <Text style={{fontSize:14}} key={index}>{tabs.tabLabel}</Text>
+            </TouchableHighlight>
+          )
+        })}
+        </ScrollView>
       </View>
       <View>
-      <ScrollView horizontal style={{borderColor:'#dfdfdf', borderTopWidth:1,borderBottomWidth:1}}>
-      {tabs.map((tabs, index) => {
-        return(
-          <TouchableHighlight
-            activeOpacity={1}
-            underlayColor="#DDDDDD"
-            selectedBackgroundColor="pink"
-            style={{paddingHorizontal:20,paddingVertical:5,marginHorizontal:8,marginVertical:12,borderRadius: 5,
-              backgroundColor: '#ffffff',elevation: 5,shadowOffset: {width: 2, height: 4},}}
-            onPress={()=>{setPageNo(tabs.tabNo)}
-            }>
-            <Text style={{fontSize:14}} key={index}>{tabs.tabLabel}</Text>
-          </TouchableHighlight>
-        )
-      })}
-      </ScrollView>
-      </View>
-      <View >
       {renderSwitch(pageNo)}
       </View>
     </View>
   );    
 }
-
-// const [imageCount, setImageCount] = React.useState(0);
-
-// const [postImg, setPostImg] = React.useState({
-//   img1: '',
-//   img2: '',
-//   img3: '',
-//   img4: '',
-// })
-
-// const authContext = React.useMemo(() => ({
-//   imageHandler: (imageSrc) => {
-//     setPostImg({
-//       ...postImg,
-//       img1: imageSrc
-//     })
-//   },
-// }), [])
-{/* <SangeuiPost selImgData={selImgData}/> */}
-//--------------------------------------------
-// hoho{
-//   switch({tabs.pageNo}) {
-//   case 1:
-//     <FlatList style={{flexDirection : "column"}}
-//     data={SangeuiFeedData} 
-//     renderItem={renderItem} 
-//     keyExtractor={item => item.id} 
-//     numColumns={3}           
-//   />
-//     break;
-//   case 2:
-//     break;
-//   case 3:
-//     break;
-//   default:
-//   }}; 
-
-// const renderItem = ({ item,index }) => (
-//   <View>
-//     <TouchableOpacity>
-//     <View style={{ justifyContent: "center", alignItems: "center" }}>
-//       <Image source={item.src} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
-//     </View>
-//     </TouchableOpacity>   
-//   </View>
-// );
-
-
-// const renderTabBar = props => (
-//   <ScrollView horizontal={true} >
-//   {tabs.map((tabs) => {
-//     return(
-//       <Pressable
-//         onPress={()=>{}
-//         }>
-//         <Text>{tabs.tabNo}</Text>
-//       </Pressable>
-//     )
-//   })}
-//   </ScrollView>
-// );

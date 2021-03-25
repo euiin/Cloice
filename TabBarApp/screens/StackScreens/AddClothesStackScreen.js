@@ -15,10 +15,9 @@ const AddClothesStack = createStackNavigator();
 
 const AddClothesStackScreen = ({route, navigation}) => {
   const { image } = route.params;
-  
+  // React.useEffect(() => {
+  //   navigation.setOptions({tabBarVisible: false })})
 
-  React.useEffect(() => {
-    navigation.setOptions({tabBarVisible: false })})
   
     return (
       <AddClothesStack.Navigator screenOptions={{ //모든 화면에 색깔 적용

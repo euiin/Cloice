@@ -4,7 +4,7 @@ import { Header, Content, Card, CardItem, Thumbnail, Body, Left, Right, Button, 
 
 const Feeds = ({ item }) => {
     return(
-        <>
+      <>
         <Content>
             <Card>
                 <CardItem style= {{alignItems: 'center'}}>
@@ -19,7 +19,7 @@ const Feeds = ({ item }) => {
                 </CardItem>
             </Card>
         </Content>
-        </>
+      </>
     );
 }
 
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
       fontFamily: 'NanumSquareR',
       fontSize: 10
     }
-    
   });
 
 export default Feeds;

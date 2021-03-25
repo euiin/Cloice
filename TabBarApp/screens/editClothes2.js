@@ -394,8 +394,8 @@ const editClothes2 = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        
-        <View style={{
+      </View>
+      <View style={{
           width: '100%',
           alignItems: 'center',
           position: 'absolute',  //버튼 위치는 아래에고정
@@ -409,8 +409,6 @@ const editClothes2 = ({ route, navigation }) => {
             <Text style={styles.NextButtonText}>다음</Text>
           </TouchableOpacity>
         </View>
-
-      </View>
       </>
     )
 }

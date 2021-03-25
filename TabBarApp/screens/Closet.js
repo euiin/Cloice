@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from 'axios';
 import { useFocusEffect } from '@react-navigation/native';
 import { BASE_URL } from '../components';
+
 const actions = [{
   text: '갤러리에서 추가',
   icon: <AntDesign
@@ -51,31 +52,23 @@ const Closet = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [closetData, setClosetData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [numberOfClothes, setNumberOfClothes] = React.useState({
+    top: 0,
+    bottom: 0,
+    outer: 0,
+    shoes: 0,
+    hat: 0,
+    acc: 0,
+  });
 
   const getClosetData = () => {
-    // setTimeout(()=>{setClosetData([]);}, 500);
-    // setClosetData([]);
-    Axios.post(BASE_URL+"/getCloset", {
+    Axios.post(BASE_URL + "/getCloset", {
         email: email,
       }).then((response) => {
       var arr = response.data;
-      console.log("arr는")
-      console.log(arr);
-
       setClosetData(arr);
-
-      // arr.forEach(item => {
-      //   setClosetData([
-      //     ...closetData,
-      //     {
-      //       id: item.file_name,
-      //       url: item.file,
-      //       title: item.clothName,
-      //     }
-      //   ]);
-      //   console.log("아이템 렌더링 하였습니다.")
-      // });
-    }).catch((error) => {
+      // setNumbers(arr)
+    }).catch((error) => {;
       console.log("에러:", error);
       throw error;
     });
@@ -86,21 +79,94 @@ const Closet = ({ navigation }) => {
       await AsyncStorage.getItem('userToken', async (err, result) => {
         setEmail(result);
       });
-      // setTimeout(getClosetData, 500);
-      // getClosetData();
+      getClosetData();
     }
     temp();
   }));
 
-  const renderItem = ({ item }) => (
+  const renderItemTop = ({ item }) => {
+    if(item.category == "top") {
+      return (
       <View>
         <TouchableOpacity>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Image source={{uri: item.file}} style={[styles.storyimage]} />
         </View>
-        </TouchableOpacity>   
+        </TouchableOpacity>
       </View>
-    );
+      );
+    }
+  };
+
+  const renderItemBottom = ({ item }) => {
+    if(item.category == "bottom") {
+      return (
+        <View>
+          <TouchableOpacity>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Image source={{uri: item.file}} style={[styles.storyimage]} />
+          </View>
+          </TouchableOpacity>   
+        </View>
+      );
+    }
+  };
+
+  const renderItemOuter = ({ item }) => {
+    if(item.category == "outer") {
+      return (
+        <View>
+          <TouchableOpacity>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Image source={{uri: item.file}} style={[styles.storyimage]} />
+          </View>
+          </TouchableOpacity>   
+        </View>
+      );
+    }
+  };
+
+  const renderItemShoes = ({ item }) => {
+    if(item.category == "shoes") {
+      return (
+        <View>
+          <TouchableOpacity>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Image source={{uri: item.file}} style={[styles.storyimage]} />
+          </View>
+          </TouchableOpacity>   
+        </View>
+        );
+    }
+  };
+
+  const renderItemHat = ({ item }) => {
+    if(item.category == "hat") {
+      return (
+        <View>
+          <TouchableOpacity>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Image source={{uri: item.file}} style={[styles.storyimage]} />
+          </View>
+          </TouchableOpacity>   
+        </View>
+        );
+    }
+  };
+
+  const renderItemAcc = ({ item }) => {
+    if(item.category == "acc") {
+      return (
+        <View>
+          <TouchableOpacity>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Image source={{uri: item.file}} style={[styles.storyimage]} />
+          </View>
+          </TouchableOpacity>   
+        </View>
+        );
+    }
+  };
 
     const handleGallery = () => {
       ImagePicker.openPicker({
@@ -139,7 +205,6 @@ const Closet = ({ navigation }) => {
             <RefreshControl
               refreshing={isLoading}
               onRefresh={async () => {
-                setClosetData([]);
                 setIsLoading(true);
                 await getClosetData();
                 setIsLoading(false);
@@ -148,32 +213,36 @@ const Closet = ({ navigation }) => {
           }>
           <View style={{flexDirection:'row',alignItems: 'center',paddingTop:15}}>
             <TouchableOpacity onPress={()=>{ navigation.navigate("MyProfile")}}>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} 
-            style={{width:80,height:80, borderRadius:52, marginRight:10}}/>
-            </TouchableOpacity> 
+            <Image source={require('../login/profileImage/ProfileImage.jpg')} 
+            style={{width:100,height:100, borderRadius:60, marginRight:10}}/>
+            </TouchableOpacity>
             <Text style={{fontSize:20}}>민희님의 옷장</Text>
-          </View>      
+          </View>
           <View style={[styles.closets]}>
             <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
-              onPress={() => navigation.navigate("SangeuiFeed")}>
-              <Text style={{fontSize:20}}>상의 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
+              onPress={() => navigation.navigate("SangeuiFeed", {
+                closetData: closetData
+              })}>
+              <Text style={{fontSize:20}}>상의 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.top} </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />
             </TouchableOpacity>
             <FlatList
-              horizontal={true} 
-              showsHorizontalScrollIndicator={false} 
-              data={closetData} 
-              renderItem={renderItem} 
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              data={closetData}
+              renderItem={renderItemTop}
               keyExtractor={(item) => item.id.toString()}
             />
           </View>
 
           <View style={[styles.closets]}>
             <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
-              onPress={() => {}}>
-              <Text style={{fontSize:20}}>하의 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
+              onPress={() => navigation.navigate("HaeuiFeed", {
+                closetData: closetData
+              })}>
+              <Text style={{fontSize:20}}>하의 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.bottom} </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />
@@ -183,67 +252,89 @@ const Closet = ({ navigation }) => {
               horizontal={true} 
               showsHorizontalScrollIndicator={false} 
               data={closetData}
-              renderItem={renderItem}
+              renderItem={renderItemBottom}
               keyExtractor={(item) => item.id.toString()}
             />
           </View>
 
           <View style={[styles.closets]}>
-          <Text style={{fontSize:20}}>아우터 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
-            <ScrollView horizontal={true}>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            </ScrollView>
+            <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
+              onPress={() => navigation.navigate("OuterFeed", {
+                closetData: closetData
+              })}>
+              <Text style={{fontSize:20}}>아우터 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.outer} </Text> </Text>
+              <EIcon name='plus' 
+              style={{padding:10, fontSize: 28 }}
+              />
+
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true} 
+              showsHorizontalScrollIndicator={false} 
+              data={closetData}
+              renderItem={renderItemOuter}
+              keyExtractor={(item) => item.id.toString()}
+            />
           </View>
+
           <View style={[styles.closets]}>
-          <Text style={{fontSize:20}}>신발 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
-            <ScrollView horizontal={true}>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            </ScrollView>
+            <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
+              onPress={() => navigation.navigate("ShoesFeed", {
+                closetData: closetData
+              })}>
+              <Text style={{fontSize:20}}>신발 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.shoes} </Text> </Text>
+              <EIcon name='plus' 
+              style={{padding:10, fontSize: 28 }}
+              />
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true} 
+              showsHorizontalScrollIndicator={false} 
+              data={closetData}
+              renderItem={renderItemShoes}
+              keyExtractor={(item) => item.id.toString()}
+            />
           </View>
+
           <View style={[styles.closets]}>
-          <Text style={{fontSize:20}}>모자 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text>
-            <ScrollView horizontal={true}>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            </ScrollView>
+            <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
+              onPress={() => navigation.navigate("HatFeed", {
+                closetData: closetData
+              })}>
+              <Text style={{fontSize:20}}>모자 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.hat} </Text> </Text>
+              <EIcon name='plus' 
+              style={{padding:10, fontSize: 28 }}
+              />
+
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true} 
+              showsHorizontalScrollIndicator={false} 
+              data={closetData}
+              renderItem={renderItemHat}
+              keyExtractor={(item) => item.id.toString()}
+            />
           </View>
-          <View style={[styles.closets],{ paddingBottom:24}}>
-          <Text style={{fontSize:20}}>액세서리 <Text style={{fontSize:14, color:'#707070'}}>10 </Text> </Text> 
-            <ScrollView horizontal={true}>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            <Image source={require('../android/app/src/assets/fonts/김민희.jpg')} style={[styles.storyimage]}/>
-            </ScrollView>
-          </View>      
+
+          <View style={[styles.closets]}>
+            <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 
+              onPress={() => navigation.navigate("AccFeed", {
+                closetData: closetData
+              })}>
+              <Text style={{fontSize:20}}>액세서리 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.acc} </Text> </Text>
+              <EIcon name='plus' 
+              style={{padding:10, fontSize: 28 }}
+              />
+
+            </TouchableOpacity>
+            <FlatList
+              horizontal={true} 
+              showsHorizontalScrollIndicator={false} 
+              data={closetData}
+              renderItem={renderItemAcc}
+              keyExtractor={(item) => item.id.toString()}
+            />
+          </View>
         </ScrollView>
 
         <FloatingAction
@@ -303,6 +394,4 @@ const styles = StyleSheet.create({
       right: 16,
       bottom: 16, //하단탭 기준 16 offset 자동으로 됨.
     },
-    
-
   });

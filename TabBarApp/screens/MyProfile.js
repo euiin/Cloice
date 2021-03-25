@@ -7,6 +7,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MyProfileStory from './MyProfileScreens/MyProfileStory'
 import BmrkFeedData from './MyProfileScreens/BmrkFeedData'
 import CodiFeedData from './MyProfileScreens/CodiFeedData'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Axios from 'axios'
+import { BASE_URL } from '../components'
 
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
@@ -52,7 +55,40 @@ const SecondRoute = () => {
 }
 
 
-export default function MyProfile({navigation}) {
+export default function MyProfile({ navigation }) {
+    const [myProfileStoryData, setMyProfileStoryData] = React.useState([]);
+    var email = '';
+    var introduce = '';
+
+    const renderItemStory = ({ item }) => (
+        <View>
+            <TouchableOpacity onPress={() => {}}>
+                <View style={{ justifyContent: "center", alignItems: "center" }}>
+                    <Image source={{uri: item.file}} style={[styles.storyimage]} />
+                </View>
+            </TouchableOpacity>   
+        </View>
+        );
+
+    React.useEffect(() => {
+        const temp = async () => {
+          await AsyncStorage.getItem('userToken', (err, result) => {  
+            email = result;
+          });
+
+          await Axios.post(BASE_URL + "/getCloset", {
+            email: email,
+          }).then((response) => {
+            var arr = response.data;
+            arr.reverse();
+            setMyProfileStoryData(arr);
+          }).catch((error) => {;
+            console.log("에러:", error);
+            throw error;
+          });
+        }
+        temp();
+      }, [navigation])
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
@@ -83,7 +119,6 @@ export default function MyProfile({navigation}) {
   
     return (
         <Container>
-
             <Content style= {{ backgroundColor: '#FCFCFC'}}>
             <View style={{ padding:16}}>
                 <ScrollView>
@@ -98,23 +133,23 @@ export default function MyProfile({navigation}) {
                         />
                     </View>
                     <View style={{flex:3,padding:10,flexDirection:'column', alignItems:'center'}}>
-                        <Image source={require('../android/app/src/assets/fonts/김민희.jpg')}
+                        <Image source={require('../login/profileImage/ProfileImage.jpg')}
                         style={{width:100, height:100, borderRadius:50}}/>
                         <Text style={{fontSize:17, fontWeight:'bold',paddingTop:7}}>민희</Text>
-                        <Text style={{padding:5}}>다이어트 중입니다 </Text>
+                        <Text style={{padding:5}}>한줄소개 </Text>
                         <View style={{flexDirection:'row'}}>
                             <View style={{flex:1}}>
                                 <View style={{flexDirection:'row', justifyContent:'space-around'}}>
                                     <View style={{alignItems:'center'}}>
-                                        <Text style={{fontSize:17, fontWeight:'bold'}}>112</Text>
+                                        <Text style={{fontSize:17, fontWeight:'bold'}}>0</Text>
                                         <Text style={{fontSize:12, color:'gray'}}>게시물</Text>
                                     </View>
                                     <View style={{alignItems:'center'}}>
-                                        <Text style={{fontSize:17, fontWeight:'bold'}}>711</Text>
+                                        <Text style={{fontSize:17, fontWeight:'bold'}}>0</Text>
                                         <Text style={{fontSize:12, color:'gray'}}>팔로워</Text>
                                     </View>
                                     <View style={{alignItems:'center'}}>
-                                        <Text style={{fontSize:17, fontWeight:'bold'}}>131</Text>
+                                        <Text style={{fontSize:17, fontWeight:'bold'}}>0</Text>
                                         <Text style={{fontSize:12, color:'gray'}}>팔로잉</Text>
                                     </View>
                                 </View>
@@ -131,7 +166,17 @@ export default function MyProfile({navigation}) {
                         />
                     </View>
                 </View>
-                <MyProfileStory navigation = {navigation}/>
+                <View style={{padding:6, borderColor:'#dfdfdf', borderTopWidth:1,borderBottomWidth:1}}>
+                    <Text style={{fontSize:11}}>옷장</Text> 
+                    <FlatList
+                    horizontal={true} 
+                    showsHorizontalScrollIndicator={false} 
+                    data={myProfileStoryData} 
+                    renderItem={renderItemStory} 
+                    keyExtractor={item => String(item.id)}
+                    />
+                </View>
+                {/* <MyProfileStory navigation = {navigation} email= {email}/> */}
                 <TabView //원래 View로 감싸고 있었다. 
                     renderTabBar={renderTabBar}
                     navigationState={{ index, routes }}
@@ -149,16 +194,20 @@ export default function MyProfile({navigation}) {
 
 
 const styles = StyleSheet.create({
-container: {
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center',
+    container: {
+        flex: 1, 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        },
+    scene: { // 코디, 북마크 안에 스타일
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap' // 사진을 row로 넣었을때 화면 밖을 나가지 않도록 해준다.
     },
-scene: { // 코디, 북마크 안에 스타일
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap' // 사진을 row로 넣었을때 화면 밖을 나가지 않도록 해준다.
-  },
+  storyimage: {
+    width:60, 
+    height:60, 
+    borderRadius:52, 
+    marginHorizontal:7
+},
 });
-
- 

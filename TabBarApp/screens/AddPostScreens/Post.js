@@ -3,11 +3,14 @@ import { Text,StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, P
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
 
 
+const Post = ({navigation, route}) => {
+  const {inputText} = route.params
 
 const Post = ({navigation, route}) => {
   const { inputText } = route.params
@@ -15,8 +18,12 @@ const Post = ({navigation, route}) => {
   
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text>hello</Text>
+      <View style={{flexDirection:'row',alignItems: 'center', marginVertical: 10,}}>
+        <TouchableOpacity onPress={()=>{ navigation.navigate("MyProfile")}}>
+        <Image source={require('../../login/profileImage/ProfileImage.jpg')} 
+        style={{width:52,height:52, borderRadius:26, marginRight:10, borderColor:'#dfdfdf', borderWidth: 1}}/>
+        </TouchableOpacity>
+        <Text style={styles.text1}>민희님의 코디</Text>
       </View>
       <View style={styles.box}>
         <Text style={{fontSize:14, color:'#707070'}}>착용샷</Text>
@@ -47,11 +54,15 @@ const Post = ({navigation, route}) => {
 
         </View>
       </ScrollView>
-      <View>
-        <Text>좋아요?</Text>
+      <View style= {styles.likebox}>
+        <AntDesign 
+          name="heart"
+          color="red"
+          size={18}
+        />
       </View>
-      <View style = {{marginVertical: 10}}>
-        <Text style ={styles.maintext}>여기 글쓰기</Text>
+      <View style = {{marginVertical: 5}}>
+        <Text style ={styles.maintext}>{inputText}</Text>
       </View>
     </View>
   );    
@@ -103,6 +114,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  likebox: {
+    marginVertical: 10,
+    width: '100%',
+    // backgroundColor: 'yellow'
+  },
   subtitle: {
     fontFamily: 'NanumSquareR',
     fontSize: 14,
@@ -110,6 +126,10 @@ const styles = StyleSheet.create({
   },
   maintext: {
     fontFamily: 'NanumSquareR',
-    fontSize: 10,
+    fontSize: 12,
+  },
+  text1: {
+    fontFamily: 'NanumSquareR',
+    fontSize: 14,
   },
 })

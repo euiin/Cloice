@@ -7,7 +7,8 @@ import {
 import { createStackNavigator } from '@react-navigation/stack';
 
 import AIcon from 'react-native-vector-icons/AntDesign';
-import { icons } from '../../components';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IIcon from 'react-native-vector-icons/Ionicons';
 
 import AddPostScreen from '../AddPostScreen';
 import AddClothScreen from '../AddClothScreen';
@@ -53,13 +54,23 @@ const AddPostStackScreen = ({navigation}) => {
         )
         }} />
       <AddPostStack.Screen name="Post" component = {Post} options={{ //Post는 AddPostStack보다는 MyProfile에 있어야 할듯. 왜냐? 메뉴 버튼& 드로어 해야하거든
-          title: 'Cloice',
-          headerTitleAlign: 'center', 
-          headerTitleStyle: {
-            fontFamily: 'DancingScript',
-            fontSize: 30
-          }
-        }}/>
+        title: 'Cloice',
+        headerTitleAlign: 'center', 
+        headerTitleStyle: {
+          fontFamily: 'DancingScript',
+          fontSize: 30
+        },
+        headerRight: () => (
+          <Icon.Button name="menu" color='#000000' size={25} 
+          backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+          </Icon.Button>
+        ),
+        headerLeft: () => (
+          <IIcon.Button name="search" color='#000000' size={25} 
+          backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+          </IIcon.Button>
+        )
+      }}/>
     </AddPostStack.Navigator>
   );
 };

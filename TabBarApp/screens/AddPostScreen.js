@@ -1,7 +1,9 @@
-import React, { createContext } from 'react';
+import React, { createContext, useRef } from 'react';
 import { Text, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
+import ViewShot from "react-native-view-shot";
+
 
 import SangeuiPost from './AddPostScreens/SangeuiPost';
 import HaeuiPost from './AddPostScreens/HaeuiPost';
@@ -21,6 +23,7 @@ const tabs = [
   { tabLabel: '액세서리',tabNo:6,},
 ];
 export default function AddPostScreen({navigation}) {
+  //const captureRef = useRef();
 
   const [pageNo, setPageNo] = React.useState(1);
   const [selImgData,setSelImgData] = React.useState([]);
@@ -65,8 +68,8 @@ export default function AddPostScreen({navigation}) {
           <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} //backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
           onPress={()=> navigation.navigate("GalleryPostAdd1", {
-            selImgDataArr: selImgData
-          })}>
+            selImgDataArr: selImgData}
+          )}>
           </MIcon.Button>
       </View>
 
@@ -80,6 +83,7 @@ export default function AddPostScreen({navigation}) {
           )
         })}
       </View>
+
 
       <View>
         <ScrollView horizontal style={{borderColor:'#dfdfdf', borderTopWidth:1,borderBottomWidth:1}}>

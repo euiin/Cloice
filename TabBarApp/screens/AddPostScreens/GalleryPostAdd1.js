@@ -31,7 +31,6 @@ export default function GalleryPostAdd1({navigation, route}) {
   
   const { selImgDataArr } = route.params
   const [selImgData, setSelImgData] = React.useState(selImgDataArr);
-
   const ImgData = {
     selImgData: selImgData,
     setSelImgData: setSelImgData
@@ -44,7 +43,7 @@ export default function GalleryPostAdd1({navigation, route}) {
       includeBase64: true,
     }).then(image => {
       // console.log(image);
-      navigation.navigate("GalleryPost1", {image: image}
+      navigation.navigate("GalleryPost1", {image: image, selImgDataArr: selImgDataArr}
       );
     });
   }
@@ -87,7 +86,8 @@ export default function GalleryPostAdd1({navigation, route}) {
         <Text style={{fontSize:14, color:'#707070'}}>착용샷</Text>
         <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} //backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostEdit")}>
+          onPress={()=> navigation.navigate("AddPostEdit"
+          )}>
         </MIcon.Button> 
       </View>
 

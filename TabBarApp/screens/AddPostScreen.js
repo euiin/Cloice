@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { Text, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
+import { Text, StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
 
@@ -58,19 +58,23 @@ export default function AddPostScreen({navigation}) {
 
 
   return (
-    <View style={{paddingHorizontal:16, backgroundColor: '#Fcfcfc'}}>
+    <View style={{paddingHorizontal:16, backgroundColor: '#fcfcfc'}}>
       <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between',borderColor:'#dfdfdf', borderBottomWidth:1,paddingVertical:4}}>
-          <View style={{ width:35, height: 24,alignSelf:'flex-start'}}></View>
-          <Text style={{justifyContent:'center', fontSize:14, color:'#707070'}}>룩북 만들기</Text>
-          <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} //backgroundColor={'#fcfcfc'}
+          <MIcon.Button name="arrow-back-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
+          style={{alignSelf:'flex-start',marginVertical:-3, marginRight:-13 }}
+          onPress={()=> navigation.navigate("Home")}>
+          </MIcon.Button>
+          <Text style={styles.subtitle}>룩북 만들기</Text>
+          <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
           onPress={()=> navigation.navigate("GalleryPostAdd1", {
-            selImgDataArr: selImgData
+            selImgDataArr: selImgData,
+
           })}>
           </MIcon.Button>
       </View>
 
-      <View style={{ width:'100%', height: width-55,backgroundColor: 'black',}}>
+      <View style={styles.imageBox}>
         {selImgData.map((selImgData, index) => {
           return(
             <DragResizeBlock //isDisabled={true} //onPress ={ () => {setSelImgData([...selImgData.slice(0, index), ...selImgData.slice(index + 1) ]) }}>
@@ -105,3 +109,21 @@ export default function AddPostScreen({navigation}) {
     </View>
   );    
 }
+
+const styles = StyleSheet.create({
+  subtitle: {
+    fontFamily: 'NanumSquareR',
+    fontSize: 14,
+    color:'#707070'
+  },
+  imageBox: {
+    width:'100%',
+    height: width-32,
+    borderTopColor: '#dfdfdf',
+    borderBottomColor: '#dfdfdf',
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+})

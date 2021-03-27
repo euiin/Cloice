@@ -17,7 +17,7 @@ export default function AddPostEdit({route, navigation}) {
     inputText: ''
   })
 
-  const { ImageURL } = route.params;
+  const { ImageURI } = route.params;
 
   const updateInputText = (val) => {
     setData({
@@ -39,7 +39,7 @@ export default function AddPostEdit({route, navigation}) {
         </MIcon.Button>
         <Text style={styles.subtitle}>글 작성</Text>
         <AIcon.Button name="checkcircle" color='#99D1E9' backgroundColor='#fcfcfc' size={24}
-        onPress={()=> navigation.navigate("Post", {inputText : data.inputText, selImgDataArr: selImgDataArr})}>
+        onPress={()=> navigation.navigate("Post", {inputText : data.inputText, selImgDataArr: selImgDataArr, ImageURI: ImageURI})}>
 
 
         </AIcon.Button>
@@ -49,8 +49,8 @@ export default function AddPostEdit({route, navigation}) {
 
       <View style = {{paddingHorizontal: 16}}>
         <View style={styles.imageBox}>
-          <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source = {{uri: ImageURL}} />
-          {/* <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source = {{uri: captureImageURI}} /> */}
+          {/* <Text style={styles.subtitle}>글 작성</Text> */}
+          <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source = {{uri: ImageURI}} />
         </View>
       </View>
       <View style={styles.line}/>

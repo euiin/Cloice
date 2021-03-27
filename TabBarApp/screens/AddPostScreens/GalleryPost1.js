@@ -34,7 +34,7 @@ export default function GalleryPost1({navigation, route }) {
   }
 
   const { image } = route.params;
-  const imageURI = "data:" + image.mime + ";base64," + image.data; 
+  const ImageURI = "data:" + image.mime + ";base64," + image.data; 
 
   const renderSwitch=(pageNo)=> {
     switch(pageNo) {
@@ -75,13 +75,13 @@ export default function GalleryPost1({navigation, route }) {
         <Text style={{fontSize:14, color:'#707070'}}>착용샷</Text>
         <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostEdit"),{selImgDataArr: selImgData}}>
+          onPress={()=> navigation.navigate("AddPostEdit"),{selImgDataArr: selImgData, ImageURI: ImageURI}}>
 
         </MIcon.Button>
       </View>
 
       <View style={{ width:'100%', height: width-55,backgroundColor: 'black',justifyContent:'center', alignItems:'center'}}>
-        <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source = {{uri: imageURI}} />
+        <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source = {{uri: ImageURI}} />
       </View>
 
       <View>

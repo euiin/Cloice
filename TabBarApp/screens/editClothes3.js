@@ -49,6 +49,13 @@ const editClothes3 = ({ navigation, route }) => {
       st_hiphop: data.st_hiphop,
       memo: data.memo,
       category: category(),
+      spring: clothesData1.spring,
+      summer: clothesData1.summer,
+      fall: clothesData1.fall,
+      winter: clothesData1.winter,
+      color1: clothesData1.color1,
+      color2: clothesData1.color2,
+      color3: clothesData1.color3,
     }).then((response) => {
       navigation.navigate("editClothes4", {imageURI: imageURI, dataSet1: clothesData1, dataSet2: data})
     }).catch((error) => {

@@ -106,8 +106,7 @@ const MainTabScreen = () => {
                         )
                 }
             }
-        })}
-        >
+        })}>
         <Tab.Screen
             name="Home"
             component={HomeStackScreen}

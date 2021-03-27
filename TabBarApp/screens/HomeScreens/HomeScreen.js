@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, StatusBar, FlatList, RefreshControl } from 'react-native';
+import { View, Text, Button, StyleSheet, StatusBar, FlatList, RefreshControl, ScrollView } from 'react-native';
 import Axios from 'axios';
 import Feeds from './Feeds';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -93,21 +93,21 @@ const HomeScreen = ({navigation}) => {
       </TouchableOpacity>
     </View>
 
-    <View style={{marginTop: 10}}>
-      <FlatList
-        refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={async () => {
-              setIsLoading(true)
-              await getFeed()
-              setIsLoading(false)
-          }} />}
-        style={styles.feed}
-        data={posts}
-        key={''}
-        renderItem={({ item }) => renderPost(item)}
-        keyExtractor={item => item.id}
-        numColumns = {2}
-        showsVerticalScrollIndicator={false}/>
+    <View style={{marginTop: 10, marginBottom: "10%"}}>
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={isLoading} onRefresh={async () => {
+                setIsLoading(true)
+                await getFeed()
+                setIsLoading(false)
+            }} />}
+          style={styles.feed}
+          data={posts}
+          key={''}
+          renderItem={({ item }) => renderPost(item)}
+          keyExtractor={item => item.id}
+          numColumns = {2}
+          showsVerticalScrollIndicator={false}/>
     </View>
     </>
   );

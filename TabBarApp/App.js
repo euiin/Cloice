@@ -64,7 +64,8 @@ const App = () => {
       signIn: async (userEmail) => {
         const userToken = userEmail;
         try {
-          await AsyncStorage.setItem('userToken', userToken)
+          await AsyncStorage.setItem('userToken', userToken);
+          await AsyncStorage.setItem('nickname', nickname);
         } catch (e) {
           console.log(e)
         }

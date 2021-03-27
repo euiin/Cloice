@@ -6,6 +6,7 @@ import * as Animatable from 'react-native-animatable';
 import {BASE_URL} from '../components';
 
 import { AuthContext } from '../components/context';
+import { connect } from 'react-redux';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -22,7 +23,6 @@ const LoginScreen = ({ navigation }) => {
     //로그인 정보 전달 함수
     const loginHandler = () => {
         Axios.post(BASE_URL+"/login", {
-
             email: data.email,
             password: data.password,
         }).then((response) => {
@@ -31,7 +31,8 @@ const LoginScreen = ({ navigation }) => {
                                                 ToastAndroid.SHORT,
                                                 ToastAndroid.CENTER);
             } else {
-                signIn(data.email);
+                console.log(response.data)
+                signIn(data.email, response.data[0].nickname);
                 navigation.navigate("Home");
             }
         }).catch((error) => {

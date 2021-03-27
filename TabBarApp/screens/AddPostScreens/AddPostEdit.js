@@ -104,10 +104,6 @@ const styles = StyleSheet.create({
       imageBox: {
         width:'100%',
         height: width-32,
-        borderTopColor: '#dfdfdf',
-        borderBottomColor: '#dfdfdf',
-        borderTopWidth: 0.5,
-        borderBottomWidth: 0.5,
         justifyContent:'center',
         alignItems:'center'
       },

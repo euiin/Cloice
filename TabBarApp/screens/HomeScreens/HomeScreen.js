@@ -45,18 +45,8 @@ const HomeScreen = ({navigation}) => {
 
   const getFeed = () => {
     Axios.get('/feed').then((response) => {
-      const base64Image = response.data.base64Iamge;
-      const nickname = response.data.nickname;
-      const text = response.data.text;
-      var temp = {
-        base64Image: base64Image,
-        nickname: nickname,
-        text: text
-      }
-      setFeedList(
-        [temp,
-          ...feedList,
-      ])
+      const feedArr = response.data;
+      setFeedList(feedArr);
     })
   }
 

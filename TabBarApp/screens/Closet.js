@@ -62,8 +62,8 @@ const Closet = ({ navigation }) => {
     acc: 0,
   });
 
-  const getClosetData = () => {
-    Axios.post(BASE_URL + "/getCloset", {
+  const getClosetData = async () => {
+    await Axios.post(BASE_URL + "/getCloset", {
         email: email,
       }).then((response) => {
       var arr = response.data;
@@ -85,10 +85,10 @@ const Closet = ({ navigation }) => {
         setNickname(result);
       });
 
-      getClosetData();
+      await getClosetData();
     }
     temp();
-  }));
+  }, [email]));
 
   const renderItemTop = ({ item }) => {
     if(item.category == "top") {

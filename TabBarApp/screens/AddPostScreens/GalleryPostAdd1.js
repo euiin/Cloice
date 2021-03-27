@@ -102,7 +102,7 @@ const GalleryPostAdd1 = ({navigation, route}) => {
         <Text style={styles.subtitle}>착용샷</Text>
         <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostEdit", {ImageURI: ImageURL, selImgDataArr: selImgData})}>
+          onPress={()=> navigation.navigate("AddPostEdit", {ImageURI: ImageURL, selImgDataArr: selImgData, captureImageURI:captureImageURI})}>
         </MIcon.Button> 
       </View>
 

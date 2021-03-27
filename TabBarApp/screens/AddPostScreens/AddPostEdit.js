@@ -39,7 +39,8 @@ export default function AddPostEdit({route, navigation}) {
         </MIcon.Button>
         <Text style={styles.subtitle}>글 작성</Text>
         <AIcon.Button name="checkcircle" color='#99D1E9' backgroundColor='#fcfcfc' size={24}
-        onPress={()=> navigation.navigate("Post", {inputText : data.inputText, selImgDataArr: selImgDataArr, ImageURI: ImageURI})}>
+        onPress={()=> navigation.navigate("Post", {inputText : data.inputText, selImgDataArr: selImgDataArr,
+         ImageURI: ImageURI, captureImageURI:captureImageURI})}>
 
 
         </AIcon.Button>

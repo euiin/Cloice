@@ -9,9 +9,7 @@ const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
 
 const Post = ({navigation, route}) => {
-  const { inputText } = route.params
-  const { selImgDataArr } = route.params
-  const { ImageURI } = route.params;
+  const { inputText,ImageURI, selImgDataArr, captureImageURI } = route.params
   
   return (
     <View style={styles.container}>
@@ -23,18 +21,12 @@ const Post = ({navigation, route}) => {
         <Text style={styles.text1}>민희님의 코디</Text>
       </View>
       <View style={styles.box}>
-        <SwiperFlatList /*autoplay autoplayDelay={2} autoplayLoop*/ index={2} showPagination>
+        <SwiperFlatList /*autoplay autoplayDelay={2} autoplayLoop index={2}*/ showPagination>
+        <View style={[styles.child]}>
+          <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURI}}/>
+        </View>
         <View style={[styles.child]}>
           <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: ImageURI}}/>
-        </View>
-        <View style={[styles.child, { backgroundColor: 'thistle' }]}>
-          <Text style={styles.text}>2</Text>
-        </View>
-        <View style={[styles.child, { backgroundColor: 'skyblue' }]}>
-          <Text style={styles.text}>3</Text>
-        </View>
-        <View style={[styles.child, { backgroundColor: 'teal' }]}>
-          <Text style={styles.text}>4</Text>
         </View>
       </SwiperFlatList>
       </View>
@@ -127,5 +119,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   child: { width:width-32, justifyContent: 'center' },
-  text: { fontSize: width * 0.5, textAlign: 'center' },
 })

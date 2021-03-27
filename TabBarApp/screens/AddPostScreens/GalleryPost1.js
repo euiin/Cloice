@@ -61,12 +61,13 @@ export default function GalleryPost1({ route, navigation }) {
   return (
     <View style={{paddingHorizontal:16, backgroundColor: '#Fcfcfc'}}>
       <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between',borderColor:'#dfdfdf', borderBottomWidth:1,paddingVertical:4}}>
-      < MIcon.Button name="arrow-back-ios" size={24} color={'#99D1E9'} //backgroundColor={'#fcfcfc'}
+      < MIcon.Button name="arrow-back-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-start',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostScreen")}>
+          onPress={()=> navigation.navigate("AddPostScreen")}
+          >
         </MIcon.Button>
         <Text style={{fontSize:14, color:'#707070'}}>착용샷</Text>
-        <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} //backgroundColor={'#fcfcfc'}
+        <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
           onPress={()=> navigation.navigate("AddPostEdit")}>
         </MIcon.Button>

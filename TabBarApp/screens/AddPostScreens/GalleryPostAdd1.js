@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
+import { Text, FlatList, StyleSheet, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
@@ -26,7 +26,10 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
   ];
   
   
-export default function GalleryPostAdd1({navigation, route}) {
+const GalleryPostAdd1 = ({navigation, route}) => {
+  // const ImageURL = '';
+  const mainImage = require('../../assets/pngs/addGalleryPost.png');
+
   const [pageNo, setPageNo] = React.useState(1);
   
   const { selImgDataArr } = route.params
@@ -36,18 +39,31 @@ export default function GalleryPostAdd1({navigation, route}) {
     selImgData: selImgData,
     setSelImgData: setSelImgData
   }
+  const [ImageURL, setImageURL] = React.useState(undefined);
+
+  // const [data, setData] = React.useState({
+  //   galleryImage: '',
+  //   mainImage: require('../../assets/pngs/addGalleryPost.png'),
+  // })
+
+  const [indicator, setIndicator] = React.useState(false);
 
   const handleGallery = () => {
+    
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       includeBase64: true,
     }).then(image => {
-      // console.log(image);
-      navigation.navigate("GalleryPost1", {image: image}
-      );
-    });
+      console.log("imageURL은 ")
+      setImageURL(("data:" + image.mime + ";base64," + image.data));
+      // setImageURL(image.uri)
+      // setImageURL(temp);
+      console.log(ImageURL)
+      setIndicator(true);
+    })
   }
+  
 
   const renderSwitch=(pageNo)=> {
     switch(pageNo) {
@@ -80,22 +96,24 @@ export default function GalleryPostAdd1({navigation, route}) {
   return (
     <View style={{paddingHorizontal:16, backgroundColor: '#Fcfcfc'}}>
       <View style={{flexDirection: 'row', alignItems:'center',justifyContent:'space-between',borderColor:'#dfdfdf', borderBottomWidth:1,paddingVertical:4}}>
-        < MIcon.Button name="arrow-back-ios" size={24} color={'#99D1E9'} //backgroundColor={'#fcfcfc'}
+        < MIcon.Button name="arrow-back-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-start',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostScreen")}>
+          onPress={()=> navigation.navigate("AddPostScreen")}
+          >
         </MIcon.Button>
-        <Text style={{fontSize:14, color:'#707070'}}>착용샷</Text>
-        <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} //backgroundColor={'#fcfcfc'}
+        <Text style={styles.subtitle}>착용샷</Text>
+        <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostEdit")}>
+          onPress={()=> navigation.navigate("AddPostEdit", {ImageURL: ImageURL})}>
         </MIcon.Button> 
       </View>
 
       <TouchableOpacity onPress={() => {handleGallery();}} 
-       style={{ width:'100%', height: width-55,backgroundColor: 'black',justifyContent:'center', alignItems:'center'}}
-        >
-        <Image source={require('../../assets/pngs/addGalleryPost.png')}
-        />
+       style={styles.imageBox}>
+          {indicator 
+          ? <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source = {{uri: ImageURL}} />
+          : <Image source={mainImage}/>}
+
       </TouchableOpacity>
 
       <View>
@@ -108,6 +126,7 @@ export default function GalleryPostAdd1({navigation, route}) {
             selectedBackgroundColor="pink"
             style={{paddingHorizontal:20,paddingVertical:5,marginHorizontal:8,marginVertical:12,borderRadius: 5,
               backgroundColor: '#ffffff',elevation: 5,shadowOffset: {width: 2, height: 4},}}
+            key = {index}
             onPress={()=>{setPageNo(tabs.tabNo)}
             }>
             <Text style={{fontSize:14}} key={index}>{tabs.tabLabel}</Text>
@@ -125,3 +144,23 @@ export default function GalleryPostAdd1({navigation, route}) {
   );    
 }
 
+
+export default GalleryPostAdd1;
+
+const styles = StyleSheet.create({
+  subtitle: {
+    fontFamily: 'NanumSquareR',
+    fontSize: 14,
+    color:'#707070'
+  },
+  imageBox: {
+    width:'100%',
+    height: width-32,
+    borderTopColor: '#dfdfdf',
+    borderBottomColor: '#dfdfdf',
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    justifyContent:'center',
+    alignItems:'center'
+  },
+})

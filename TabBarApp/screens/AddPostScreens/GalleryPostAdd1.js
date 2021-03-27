@@ -38,7 +38,7 @@ const GalleryPostAdd1 = ({navigation, route}) => {
     selImgData: selImgData,
     setSelImgData: setSelImgData
   }
-  const [ImageURL, setImageURL] = React.useState(undefined);
+  const [ImageURL, setImageURL] = React.useState(undefined); //uri와 헷갈리지 마세여~~
 
   // const [data, setData] = React.useState({
   //   galleryImage: '',
@@ -103,7 +103,7 @@ const GalleryPostAdd1 = ({navigation, route}) => {
         <Text style={styles.subtitle}>착용샷</Text>
         <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostEdit", {ImageURL: ImageURL, selImgDataArr: selImgData})}>
+          onPress={()=> navigation.navigate("AddPostEdit", {ImageURI: ImageURL, selImgDataArr: selImgData})}>
         </MIcon.Button> 
       </View>
 

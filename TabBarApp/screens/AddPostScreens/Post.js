@@ -2,7 +2,7 @@ import React from 'react';
 import { Text,StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
-import { DragResizeBlock,} from 'react-native-drag-resize-elements';
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const initialLayout = { width: Dimensions.get('window').width };
@@ -10,11 +10,9 @@ var { height, width } = Dimensions.get('screen');
 
 
 const Post = ({navigation, route}) => {
-  const {inputText} = route.params
-
-const Post = ({navigation, route}) => {
   const { inputText } = route.params
   const { selImgDataArr } = route.params
+  const { ImageURI } = route.params;
   
   return (
     <View style={styles.container}>
@@ -26,7 +24,20 @@ const Post = ({navigation, route}) => {
         <Text style={styles.text1}>민희님의 코디</Text>
       </View>
       <View style={styles.box}>
-        <Text style={{fontSize:14, color:'#707070'}}>착용샷</Text>
+        <SwiperFlatList /*autoplay autoplayDelay={2} autoplayLoop*/ index={2} showPagination>
+        <View style={[styles.child]}>
+          <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: ImageURI}}/>
+        </View>
+        <View style={[styles.child, { backgroundColor: 'thistle' }]}>
+          <Text style={styles.text}>2</Text>
+        </View>
+        <View style={[styles.child, { backgroundColor: 'skyblue' }]}>
+          <Text style={styles.text}>3</Text>
+        </View>
+        <View style={[styles.child, { backgroundColor: 'teal' }]}>
+          <Text style={styles.text}>4</Text>
+        </View>
+      </SwiperFlatList>
       </View>
       <ScrollView horizontal={true} style={{width: '100%'}}>
         
@@ -116,4 +127,6 @@ const styles = StyleSheet.create({
     fontFamily: 'NanumSquareR',
     fontSize: 14,
   },
+  child: { width:width-32, justifyContent: 'center' },
+  text: { fontSize: width * 0.5, textAlign: 'center' },
 })

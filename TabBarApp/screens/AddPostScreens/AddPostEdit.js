@@ -12,7 +12,7 @@ import AIcon from 'react-native-vector-icons/AntDesign';
 export default function AddPostEdit({route, navigation}) {
 //   const { image } = route.params;
 //   const imageURI = "data:" + image.mime + ";base64," + image.data; 
-  const { selImgDataArr } = route.params
+  const { selImgDataArr, captureImageURI } = route.params
   const [data, setData] = React.useState({
     inputText: ''
   })
@@ -49,8 +49,8 @@ export default function AddPostEdit({route, navigation}) {
 
       <View style = {{paddingHorizontal: 16}}>
         <View style={styles.imageBox}>
-          {/* <Text style={styles.subtitle}>글 작성</Text> */}
           <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source = {{uri: ImageURL}} />
+          {/* <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source = {{uri: captureImageURI}} /> */}
         </View>
       </View>
       <View style={styles.line}/>

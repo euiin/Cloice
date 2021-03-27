@@ -1,4 +1,4 @@
-import React, { createContext, useRef } from 'react';
+import React from 'react';
 import { Text, StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
@@ -23,10 +23,17 @@ const tabs = [
   { tabLabel: '액세서리',tabNo:6,},
 ];
 export default function AddPostScreen({navigation}) {
-  //const captureRef = useRef();
+  const captureRef = React.useRef();
+  var captureImageURI = '';
+
+  const getPhotoURI = async () => {
+    const uri = await captureRef.current.capture();
+    console.log(uri);
+    captureImageURI = uri;
+  }
 
   const [pageNo, setPageNo] = React.useState(1);
-  const [selImgData,setSelImgData] = React.useState([]);
+  const [selImgData, setSelImgData] = React.useState([]);
   const ImgData = {
     selImgData: selImgData,
     setSelImgData: setSelImgData
@@ -70,22 +77,27 @@ export default function AddPostScreen({navigation}) {
           <Text style={styles.subtitle}>룩북 만들기</Text>
           <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("GalleryPostAdd1", {
-            selImgDataArr: selImgData}
-          )}>
+          onPress={async ()=> {
+            await getPhotoURI();
+            navigation.navigate("GalleryPostAdd1", {
+              selImgDataArr: selImgData,
+              captureImageURI: captureImageURI})
+            }}>
           </MIcon.Button>
       </View>
 
-      <View style={styles.imageBox}>
-        {selImgData.map((selImgData, index) => {
-          return(
-            <DragResizeBlock //isDisabled={true} //onPress ={ () => {setSelImgData([...selImgData.slice(0, index), ...selImgData.slice(index + 1) ]) }}>
-             >
-              <Image source={selImgData.src} key={index} style={{width: '100%', height: '100%'}}/>
-            </DragResizeBlock> 
-          )
-        })}
-      </View>
+      <ViewShot ref={captureRef} options ={{ format: 'jpg', quality: 0.9 }}>
+        <View style={styles.imageBox}>
+          {selImgData.map((selImgData, index) => {
+            return(
+              <DragResizeBlock //isDisabled={true} //onPress ={ () => {setSelImgData([...selImgData.slice(0, index), ...selImgData.slice(index + 1) ]) }}>
+              >
+                <Image source={selImgData.src} key={index} style={{width: '100%', height: '100%'}}/>
+              </DragResizeBlock> 
+            )
+          })}
+        </View>
+      </ViewShot>
 
 
       <View>
@@ -127,6 +139,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    backgroundColor: 'white'
   },
 })

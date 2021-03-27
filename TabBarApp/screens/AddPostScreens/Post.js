@@ -1,15 +1,59 @@
 import React from 'react';
-import { Text,StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { Text,StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, BackHandler} from 'react-native';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
 
 const Post = ({navigation, route}) => {
-  const { inputText,ImageURI, selImgDataArr, captureImageURI } = route.params
+  const backAction = () => {
+    navigation.popToTop();
+  }
+
+  const { inputText, ImageURI, selImgDataArr, captureImageURI } = route.params
+  
+  const [nickname, setNickname] = React.useState('');
+
+  React.useEffect(() => {
+    const temp = async () => {
+      await AsyncStorage.getItem('userToken', async (err, result) => {
+        setEmail(result);
+      });
+
+      await AsyncStorage.getItem('nickname', async (err, result) => {
+        setNickname(result);
+      });
+    }
+    temp();
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+    return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
+  }, [])
+
+  const renderSwipper = () => {
+    if(ImageURI != undefined) {
+      return(
+        <SwiperFlatList showPagination paginationActiveColor = "#99D1E9" paginationDefaultColor = "#dfdfdf">
+          <View style={[styles.child]}>
+            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURI}}/>
+          </View>
+          <View style={[styles.child]}>
+            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: ImageURI}}/>
+          </View>
+        </SwiperFlatList>
+      );
+    } else {
+      return (
+        <SwiperFlatList showPagination paginationActiveColor = "#99D1E9" paginationDefaultColor = "#dfdfdf">
+          <View style={[styles.child]}>
+            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURI}}/>
+          </View>
+        </SwiperFlatList>
+      );
+    }
+  }
   
   return (
     <View style={styles.container}>
@@ -18,17 +62,10 @@ const Post = ({navigation, route}) => {
         <Image source={require('../../login/profileImage/ProfileImage.jpg')} 
         style={{width:52,height:52, borderRadius:26, marginRight:10, borderColor:'#dfdfdf', borderWidth: 1}}/>
         </TouchableOpacity>
-        <Text style={styles.text1}>민희님의 코디</Text>
+        <Text style={styles.text1}>{nickname}님의 코디</Text>
       </View>
       <View style={styles.box}>
-        <SwiperFlatList /*autoplay autoplayDelay={2} autoplayLoop index={2}*/ showPagination>
-        <View style={[styles.child]}>
-          <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURI}}/>
-        </View>
-        <View style={[styles.child]}>
-          <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: ImageURI}}/>
-        </View>
-      </SwiperFlatList>
+        {renderSwipper()}
       </View>
       <ScrollView horizontal={true} style={{width: '100%'}}>
         

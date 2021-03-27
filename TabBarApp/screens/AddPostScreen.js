@@ -1,13 +1,12 @@
 import React from 'react';
-import { Text, StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
-import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
+import { Text, StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight, ScrollView} from 'react-native';
+// import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
 import ViewShot from "react-native-view-shot";
-
-
 import SangeuiPost from './AddPostScreens/SangeuiPost';
 import HaeuiPost from './AddPostScreens/HaeuiPost';
 import {AddPostContext} from './AddPostScreens/AddPostContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
@@ -38,6 +37,10 @@ export default function AddPostScreen({navigation}) {
     selImgData: selImgData,
     setSelImgData: setSelImgData
   }
+
+  useFocusEffect(React.useCallback(() => {
+    setSelImgData([]);
+  }, []));
 
   const renderSwitch=(pageNo)=> {
     switch(pageNo) {

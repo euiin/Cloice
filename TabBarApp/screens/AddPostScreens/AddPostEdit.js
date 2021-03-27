@@ -12,7 +12,7 @@ import AIcon from 'react-native-vector-icons/AntDesign';
 export default function AddPostEdit({route, navigation}) {
 //   const { image } = route.params;
 //   const imageURI = "data:" + image.mime + ";base64," + image.data; 
-
+  const { selImgDataArr } = route.params
   const [data, setData] = React.useState({
     inputText: ''
   })
@@ -39,7 +39,9 @@ export default function AddPostEdit({route, navigation}) {
         </MIcon.Button>
         <Text style={styles.subtitle}>글 작성</Text>
         <AIcon.Button name="checkcircle" color='#99D1E9' backgroundColor='#fcfcfc' size={24}
-        onPress={()=> navigation.navigate("Post", {inputText : data.inputText})}>
+        onPress={()=> navigation.navigate("Post", {inputText : data.inputText, selImgDataArr: selImgDataArr})}>
+
+
         </AIcon.Button>
 
       </View>

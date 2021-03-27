@@ -10,7 +10,8 @@ var { height, width } = Dimensions.get('screen');
 
 
 const Post = ({navigation, route}) => {
-  const inputText = route.params
+  const { inputText } = route.params
+  const { selImgDataArr } = route.params
   
   return (
     <View style={styles.container}>
@@ -21,9 +22,15 @@ const Post = ({navigation, route}) => {
         <Text style={{fontSize:14, color:'#707070'}}>착용샷</Text>
       </View>
       <ScrollView horizontal={true} style={{width: '100%'}}>
-        <View style={styles.minibox}>
-          <Text>플랫리스트??</Text>
-        </View>
+        
+        {selImgDataArr.map((selImgDataArr, index) => {
+          return(
+          <View style={styles.minibox}>
+            <Image source={selImgDataArr.src} key={index} style={{width: '100%', height: '100%'}}/>
+          </View>
+          )
+        })}
+
         <View style={styles.minibox}>
 
         </View>

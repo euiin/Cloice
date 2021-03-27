@@ -23,9 +23,15 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
   ];
   
   
-export default function GalleryPost1({ route, navigation }) {
+export default function GalleryPost1({navigation, route }) {
   const [pageNo, setPageNo] = React.useState(1);
-  const ImgData = React.useContext(AddPostContext);
+
+  const { selImgDataArr } = route.params
+  const [selImgData, setSelImgData] = React.useState(selImgDataArr);
+  const ImgData = {
+    selImgData: selImgData,
+    setSelImgData: setSelImgData
+  }
 
   const { image } = route.params;
   const imageURI = "data:" + image.mime + ";base64," + image.data; 

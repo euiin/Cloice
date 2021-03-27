@@ -34,7 +34,6 @@ const GalleryPostAdd1 = ({navigation, route}) => {
   
   const { selImgDataArr } = route.params
   const [selImgData, setSelImgData] = React.useState(selImgDataArr);
-
   const ImgData = {
     selImgData: selImgData,
     setSelImgData: setSelImgData

@@ -7,6 +7,8 @@ import IIcon from 'react-native-vector-icons/Ionicons';
 
 import MyProfile from '../MyProfile';
 import MainTabScreen from '../MainTabScreen';
+import Post from '../AddPostScreens/Post';
+import AddPostEdit from '../AddPostScreens/AddPostEdit';
 
 const MyProfileStack = createStackNavigator();
 
@@ -41,6 +43,25 @@ const  MyProfileStackScreen = ({navigation}) => {
             </IIcon.Button>
           )
         }} />
+        {/* <MyProfileStack.Screen name="Post" component = {Post} options={{ //Post는 AddPostStack보다는 MyProfile에 있어야 할듯. 왜냐? 메뉴 버튼& 드로어 해야하거든
+        title: 'Cloice',
+        headerTitleAlign: 'center', 
+        headerTitleStyle: {
+          fontFamily: 'DancingScript',
+          fontSize: 30
+        },
+        headerRight: () => (
+          <Icon.Button name="menu" color='#000000' size={25} 
+          backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+          </Icon.Button>
+        ),
+        headerLeft: () => (
+          <IIcon.Button name="search" color='#000000' size={25} 
+          backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+          </IIcon.Button>
+        )
+      }}/> */}
+
       </MyProfileStack.Navigator>
     );
 }

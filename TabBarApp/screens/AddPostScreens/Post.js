@@ -9,8 +9,8 @@ const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
 
 
-const Post = ({navigation, route}) => {
-  const {inputText} = route.params
+// const Post = ({navigation, route}) => {
+//   const {inputText} = route.params
 
 const Post = ({navigation, route}) => {
   const { inputText } = route.params

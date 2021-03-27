@@ -27,12 +27,11 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
   
   
 const GalleryPostAdd1 = ({navigation, route}) => {
-  // const ImageURL = '';
   const mainImage = require('../../assets/pngs/addGalleryPost.png');
 
   const [pageNo, setPageNo] = React.useState(1);
   
-  const { selImgDataArr } = route.params
+  const { selImgDataArr, captureImageURI } = route.params
   const [selImgData, setSelImgData] = React.useState(selImgDataArr);
   const ImgData = {
     selImgData: selImgData,
@@ -103,7 +102,7 @@ const GalleryPostAdd1 = ({navigation, route}) => {
         <Text style={styles.subtitle}>착용샷</Text>
         <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostEdit", {ImageURL: ImageURL, selImgDataArr: selImgData})}>
+          onPress={()=> navigation.navigate("AddPostEdit", {ImageURL: ImageURL, selImgDataArr: selImgData, captureImageURI: captureImageURI})}>
         </MIcon.Button> 
       </View>
 

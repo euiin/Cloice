@@ -75,7 +75,8 @@ export default function GalleryPost1({navigation, route }) {
         <Text style={{fontSize:14, color:'#707070'}}>착용샷</Text>
         <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostEdit")}>
+          onPress={()=> navigation.navigate("AddPostEdit"),{selImgDataArr: selImgData}}>
+
         </MIcon.Button>
       </View>
 

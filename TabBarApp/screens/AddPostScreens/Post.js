@@ -8,10 +8,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
 
-
-const Post = ({navigation, route}) => {
-  const {inputText} = route.params
-
 const Post = ({navigation, route}) => {
   const { inputText } = route.params
   const { selImgDataArr } = route.params

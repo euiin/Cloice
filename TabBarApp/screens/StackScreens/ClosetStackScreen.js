@@ -5,7 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IIcon from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
 
 import Closet from '../Closet';
 import SangeuiFeed from '../ClosetScreens/ClosetDetailScreen/SangeuiFeed';
@@ -18,6 +17,7 @@ import editClothes1 from '../editClothes1';
 import editClothes2 from '../editClothes2';
 import editClothes3 from '../editClothes3';
 import AddClothesStackScreen from './AddClothesStackScreen';
+import ClothInfo from '../ClosetScreens/ClothInfo';
 
 const ClosetStack = createStackNavigator();
 
@@ -60,6 +60,7 @@ const ClosetStackScreen = ({navigation}) => {
         <ClosetStack.Screen name="ShoesFeed" component = {ShoesFeed} options={{ title: ''}}/>
         <ClosetStack.Screen name="HatFeed" component = {HatFeed} options={{ title: ''}}/>
         <ClosetStack.Screen name="AccFeed" component = {AccFeed} options={{ title: ''}}/>
+        <ClosetStack.Screen name="ClothInfo" component = {ClothInfo} options={{ title: ''}}/>
         <ClosetStack.Screen name="AddClothesStackScreen" component = {AddClothesStackScreen} options={{headerShown: false}} screenOptions={{tabBarVisible: false}}/>
       </ClosetStack.Navigator>
       </NavigationContainer>

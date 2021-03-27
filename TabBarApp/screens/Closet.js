@@ -50,6 +50,7 @@ const actions = [{
 
 const Closet = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
+  const [nickname, setNickname] = React.useState("");
   const [closetData, setClosetData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [numberOfClothes, setNumberOfClothes] = React.useState({
@@ -79,6 +80,11 @@ const Closet = ({ navigation }) => {
       await AsyncStorage.getItem('userToken', async (err, result) => {
         setEmail(result);
       });
+
+      await AsyncStorage.getItem('nickname', async (err, result) => {
+        setNickname(result);
+      });
+
       getClosetData();
     }
     temp();
@@ -88,7 +94,11 @@ const Closet = ({ navigation }) => {
     if(item.category == "top") {
       return (
       <View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress ={() => {
+          navigation.navigate("ClothInfo", {
+            item: item,
+          })
+        }} >
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Image source={{uri: item.file}} style={[styles.storyimage]} />
         </View>
@@ -102,7 +112,11 @@ const Closet = ({ navigation }) => {
     if(item.category == "bottom") {
       return (
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress ={() => {
+          navigation.navigate("ClothInfo", {
+            item: item,
+          })
+        }} >
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Image source={{uri: item.file}} style={[styles.storyimage]} />
           </View>
@@ -116,7 +130,11 @@ const Closet = ({ navigation }) => {
     if(item.category == "outer") {
       return (
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress ={() => {
+          navigation.navigate("ClothInfo", {
+            item: item,
+          })
+        }} >
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Image source={{uri: item.file}} style={[styles.storyimage]} />
           </View>
@@ -130,7 +148,11 @@ const Closet = ({ navigation }) => {
     if(item.category == "shoes") {
       return (
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress ={() => {
+          navigation.navigate("ClothInfo", {
+            item: item,
+          })
+        }} >
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Image source={{uri: item.file}} style={[styles.storyimage]} />
           </View>
@@ -144,7 +166,11 @@ const Closet = ({ navigation }) => {
     if(item.category == "hat") {
       return (
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress ={() => {
+          navigation.navigate("ClothInfo", {
+            item: item,
+          })
+        }} >
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Image source={{uri: item.file}} style={[styles.storyimage]} />
           </View>
@@ -158,7 +184,11 @@ const Closet = ({ navigation }) => {
     if(item.category == "acc") {
       return (
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress ={() => {
+          navigation.navigate("ClothInfo", {
+            item: item,
+          })
+        }} >
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Image source={{uri: item.file}} style={[styles.storyimage]} />
           </View>
@@ -216,7 +246,7 @@ const Closet = ({ navigation }) => {
             <Image source={require('../login/profileImage/ProfileImage.jpg')} 
             style={{width:100,height:100, borderRadius:60, marginRight:10}}/>
             </TouchableOpacity>
-            <Text style={{fontSize:20}}>민희님의 옷장</Text>
+            <Text style={{fontSize:20}}>{nickname}님의 옷장</Text>
           </View>
           <View style={[styles.closets]}>
             <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} 

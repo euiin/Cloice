@@ -37,22 +37,6 @@ const Post = ({navigation, route}) => {
           </View>
           )
         })}
-
-        <View style={styles.minibox}>
-
-        </View>
-        <View style={styles.minibox}>
-
-        </View>
-        <View style={styles.minibox}>
-
-        </View>
-        <View style={styles.minibox}>
-
-        </View>
-        <View style={styles.minibox}>
-
-        </View>
       </ScrollView>
       <View style= {styles.likebox}>
         <AntDesign 

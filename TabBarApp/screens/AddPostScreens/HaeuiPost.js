@@ -12,11 +12,13 @@ const HaeuiPost = () => {
   const renderItem = ({ item,index }) => (
       <View>
         <TouchableOpacity
-          onPress={ () => {ImgData.setSelImgData([
-          ...ImgData.selImgData,
-          {src: item.src,}
-          ])   }}
-        > 
+          onPress={ () => {
+            ImgData.setSelImgData([
+              ...ImgData.selImgData,
+              {src: item.src,}
+              ])
+            ImgData.setIsValid(true);
+            }}>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Image source={item.src} style={[{ width: (width-32) / 4 }, { height: (width-32) / 4 }, { marginBottom: 2 }, index % 4 !== 0 ? { paddingLeft: 2 } : { paddingLeft: 0 } ]} />
         </View>

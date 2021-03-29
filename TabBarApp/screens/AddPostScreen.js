@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight, ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import { Text, StyleSheet, FlatList, Image, View, Dimensions, ToastAndroid, TouchableOpacity, Pressable,TouchableHighlight, ScrollView} from 'react-native';
 // import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
 import ViewShot from "react-native-view-shot";
@@ -33,12 +33,15 @@ export default function AddPostScreen({navigation}) {
 
   const [pageNo, setPageNo] = React.useState(1);
   const [selImgData, setSelImgData] = React.useState([]);
+  const [isValid, setIsValid] = React.useState(false);
   const ImgData = {
     selImgData: selImgData,
-    setSelImgData: setSelImgData
+    setSelImgData: setSelImgData,
+    setIsValid: setIsValid
   }
 
   useFocusEffect(React.useCallback(() => {
+    setIsValid(false)
     setSelImgData([]);
   }, []));
 
@@ -81,10 +84,17 @@ export default function AddPostScreen({navigation}) {
           <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
           onPress={async ()=> {
-            await getPhotoURI();
+            if(isValid) {
+              await getPhotoURI();
             navigation.navigate("GalleryPostAdd1", {
               selImgDataArr: selImgData,
               captureImageURI: captureImageURI})
+            }
+            else {
+              ToastAndroid.showWithGravity("룩북을 만들어주세요.",
+              ToastAndroid.SHORT,
+              ToastAndroid.CENTER);
+            }
             }}>
           </MIcon.Button>
       </View>
@@ -143,6 +153,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     justifyContent:'center',
     alignItems:'center',
-    backgroundColor: 'white'
+    backgroundColor: '#fcfcfc'
   },
 })

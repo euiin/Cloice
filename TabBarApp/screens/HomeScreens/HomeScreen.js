@@ -29,11 +29,15 @@ const HomeScreen = ({navigation}) => {
 
   const renderPost = (item) => {
     return (
-      // <TouchableOpacity onPress = {() => {navigation.navigate("FeedDetail", {
-      //   item: item
-      // })}}>
-        <Feeds item = {item}/>
-      // </TouchableOpacity>
+      <View style = {{width: '50%', }}>
+        <TouchableOpacity onPress = {() => {navigation.navigate("FeedDetail", {
+          item: item
+        })}}
+          >
+          <Feeds item = {item}/>
+        </TouchableOpacity>
+      </View>
+      
     );
   }
 
@@ -63,7 +67,7 @@ const HomeScreen = ({navigation}) => {
       </TouchableOpacity>
     </View>
 
-    <View style={{marginTop: 10, marginBottom: "10%"}}>
+    <View style={{marginTop: 10, marginBottom: "10%", width: "100%",}}>
         <FlatList
           refreshControl={
             <RefreshControl refreshing={isLoading} onRefresh={async () => {
@@ -110,7 +114,8 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   feed: {
-      marginHorizontal: 16
+      marginHorizontal: 16,
+      // width: 800,
   }
 });
 

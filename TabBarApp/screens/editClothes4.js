@@ -66,11 +66,11 @@ const editClothes4 = ({ route, navigation }) => {
         left: 0,
         top: 0,
       }}>
-        <Feather
-          name="chevron-left"
+        <Entypo
+          name="cross"
           color="#99d1e9"
-          size={32}
-          onPress={() => navigation.navigate('editClothes3')}
+          size={34}
+          onPress={() => navigation.navigate("Closet")}
         />
       </TouchableOpacity>
 

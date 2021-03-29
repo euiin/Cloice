@@ -29,11 +29,11 @@ const HomeScreen = ({navigation}) => {
 
   const renderPost = (item) => {
     return (
-      <TouchableOpacity onPress = {() => {navigation.navigate("FeedDetail", {
-        item: item
-      })}}>
+      // <TouchableOpacity onPress = {() => {navigation.navigate("FeedDetail", {
+      //   item: item
+      // })}}>
         <Feeds item = {item}/>
-      </TouchableOpacity>
+      // </TouchableOpacity>
     );
   }
 

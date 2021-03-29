@@ -41,7 +41,9 @@ const HomeStackScreen = ({ navigation }) => {
             </IIcon.Button>
           )
         }} />
-        <HomeStack.Screen name="FeedDetail" component={FeedDetail} />
+        <HomeStack.Screen name="FeedDetail" component={FeedDetail} options = {{
+          headerTitle: ""
+        }} />
       </HomeStack.Navigator>
     );
 }

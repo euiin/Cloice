@@ -11,8 +11,6 @@ import {AddPostContext} from './AddPostContext';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-
-
   const initialLayout = { width: Dimensions.get('window').width };
   var { height, width } = Dimensions.get('screen');
   
@@ -39,11 +37,6 @@ const GalleryPostAdd1 = ({navigation, route}) => {
   }
   const [ImageURL, setImageURL] = React.useState(undefined); //uri와 헷갈리지 마세여~~
 
-  // const [data, setData] = React.useState({
-  //   galleryImage: '',
-  //   mainImage: require('../../assets/pngs/addGalleryPost.png'),
-  // })
-
   const [indicator, setIndicator] = React.useState(false);
 
   const handleGallery = () => {
@@ -53,11 +46,7 @@ const GalleryPostAdd1 = ({navigation, route}) => {
       height: 400,
       includeBase64: true,
     }).then(image => {
-      console.log("imageURL은 ")
       setImageURL(("data:" + image.mime + ";base64," + image.data));
-      // setImageURL(image.uri)
-      // setImageURL(temp);
-      console.log(ImageURL)
       setIndicator(true);
     })
   }

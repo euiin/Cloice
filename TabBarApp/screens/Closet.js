@@ -211,6 +211,7 @@ const Closet = ({ navigation }) => {
           params: {image: image},
         });
       });
+
     }
 
     const handleCamera = () => {

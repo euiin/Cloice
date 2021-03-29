@@ -32,12 +32,16 @@ export default function AddPostEdit({ route, navigation }) {
         setNickname(result);
       });
 
-      ImgToBase64.getBase64String(captureImageURI)
-      .then(base64String => setCaptureImageURIBase64(base64String))
+      await ImgToBase64.getBase64String(captureImageURI)
+      .then(base64String => {
+        console.log(captureImageURI);
+        base64String = base64String.replace(/\n/gm,"");
+        setCaptureImageURIBase64("data:image/jpg;base64,"+ base64String)
+      })
       .catch(err => console.log(err));
     }
     temp();
-  }, [])
+  }, [navigation])
 
   const updateInputText = (val) => {
     setData({
@@ -54,8 +58,9 @@ export default function AddPostEdit({ route, navigation }) {
       POST_TEXT: data.inputText,
       NICK:  nickname,
     }).then((response) => {
-      var arr = response.data;
-      setClosetData(arr);
+      navigation.navigate("Post", {inputText : data.inputText, selImgDataArr: selImgDataArr,
+        ImageURI: ImageURI, captureImageURI:captureImageURI}
+      )
     }).catch((error) => {;
       console.log("에러:", error);
       throw error;
@@ -67,7 +72,8 @@ export default function AddPostEdit({ route, navigation }) {
       return(
         <SwiperFlatList showPagination paginationActiveColor = "#99D1E9" paginationDefaultColor = "#dfdfdf">
           <View style={[styles.child]}>
-            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURI}}/>
+            {/* <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURI}}/> */}
+            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURIBase64}}/>
           </View>
           <View style={[styles.child]}>
             <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: ImageURI}}/>
@@ -78,7 +84,8 @@ export default function AddPostEdit({ route, navigation }) {
       return (
         <SwiperFlatList showPagination paginationActiveColor = "#99D1E9" paginationDefaultColor = "#dfdfdf">
           <View style={[styles.child]}>
-            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURI}}/>
+            {/* <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURI}}/> */}
+            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURIBase64}}/>
           </View>
         </SwiperFlatList>
       );
@@ -97,9 +104,6 @@ export default function AddPostEdit({ route, navigation }) {
         <AIcon.Button name="checkcircle" color='#99D1E9' backgroundColor='#fcfcfc' size={24}
         onPress={async ()=> {
           await postFeed();
-          navigation.navigate("Post", {inputText : data.inputText, selImgDataArr: selImgDataArr,
-            ImageURI: ImageURI, captureImageURI:captureImageURI}
-          )
          }}>
 
         </AIcon.Button>

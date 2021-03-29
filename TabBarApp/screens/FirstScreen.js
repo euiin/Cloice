@@ -13,7 +13,6 @@ const FirstScreen = () => {
                     style={styles.logo}
                 />
             </View>
-            
         </View>
     )
 }

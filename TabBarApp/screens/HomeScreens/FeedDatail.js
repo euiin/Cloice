@@ -1,182 +1,128 @@
-import _ from 'lodash';
-import {useRoute, TabActions} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import React, {useCallback, useState} from 'react';
-import InputSpinner from 'react-native-input-spinner';
-import {
-  View,
-  Text,
-  ImageBackground,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-  TextInput,
-  Alert,
-} from 'react-native';
+import React from 'react';
+import { Text,StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, BackHandler} from 'react-native';
+import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
+import { SwiperFlatList } from 'react-native-swiper-flatlist';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const aspectRatio = 640 / 480;
+const initialLayout = { width: Dimensions.get('window').width };
+var { height, width } = Dimensions.get('screen');
 
-export default function FeedDatail() {
-  const route = useRoute();
-  const insets = useSafeAreaInsets();
+const FeedDetail = ({navigation, route}) => {
+  const { item } = route.params;
 
-  const item = route.params.item;
-
+  const renderSwipper = () => {
+      return(
+        <SwiperFlatList showPagination paginationActiveColor = "#99D1E9" paginationDefaultColor = "#dfdfdf">
+          <View style={[styles.child]}>
+            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: item.captureImageURI}}/>
+          </View>
+          <View style={[styles.child]}>
+            <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: item.ImageURI}}/>
+          </View>
+        </SwiperFlatList>
+      ); 
+  }
+  
   return (
-    <>
-      <ScrollView
-        style={[
-          styles.container,
-          {
-            paddingBottom: insets.bottom,
-            marginBottom: 20,
-          },
-        ]}>
-        <ImageBackground
-          source={{uri: _.get(route, 'imageUrl', '')}}
-          resizeMode="cover"
-          style={styles.mainImage}>
-          <PublicText style={styles.productName}>
-            {_.get(route, 'params.item.productName', '')}
-          </PublicText>
-          <PublicText style={styles.productPrice}>
-            &#8361;{' '}
-            {numeral(_.get(route, 'params.item.price', 0)).format('0,0')}
-          </PublicText>
-        </ImageBackground>
-        <View style={styles.contentContainer}>
-          <Row title="상품 등록일">
-            <PublicText>
-              {moment(_.get(route, 'params.item.createdAt', '')).format(
-                'YYYY. MM. DD',
-              )}
-            </PublicText>
-          </Row>
-
-          <Row title="상품 상세 정보">
-            <PublicText>
-              {_.get(route, 'params.item.productDescription', '')}
-            </PublicText>
-          </Row>
-          <Row title="색상">
-            <ColorView size={5} color={_.get(route, 'params.item.color', '')} />
-          </Row>
-          <Row title="소재">
-            <PublicText>
-              {_.get(route, 'params.item.productMaterial', '')}
-            </PublicText>
-          </Row>
-          <Row title="상품 종류">
-            <PublicText>{_.get(route, 'params.item.product', '')}</PublicText>
-          </Row>
-          <Row title="수량">
-            <InputSpinner
-              max={10}
-              min={1}
-              step={1}
-              skin="square"
-              value={quantity}
-              onChange={(num) => {
-                setQuantity(num);
-              }}
-            />
-          </Row>
-          <Row title="총금액">
-            <PublicText style={styles.totalPrice}>
-              {' '}
-              &#8361;{' '}
-              {numeral(_.get(route, 'params.item.price', 0) * quantity).format(
-                '0,0',
-              )}
-            </PublicText>
-          </Row>
-          <Row title="주소">
-            <TextInput
-              style={styles.textInput}
-              placeholder="우편번호"
-              placeholderTextColor="#333"
-              value={zipCode}
-              onFocus={onAddressSearch}
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder="주소"
-              placeholderTextColor="#333"
-              value={address}
-              onFocus={onAddressSearch}
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder="상세주소"
-              placeholderTextColor="#333"
-              value={addressDetail}
-              onChangeText={setAddressDetail}
-            />
-          </Row>
-        </View>
-      </ScrollView>
-      <Pressable style={styles.orderBtn} onPress={onOrder}>
-        <PublicText style={styles.orderBtnText}>주문 하기</PublicText>
-      </Pressable>
-    </>
-  );
+    <View style={styles.container}>
+      <View style={{flexDirection:'row',alignItems: 'center', marginVertical: 10,}}>
+        <TouchableOpacity onPress={()=>{ navigation.navigate("MyProfile")}}>
+        <Image source={require('../../login/profileImage/ProfileImage.jpg')} 
+        style={{width:52,height:52, borderRadius:26, marginRight:10, borderColor:'#dfdfdf', borderWidth: 1}}/>
+        </TouchableOpacity>
+        <Text style={styles.text1}>{item.NICK}님의 코디</Text>
+      </View>
+      <View style={styles.box}>
+        {renderSwipper()}
+      </View>
+      {/* <ScrollView horizontal={true} style={{width: '100%'}}>
+        
+        {selImgDataArr.map((selImgDataArr, index) => {
+          return(
+          <View style={styles.minibox}>
+            <Image source={selImgDataArr.src} key={index} style={{width: '100%', height: '100%'}}/>
+          </View>
+          )
+        })}
+      </ScrollView> */}
+      <View style= {styles.likebox}>
+        <AntDesign 
+          name="heart"
+          color="red"
+          size={18}
+        />
+      </View>
+      <View style = {{marginVertical: 5}}>
+        <Text style ={styles.maintext}>{item.POST_TEXT}</Text>
+      </View>
+    </View>
+  );    
 }
 
+export default FeedDetail
+
+  
+
+
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingTop: 20,
-    paddingRight: 20,
-    paddingLeft: 20,
-  },
   container: {
-    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: '#Fcfcfc',
+    // height: '100%'
   },
-  mainImage: {
-    alignSelf: 'stretch',
-    aspectRatio,
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 20,
-  },
-  row: {
-    marginTop: 20,
-  },
-  orderBtn: {
-    alignSelf: 'stretch',
-    padding: 30,
-    backgroundColor: '#B9D3DE',
+  header: {
+    height: 65,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  orderBtnText: {
-    fontSize: 30,
+  box: {
+    width:'100%', 
+    height: width-32,
+    backgroundColor: '#fff',
+    justifyContent:'center', 
+    alignItems:'center',
+    borderRadius: 10,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
   },
-  productName: {
-    position: 'absolute',
-    bottom: 50,
-    right: 20,
-    fontSize: 30,
-    color: '#fff',
-  },
-  productPrice: {
-    position: 'absolute',
-    bottom: 10,
-    right: 20,
-    fontSize: 30,
-    color: '#fff',
-  },
-  textInput: {
-    height: 50,
-    borderColor: 'gray',
-    alignSelf: 'stretch',
+  minibox: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
     borderWidth: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginBottom: 20,
+    borderColor: '#dfdfdf',
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  totalPrice: {
-    fontSize: 30,
+  likebox: {
+    marginVertical: 10,
+    width: '100%',
+    // backgroundColor: 'yellow'
   },
-});
+  subtitle: {
+    fontFamily: 'NanumSquareR',
+    fontSize: 14,
+    color:'#707070'
+  },
+  maintext: {
+    fontFamily: 'NanumSquareR',
+    fontSize: 12,
+  },
+  text1: {
+    fontFamily: 'NanumSquareR',
+    fontSize: 14,
+  },
+  child: { width:width-32, justifyContent: 'center' },
+})

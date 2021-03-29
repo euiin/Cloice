@@ -8,13 +8,13 @@ const Feeds = ({ item }) => {
         <Content>
             <Card>
                 <CardItem style= {{alignItems: 'center'}}>
-                    <Image source={require('../../assets/pngs/google.png')} style={styles.mainImage}/>
+                    <Image source={{uri: item.ImageURI}} style={styles.mainImage}/>
                 </CardItem>
                 <CardItem footer bordered style={styles.bottomCard}>
-                    <Image source={require('../../assets/pngs/naver.png')} style={styles.profileImage}/>
+                    <Image source={require('../../login/profileImage/ProfileImage.jpg')} style={styles.profileImage}/>
                     <Body style={{paddingTop:3}}>
-                        <Text style={styles.titleText}>소녀소녀 룩이에요~ *^^*</Text>
-                        <Text style={styles.nickText}>민희</Text>
+                        <Text style={styles.titleText}>{item.POST_TEXT}</Text>
+                        <Text style={styles.nickText}>{item.NICK}</Text>
                     </Body>
                 </CardItem>
             </Card>

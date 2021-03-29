@@ -67,6 +67,7 @@ app.post("/login", (req, res) => {
             }
             
             if(result.length > 0) {
+                console.log(result);
                 res.send(result);
                 console.log(result[0].email);
             } else {
@@ -134,6 +135,13 @@ app.post('/uploadCloth', (req, res) => {
     const st_hiphop = req.body.st_hiphop;
     const memo = req.body.memo;
     const category = req.body.category;
+    const spring = req.body.spring;
+    const summer = req.body.summer;
+    const fall = req.body.fall;
+    const winter = req.body.winter;
+    const color1 = req.body.color1;
+    const color2 = req.body.color2;
+    const color3 = req.body.color3;
 
     var matches = base64Image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
@@ -154,8 +162,8 @@ app.post('/uploadCloth', (req, res) => {
         console.log(__dirname);
         fs.writeFileSync("./images/" + fileName, imageBuffer, 'utf8');
         db.query(
-            "INSERT INTO files (email, file, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category, file_name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", 
-            [email, BASE_URL+"/images/" + fileName, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category, date], 
+            "INSERT INTO files (email, file, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category, file_name, spring, summer, fall, winter, color1, color2, color3) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
+            [email, BASE_URL+"/images/" + fileName, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category, date, spring, summer, fall, winter, color1, color2, color3], 
             (err, result) => {
                 console.log(err)
                 if(err) {
@@ -212,3 +220,59 @@ app.get('/feed', (req, res) => {
     })    
 })
 
+//Feed 저장
+app.post('/uploadFeed', (req, res) => {
+
+    const email = req.body.email;
+    const ImageURI = req.body.ImageURI;
+    var captureImageURI = req.body.captureImageURI;
+    const POST_TEXT = req.body.POST_TEXT;
+    const NICK = req.body.NICK;
+    
+    // console.log(captureImageURI)
+
+    if(ImageURI != undefined) {
+        var matchesImageURI = ImageURI.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        responseImageURI = {};
+    }
+
+    if(captureImageURI != undefined) {
+        var matchesCaptureImageURI = captureImageURI.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        responseCaptureImageURI = {};
+    }
+
+    responseImageURI.type = matchesImageURI[1];
+    responseImageURI.data = new Buffer.from(matchesImageURI[2], 'base64');
+    let decodedImgImageURI = responseImageURI;
+    let imageBufferImageURI = decodedImgImageURI.data;
+    let typeImageURI = decodedImgImageURI.type;
+    let extensionImageURI = mime.getExtension(typeImageURI);
+    let fileNameImageURI = Date.now() + "." + extensionImageURI;
+    let dateImageURI = Date.now();
+
+    responseCaptureImageURI.type = matchesCaptureImageURI[1];
+    responseCaptureImageURI.data = new Buffer.from(matchesCaptureImageURI[2], 'base64');
+    let decodedImgCaptureImageURI = responseCaptureImageURI;
+    let imageBufferCaptureImageURI = decodedImgCaptureImageURI.data;
+    let typeCaptureImageURI = decodedImgCaptureImageURI.typeCaptureImageURI;
+    let extensionCaptureImageURI = mime.getExtension(typeCaptureImageURI);
+    let fileNameCaptureImageURI = (Date.now() + 5) + ".jpg";
+    let dateCaptureImageURI = Date.now() + 5;
+
+    try {
+        fs.writeFileSync("./images/" + fileNameImageURI, imageBufferImageURI, 'utf8');
+        fs.writeFileSync("./images/" + fileNameCaptureImageURI, imageBufferCaptureImageURI, 'utf8');
+        db.query(
+            "INSERT INTO files (POST_TEXT, USER_NO, NICK, ImageURI, captureImageURI) VALUES (?,?,?,?,?)", 
+            [POST_TEXT, email, NICK, BASE_URL+"/images/" + fileNameImageURI, BASE_URL+"/images/" + fileNameCaptureImageURI], 
+            (err, result) => {
+                console.log(err)
+                if(err) {
+                    res.send({ err: err });
+                }
+                res.send(result);
+        })
+    } catch (e) {
+        console.log(e)
+    }
+})

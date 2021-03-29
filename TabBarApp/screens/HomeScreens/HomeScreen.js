@@ -5,46 +5,23 @@ import Feeds from './Feeds';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import { useFocusEffect } from '@react-navigation/native';
+import { BASE_URL } from '../../components';
 
 
 const HomeScreen = ({navigation}) => {
   const [feedList, setFeedList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  //임시 데이터
-  const posts = [
-    {
-        id: "1",
-        name: "Joe McKay",
-        text:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        timestamp: 1569109273726
-    },
-    {
-        id: "2",
-        name: "Karyn Kim",
-        text:
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        timestamp: 1569109273726
-    },
-    {
-        id: "3",
-        name: "Emerson Parsons",
-        text:
-            "Amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant.",
-        timestamp: 1569109273726
-    },
-    {
-        id: "4",
-        name: "Kathie Malone",
-        text:
-            "At varius vel pharetra vel turpis nunc eget lorem. Lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor. Adipiscing tristique risus nec feugiat in fermentum.",
-        timestamp: 1569109273726
+  useFocusEffect(React.useCallback(() => {
+    const temp = async () => {
+      await getFeed()
     }
-];
+    temp();
+  }, [navigation]));
 
   const getFeed = () => {
-    Axios.get('/feed').then((response) => {
+    Axios.get(BASE_URL +'/getFeed').then((response) => {
       const feedArr = response.data;
       setFeedList(feedArr);
     })
@@ -52,10 +29,13 @@ const HomeScreen = ({navigation}) => {
 
   const renderPost = (item) => {
     return (
+      <TouchableOpacity onPress = {() => {navigation.navigate("FeedDetail", {
+        item: item
+      })}}>
         <Feeds item = {item}/>
+      </TouchableOpacity>
     );
   }
-
 
   return (
     <>
@@ -92,7 +72,7 @@ const HomeScreen = ({navigation}) => {
                 setIsLoading(false)
             }} />}
           style={styles.feed}
-          data={posts}
+          data={feedList}
           key={''}
           renderItem={({ item }) => renderPost(item)}
           keyExtractor={item => item.id}
@@ -104,6 +84,12 @@ const HomeScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  mainImage: {
+    height: 160,
+    width: 160,
+    resizeMode: 'contain',
+    flex:1
+  },
   top:{
     height: 46,
     borderBottomWidth: 1,

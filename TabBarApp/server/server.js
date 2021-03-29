@@ -48,7 +48,6 @@ app.post('/register', (req, res) => {
             console.log(err);
             res.send({ message: "회원 가입 실패" });
         }
-        console.log("회원 정보 입력 완료")
         res.send(result)
     })
 })
@@ -67,11 +66,8 @@ app.post("/login", (req, res) => {
             }
             
             if(result.length > 0) {
-                console.log(result);
                 res.send(result);
-                console.log(result[0].email);
             } else {
-                console.log("로그인 실패");
                 res.send({ message: "Wrong email/password combination" });
             }
     })
@@ -91,10 +87,8 @@ app.post("/dupemail", (req, res) => {
             
             if(result.length > 0) {
                 res.send({ message: "중복된 이메일" });
-                console.log("중복된 이메일");
             } else {
                 res.send(result);
-                console.log("이메일 생성 가능");
             }
     })
 })
@@ -113,10 +107,8 @@ app.post("/dupnick", (req, res) => {
             
             if(result.length > 0) {
                 res.send({ message: "중복된 닉네임" });
-                console.log("중복된 닉네임");
             } else {
                 res.send(result);
-                console.log("닉네임 생성 가능");
             }
     })
 })
@@ -159,7 +151,6 @@ app.post('/uploadCloth', (req, res) => {
     let fileName = Date.now() + "." + extension;
     let date = Date.now();
     try {
-        console.log(__dirname);
         fs.writeFileSync("./images/" + fileName, imageBuffer, 'utf8');
         db.query(
             "INSERT INTO files (email, file, clothName, brand, price, st_casual, st_dandy, st_street, st_hiphop, memo, category, file_name, spring, summer, fall, winter, color1, color2, color3) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", 
@@ -174,13 +165,11 @@ app.post('/uploadCloth', (req, res) => {
     } catch (e) {
         console.log(e)
     }
-
 })
 
 //옷장 정보 받아오기
 app.post('/getCloset', (req, res) => {
     const email = req.body.email;
-    console.log(email)
 
     db.query("SELECT * FROM files WHERE email = ?",
         [email],
@@ -189,34 +178,19 @@ app.post('/getCloset', (req, res) => {
                 console.log(err);
                 res.send({ err: err });
             }
-            console.log("보내는 데이터는");
-            console.log(result);
-            console.log("입니다.")
 
             res.send(result)
-
-
-            // const imageURL = result[0].BASE_FILE;
-            // const nickname = result[0].NICK;
-            // const text = result[0].POST_TEXT;
-
-            // res.send({imageURL: imageURL, nickname: nickname, text: text});
     })
 })
 
 //피드 받아오기
-app.get('/feed', (req, res) => {
-    db.query("SELECT * FROM posts",
+app.get('/getFeed', (req, res) => {
+    db.query("SELECT * FROM FEEDS",
     (err, result) => {
         if(err) {
             res.send({ err: err })
         }
-
-        const base64Iamge = result[0].BASE_FILE;
-        const nickname = result[0].NICK;
-        const text = result[0].POST_TEXT;
-
-        res.send({base64Iamge: base64Iamge, nickname: nickname, text: text});
+        res.send(result);
     })    
 })
 
@@ -228,8 +202,6 @@ app.post('/uploadFeed', (req, res) => {
     var captureImageURI = req.body.captureImageURI;
     const POST_TEXT = req.body.POST_TEXT;
     const NICK = req.body.NICK;
-    
-    // console.log(captureImageURI)
 
     if(ImageURI != undefined) {
         var matchesImageURI = ImageURI.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
@@ -263,7 +235,7 @@ app.post('/uploadFeed', (req, res) => {
         fs.writeFileSync("./images/" + fileNameImageURI, imageBufferImageURI, 'utf8');
         fs.writeFileSync("./images/" + fileNameCaptureImageURI, imageBufferCaptureImageURI, 'utf8');
         db.query(
-            "INSERT INTO files (POST_TEXT, USER_NO, NICK, ImageURI, captureImageURI) VALUES (?,?,?,?,?)", 
+            "INSERT INTO FEEDS (POST_TEXT, USER_NO, NICK, ImageURI, captureImageURI) VALUES (?,?,?,?,?)", 
             [POST_TEXT, email, NICK, BASE_URL+"/images/" + fileNameImageURI, BASE_URL+"/images/" + fileNameCaptureImageURI], 
             (err, result) => {
                 console.log(err)

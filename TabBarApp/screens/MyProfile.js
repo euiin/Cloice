@@ -109,7 +109,14 @@ export default function MyProfile({ navigation }) {
           throw error;
         });
 
-
+        await Axios.get(BASE_URL +'/getFeedProfile', {
+          email: email,
+        }).then((response) => {
+          setCodiFeedData(response.data);
+        }).catch((error) => {
+          console.log("에러:", error);
+          throw error;
+        });
       }
       temp();
     }, [navigation])

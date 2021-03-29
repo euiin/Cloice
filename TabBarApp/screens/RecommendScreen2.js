@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    View, Text, StyleSheet, TouchableOpacity, ScrollView, Image
+    View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView, Image
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -8,7 +8,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 
-
+var { height, width } = Dimensions.get('screen');
 
 const RecommendScreen2 = ({navigation}) => {
 
@@ -36,9 +36,74 @@ const RecommendScreen2 = ({navigation}) => {
     
     return (
         <>
-        <View>
-          <Text>hello</Text>
-        </View>
+        <ScrollView style={{
+          width: '100%'
+        }}>
+          <View style = {styles.container}>
+            <TouchableOpacity style={{
+                width: 40,
+                height: 40,
+                position: 'absolute',
+                right: 10,
+                top: 7,
+              }}>
+                <Entypo
+                  name="cross"
+                  color="#99d1e9"
+                  size={34}
+                  onPress={() => navigation.navigate("Home")}
+                />
+              </TouchableOpacity>
+            <View style = {styles.subtitle}>
+              <Text style ={styles.subtext}>이 코디는 어떠신가요?</Text>
+            </View>
+            
+            <View style = {styles.box}>
+              <Image
+                source={require('../assets/pngs/recomm.png')}
+              />
+            </View>
+
+            <View style = {styles.box1}>
+            <Image
+                source={require('../assets/pngs/emptyStars.png')}
+              />
+            </View>
+
+            <View style = {styles.box2}>
+              <Image
+                source={require('../assets/pngs/recommItem1.png')}
+                style = {{marginLeft: 10,}}
+              />
+              <View style = {{marginLeft: 10,}}>
+                <Text style={styles.subtext}>칼하트 비니</Text>
+                <Text style={styles.greytext}>판매처 : 무신사 스토어</Text>
+                <Text style={styles.greytext}>판매가 : 25,900원</Text>
+              </View>
+            </View>
+            <View style = {styles.box2}>
+              <Image
+                source={require('../assets/pngs/recommItem2.png')}
+                style = {{marginLeft: 10,}}
+              />
+              <View style = {{marginLeft: 10,}}>
+                <Text style={styles.subtext}>나이키 조던 에어1</Text>
+                <Text style={styles.greytext}>판매처 : NIKE 온라인 스토어</Text>
+                <Text style={styles.greytext}>판매가 : 13,900원</Text>
+              </View>
+            </View>
+            
+            <View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 10,}}>
+              <Image
+                source={require('../assets/pngs/credit.png')}
+                // style = {{marginLeft: 10,}}
+              />
+              <Text style={[styles.subtext, {marginLeft: 10,}]}>바로 구매</Text>
+            </View>
+            
+          </View>
+        </ScrollView>
+        
         </>
     );
 }
@@ -53,117 +118,55 @@ const styles=StyleSheet.create({
     },
     subtitle: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
+        justifyContent: 'center',
+        width: '100%',
+        alignItems: 'center',
+        marginVertical: 15,
     },
     subtext: {
         fontFamily: 'NanumSquareR',
-        fontSize: 16,
-        marginRight: 5,
+        fontSize: 18,
+        // marginRight: 5,
     },
-    LongButtonT: {
-        width: 68,
-        height: 28,
-        marginLeft: 20,
-        backgroundColor: '#dfdfdf',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
-        shadowColor: "#000",
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 2,
-          height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-  
-        elevation: 3,
+    greytext: {
+      fontFamily: 'NanumSquareR',
+      fontSize: 12,
+      color: '#cfcfcf',
+      marginVertical: 3,
+    },
+    box: {
+      width:'100%', 
+      height: width-32,
+      backgroundColor: '#fff',
+      justifyContent:'center', 
+      alignItems:'center',
+      borderRadius: 10,
+      marginBottom: 10,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 3,
       },
-    LongButtonF: {
-        width: 68,
-        height: 28,
-        marginLeft: 20,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
-        shadowColor: "#000",
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 2,
-          height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-  
-        elevation: 3,
+      shadowOpacity: 0.27,
+      shadowRadius: 4.65,
+      elevation: 6,
     },
-    ButtonText: {
-        fontFamily: 'NanumSquareR',
-        fontSize: 12,
+    box1: {
+      width: '100%', 
+      height: 50,
+      flexDirection: 'row',
+      alignItems: 'center',
     },
-    ShortButtonT: {
-        width: 52, //이거 퍼센트로 해야하나?
-        height: 28,
-        marginLeft: 15,
-        backgroundColor: '#dfdfdf',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
-        shadowColor: "#000",
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 2,
-          height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-  
-        elevation: 3,
-    },
-    ShortButtonF: {
-        width: 52, //이거 퍼센트로 해야하나?
-        height: 28,
-        marginLeft: 15,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
-        shadowColor: "#000",
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 2,
-          height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-  
-        elevation: 3,
-    },
-    Circle: {
-        width: 20,
-        height: 20,
-        borderRadius: 10,
-        backgroundColor: "#99d1e9",
-        borderColor: "#70707099",
-        borderWidth: 1.5,
-      },
-      emptyCircle: {
-        width: 20,
-        height: 20,
-        borderRadius: 10,
-        backgroundColor: "#fff",
-        borderColor: "#70707099",
-        borderWidth: 1.5,
-      },
-    miniCircle: {
-        width: 12,
-        height: 12,
-        borderRadius: 10,
-        backgroundColor: "#99d1e9",
-        borderColor: "#70707099",
-        borderWidth: 1.5,
+    box2: {
+      width: '100%', 
+      height: 80,
+      flexDirection: 'row',
+      // backgroundColor: 'grey',
+      borderWidth: 1,
+      borderColor: '#dfdfdf',
+      borderRadius: 5,
+      marginVertical: 5,
+      alignItems: 'center',
     },
     style: {
         fontFamily: 'NanumSquareB',
@@ -176,101 +179,7 @@ const styles=StyleSheet.create({
         paddingLeft: 10,
         justifyContent: 'space-between',
       },
-      btnStyle2: {
-        flexDirection: 'row',
-        width: '40%',
-        height: 32,
-        alignItems: 'center',
-        // backgroundColor: 'grey',
-        // justifyContent: 'space-between'
-      },
-      StyleText: {
-        fontFamily: 'NanumSquareR',
-        fontSize: 14,
-        color: '#000',
-        marginLeft: 20,
-      },
-      line: {
-        marginTop: 10,
-        width: '100%',
-        borderBottomColor: '#dfdfdfb0',  //dfdfdfb0하면 투명도 적용되는 듯
-        borderBottomWidth: 0.7,
-    },
-    substyle: {
-      fontFamily: 'NanumSquareR',
-      fontSize: 12,
-      color: '#b5b5b5',
-      marginLeft: 10,
-    },
-    minibutton: {
-      marginLeft: 5,
-      marginRight: 10,
-      borderRadius: 5,
-      height: 24,
-      width: 48,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#fff',
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.22,
-      shadowRadius: 2.22,
-
-      elevation: 3,
-    },
-    minitext: {
-      fontFamily: 'NanumSquareR',
-      fontSize: 12,
-    },
-    horizontalScrollView: {
-    },
-    ghost: {
-      width: 121,
-      height: 165,
-      resizeMode: 'contain',
-      position: 'absolute',
-      top: 60,
-      left: 40
-    },
-    bubble: {
-      width: 113,
-      height: 84,
-      resizeMode: 'contain',
-      marginLeft: 110
-    },
-    ghostment: {
-      fontFamily: 'NanumSquareR',
-      fontSize: 14,
-      textAlign: 'center',
-    },
-    recommText: {
-      fontFamily: 'NanumSquareR',
-      fontSize: 24,
-    },
-    recommBtn: {
-      width: 164,
-      height: 45,
-      position: 'absolute',
-      alignItems: 'center',
-      justifyContent: 'center',
-      bottom: 60,
-      right: 20,
-      backgroundColor: '#fff',
-      borderRadius: 8,
-      shadowColor: "#000",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 2,
-        height: 1,
-      },
-      shadowOpacity: 0.22,
-      shadowRadius: 2.22,
-
-      elevation: 3,
-    },
+     
 
 })
 

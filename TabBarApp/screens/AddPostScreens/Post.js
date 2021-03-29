@@ -3,6 +3,7 @@ import { Text,StyleSheet, FlatList, Image, View, Dimensions, TouchableOpacity, B
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialLayout = { width: Dimensions.get('window').width };
@@ -63,6 +64,20 @@ const Post = ({navigation, route}) => {
         style={{width:52,height:52, borderRadius:26, marginRight:10, borderColor:'#dfdfdf', borderWidth: 1}}/>
         </TouchableOpacity>
         <Text style={styles.text1}>{nickname}님의 코디</Text>
+        <TouchableOpacity style={{
+            position: 'absolute',
+            right: 10,
+            width: 30,
+            height: 30,
+            }}
+            onPress={()=>navigation.navigate("Home")}>
+          <Feather
+            name="x"
+            color="black"
+            size={25}
+          />
+        </TouchableOpacity>
+        
       </View>
       <View style={styles.box}>
         {renderSwipper()}

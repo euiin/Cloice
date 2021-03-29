@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, FlatList, StyleSheet, Image, View, Dimensions, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
+import { Text, FlatList, StyleSheet, Image, View, Dimensions, ToastAndroid, TouchableOpacity, Pressable,TouchableHighlight} from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
@@ -38,6 +38,7 @@ const GalleryPostAdd1 = ({navigation, route}) => {
   const [ImageURL, setImageURL] = React.useState(undefined); //uri와 헷갈리지 마세여~~
 
   const [indicator, setIndicator] = React.useState(false);
+  const isValid = (ImageURL!=undefined)
 
   const handleGallery = () => {
     
@@ -91,7 +92,16 @@ const GalleryPostAdd1 = ({navigation, route}) => {
         <Text style={styles.subtitle}>착용샷</Text>
         <MIcon.Button name="arrow-forward-ios" size={24} color={'#99D1E9'} backgroundColor={'#fcfcfc'}
           style={{alignSelf:'flex-end',marginVertical:-3, marginRight:-13 }}
-          onPress={()=> navigation.navigate("AddPostEdit", {ImageURI: ImageURL, selImgDataArr: selImgData, captureImageURI:captureImageURI})}>
+          onPress={()=> {
+            if (isValid) {
+              navigation.navigate("AddPostEdit", {ImageURI: ImageURL, selImgDataArr: selImgData, captureImageURI:captureImageURI})
+            }
+            else {
+              ToastAndroid.showWithGravity("착용샷을 추가해주세요.",
+              ToastAndroid.SHORT,
+              ToastAndroid.CENTER);
+            }
+          }}>
         </MIcon.Button> 
       </View>
 

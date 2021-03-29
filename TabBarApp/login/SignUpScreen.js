@@ -369,7 +369,7 @@ const SignUpScreen = ({navigation}) => {
                         color="red"
                         size={20}
                         />
-                        <Text style={[styles.notice, {color: 'red'}]}>올바르지 않은 이메일 형식입니다. (나중에 중복도 알려줘야 함)</Text>
+                        <Text style={[styles.notice, {color: 'red'}]}>올바르지 않은 이메일 형식입니다.</Text>
                         </Animatable.View>)
                 : null
                 }

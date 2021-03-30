@@ -45,7 +45,7 @@ const HatFeed = ({ navigation, route }) =>{
           <Image source={require('../../../login/profileImage/ProfileImage.jpg')}
           style={{width:100,height:100, borderRadius:60, marginRight:10}}/>
           </TouchableOpacity> 
-          <Text style={{fontSize:20}}>민희님의 모자 <Text style={{fontSize:14, color:'#707070'}}>{number} </Text> </Text>                     
+          <Text style={{fontSize:20}}>{nickname}님의 모자 <Text style={{fontSize:14, color:'#707070'}}>{number} </Text> </Text>                     
         </View>
         <FlatList style={{flexDirection : "column"}}
           data={closetDetailData}

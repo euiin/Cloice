@@ -248,3 +248,18 @@ app.post('/uploadFeed', (req, res) => {
         console.log(e)
     }
 })
+
+//사용자별 피드 받아오기
+app.post('/getFeedProfile', (req, res) => {
+    const email = req.body.email;
+
+    db.query("SELECT * FROM FEEDS WHERE USER_NO = ?",
+        [email],
+        (err, result) => {
+            if(err) {
+                res.send({ err: err })
+            }
+            console.log(result)
+            res.send(result);
+    })
+})

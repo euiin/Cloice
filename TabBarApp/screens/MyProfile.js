@@ -38,7 +38,7 @@ export default function MyProfile({ navigation }) {
         <View>
           <TouchableOpacity>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Image source={item.src} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
+            <Image source={{uri: item.ImageURI}} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
           </View>
           </TouchableOpacity>   
         </View>
@@ -60,7 +60,7 @@ export default function MyProfile({ navigation }) {
         <View>
           <TouchableOpacity>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Image source={item.src} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
+            <Image source={{uri: item.ImageURI}} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
           </View>
           </TouchableOpacity>   
         </View>
@@ -102,7 +102,7 @@ export default function MyProfile({ navigation }) {
           throw error;
         });
 
-        await Axios.get(BASE_URL +'/getFeedProfile', {
+        await Axios.post(BASE_URL +'/getFeedProfile', {
           email: email,
         }).then((response) => {
           setCodiFeedData(response.data);

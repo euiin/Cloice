@@ -84,7 +84,6 @@ export default function AddPostEdit({ route, navigation }) {
       return (
         <SwiperFlatList showPagination paginationActiveColor = "#99D1E9" paginationDefaultColor = "#dfdfdf">
           <View style={[styles.child]}>
-            {/* <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURI}}/> */}
             <Image style={{height:'100%', width:'100%', resizeMode: 'contain'}} source={{uri: captureImageURIBase64}}/>
           </View>
         </SwiperFlatList>
@@ -105,7 +104,6 @@ export default function AddPostEdit({ route, navigation }) {
         onPress={async ()=> {
           await postFeed();
          }}>
-
         </AIcon.Button>
       </View>
 

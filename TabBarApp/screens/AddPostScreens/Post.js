@@ -70,7 +70,7 @@ const Post = ({navigation, route}) => {
             width: 30,
             height: 30,
             }}
-            onPress={()=>navigation.navigate("Home")}>
+            onPress={() => {navigation.popToTop()}}>
           <Feather
             name="x"
             color="black"

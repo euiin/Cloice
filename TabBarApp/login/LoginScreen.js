@@ -31,8 +31,8 @@ const LoginScreen = ({ navigation }) => {
                                                 ToastAndroid.SHORT,
                                                 ToastAndroid.CENTER);
             } else {
-                console.log(response.data)
-                signIn(data.email, response.data[0].nickname);
+                const arr = response.data
+                signIn(data.email, arr[0].nickname);
                 navigation.navigate("Home");
             }
         }).catch((error) => {

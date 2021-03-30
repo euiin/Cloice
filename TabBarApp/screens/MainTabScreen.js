@@ -26,7 +26,6 @@ const MainTabScreen = () => {
 
     //로그인 되어 있는지 확인
     React.useEffect(() => {
-        console.log("실행됨")
         loginCheck();
     })
 

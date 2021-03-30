@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet,TouchableOpacity} from 'react-native';//이제 여기서 text 이용 안하고
+import {View, StyleSheet,TouchableOpacity, ToastAndroid} from 'react-native';//이제 여기서 text 이용 안하고
 import {
     Avatar,
     Title,
@@ -21,6 +21,10 @@ export function DrawerContent(props, { loginStatus }) {
     const { signOut } = React.useContext(AuthContext);
 
     const signOutHandler = () => {
+        ToastAndroid.showWithGravity("로그아웃 되셨습니다",
+                                            ToastAndroid.SHORT,
+                                            ToastAndroid.CENTER);
+
         signOut();
         props.navigation.jumpTo("Home")
     }

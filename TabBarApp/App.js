@@ -61,20 +61,18 @@ const App = () => {
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
 
   const authContext = React.useMemo(() => ({
-      signIn: async (userEmail) => {
+      signIn: async (userEmail, nickname) => {
         const userToken = userEmail;
+        console.log(nickname)
         try {
           await AsyncStorage.setItem('userToken', userToken);
           await AsyncStorage.setItem('nickname', nickname);
         } catch (e) {
           console.log(e)
         }
-        console.log("signIn 실행됨.")
         dispatch({ type: 'LOGIN', id: userEmail, token: userToken });
-        console.log("토큰은 " + loginState.userToken)
       },
       signOut: async () => {
-        console.log("signOut 실행됨.")
         try {
           await AsyncStorage.removeItem('userToken')
         } catch (e) {
@@ -83,7 +81,6 @@ const App = () => {
         dispatch({ type: 'LOGOUT' });
       },
       loginCheck: async() => {
-        console.log("loginCheck 실행됨.")
         var userToken = null;
         try {
           await AsyncStorage.getItem('userToken', (err, result) => {
@@ -92,7 +89,6 @@ const App = () => {
         } catch (e) {
           console.log(e)
         }
-        console.log("userToken은 "+userToken)
         dispatch({ type: 'TOKEN', token: userToken });
       }
   }), [])

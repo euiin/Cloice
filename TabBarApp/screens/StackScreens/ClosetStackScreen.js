@@ -50,12 +50,12 @@ const ClosetStackScreen = ({navigation}) => {
           ),
           headerLeft: () => (
             <IIcon.Button name="search" color='#000000' size={25} 
-            backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+            backgroundColor="#ffffff" onPress={() => {}}>
             </IIcon.Button>
           )
         }} />
         <ClosetStack.Screen name="SangeuiFeed" component = {SangeuiFeed} options={{ title: ''}}/>
-        <ClosetStack.Screen name="HaueiFeed" component = {HaueiFeed} options={{ title: ''}}/>
+        <ClosetStack.Screen name="HaeuiFeed" component = {HaueiFeed} options={{ title: ''}}/>
         <ClosetStack.Screen name="OuterFeed" component = {OuterFeed} options={{ title: ''}}/>
         <ClosetStack.Screen name="ShoesFeed" component = {ShoesFeed} options={{ title: ''}}/>
         <ClosetStack.Screen name="HatFeed" component = {HatFeed} options={{ title: ''}}/>

@@ -469,7 +469,7 @@ const RecommendScreen2 = ({navigation}) => {
                     width: 25,
                     height: 25,
                     }}
-                    onPress={()=>{ sheetRef.current.snapTo(0)}}>
+                    onPress={()=>{}}>
                     <Entypo
                     name="plus"
                     color="black"
@@ -568,9 +568,9 @@ const RecommendScreen2 = ({navigation}) => {
                   
                   <View style=
                     {{position: 'absolute',
-                      top: 25,
-                      left: 115}}>
-                    <Text style={styles.ghostment}>오늘 남은 추천 수{"\n"}2/5</Text>
+                      top: 23,
+                      left: 130}}>
+                    <Text style={styles.ghostment}>옷걸이 귀신을{"\n"}믿어봐!</Text>
                   </View>
 
                   <TouchableOpacity style={styles.recommBtn}

@@ -2,20 +2,32 @@ import React from 'react';
 import { View, Image, Text, Button, StyleSheet,
    TouchableOpacity, ScrollView, Dimensions, FlatList, SafeAreaView } from 'react-native';
 
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 var { height, width } = Dimensions.get('screen');
 
 const HaueiFeed = ({ navigation, route }) =>{
   const { closetData } = route.params;
   const [closetDetailData, setClosetDetailData] = React.useState(closetData);
+  const [nickname, setNickname] = React.useState('');
   var number = 0;
+
+  React.useEffect(() => {
+    const temp = async () => {
+      await AsyncStorage.getItem('nickname', async (err, result) => {
+        setNickname(result);
+      });
+    }
+    temp();
+  })
 
   const renderItem = ({ item, index }) => {
     if(item.category == "bottom") {
       number = number + 1;
       return (
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {navigation.navigate("ClothInfo", {
+            item: item,
+          })}}>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <Image source={{uri: item.file}} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
             </View>
@@ -33,7 +45,7 @@ const HaueiFeed = ({ navigation, route }) =>{
           <Image source={require('../../../login/profileImage/ProfileImage.jpg')}
           style={{width:100,height:100, borderRadius:60, marginRight:10}}/>
           </TouchableOpacity> 
-          <Text style={{fontSize:20}}>민희님의 하의 <Text style={{fontSize:14, color:'#707070'}}>{number} </Text> </Text>                     
+          <Text style={{fontSize:20}}>{nickname}님의 하의 <Text style={{fontSize:14, color:'#707070'}}>{number} </Text> </Text>                     
         </View>
         <FlatList style={{flexDirection : "column"}}
           data={closetDetailData} 

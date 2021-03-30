@@ -35,22 +35,6 @@ const ClothInfo = ({ route, navigation }) => {
         justifyContent: 'center',
         marginTop: 10,
       }}>
-      <TouchableOpacity style={{
-        width: 40,
-        // backgroundColor: 'red',  나중에 얘네 고정되는걸로 고치기
-        height: 40,
-        position: 'absolute',
-        left: 0,
-        top: 0,
-      }}>
-        <Feather
-          name="chevron-left"
-          color="#99d1e9"
-          size={32}
-          onPress={() => {}}
-        />
-      </TouchableOpacity>
-
         <Image style = {{height: 260, width: 260 ,resizeMode: 'contain'}} source= {{uri: item.file}} />
         <TouchableOpacity style={{
           // backgroundColor:'grey',

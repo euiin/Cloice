@@ -53,14 +53,18 @@ const Closet = ({ navigation }) => {
   const [nickname, setNickname] = React.useState("");
   const [closetData, setClosetData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [numberOfClothes, setNumberOfClothes] = React.useState({
-    top: 0,
-    bottom: 0,
-    outer: 0,
-    shoes: 0,
-    hat: 0,
-    acc: 0,
-  });
+  const [topNum, setTopNumber] = React.useState(0);
+  const [bottomNum, setBottomNumber] = React.useState(0);
+  const [outerNum, setOuterNumber] = React.useState(0);
+  const [shoesNum, setShoesNumber] = React.useState(0);
+  const [hatNum, setHatNumber] = React.useState(0);
+  const [accNum, setAccNumber] = React.useState(0);
+  var topNumber = 0;
+  var bottomNumber = 0;
+  var outerNumber = 0;
+  var shoesNumber = 0;
+  var hatNumber = 0;
+  var accNumber = 0;
 
   const getClosetData = async () => {
     await Axios.post(BASE_URL + "/getCloset", {
@@ -68,7 +72,6 @@ const Closet = ({ navigation }) => {
       }).then((response) => {
       var arr = response.data;
       setClosetData(arr);
-      // setNumbers(arr)
     }).catch((error) => {;
       console.log("에러:", error);
       throw error;
@@ -85,13 +88,25 @@ const Closet = ({ navigation }) => {
         setNickname(result);
       });
 
-      await getClosetData();
+      if(email != '')
+        await getClosetData();
+      else
+        setClosetData([]);
+      
     }
     temp();
-  }, [email]));
+    setTopNumber(topNumber);
+    setBottomNumber(bottomNumber);
+    setShoesNumber(shoesNumber);
+    setOuterNumber(outerNumber);
+    setHatNumber(hatNumber);
+    setAccNumber(accNumber);
+  }, [closetData, navigation, topNumber, bottomNumber, outerNumber, shoesNumber, hatNumber, accNumber]));
 
   const renderItemTop = ({ item }) => {
     if(item.category == "top") {
+      // setTopNumber(topNumber + 1);
+      topNumber = topNumber + 1;
       return (
       <View>
         <TouchableOpacity onPress ={() => {
@@ -110,6 +125,8 @@ const Closet = ({ navigation }) => {
 
   const renderItemBottom = ({ item }) => {
     if(item.category == "bottom") {
+      // setBottomNumber(bottomNumber + 1);
+      bottomNumber = bottomNumber + 1;
       return (
         <View>
           <TouchableOpacity onPress ={() => {
@@ -128,6 +145,8 @@ const Closet = ({ navigation }) => {
 
   const renderItemOuter = ({ item }) => {
     if(item.category == "outer") {
+      outerNumber = outerNumber + 1;
+      // setOuterNumber(outerNumber + 1);
       return (
         <View>
           <TouchableOpacity onPress ={() => {
@@ -146,6 +165,8 @@ const Closet = ({ navigation }) => {
 
   const renderItemShoes = ({ item }) => {
     if(item.category == "shoes") {
+      shoesNumber = shoesNumber + 1;
+      // setShoesNumber(shoesNumber + 1);
       return (
         <View>
           <TouchableOpacity onPress ={() => {
@@ -164,6 +185,8 @@ const Closet = ({ navigation }) => {
 
   const renderItemHat = ({ item }) => {
     if(item.category == "hat") {
+      hatNumber = hatNumber + 1;
+      // setHatNumber(hatNumber + 1);
       return (
         <View>
           <TouchableOpacity onPress ={() => {
@@ -182,6 +205,8 @@ const Closet = ({ navigation }) => {
 
   const renderItemAcc = ({ item }) => {
     if(item.category == "acc") {
+      // setAccNumber(accNumber + 1);
+      accNumber = accNumber + 1;
       return (
         <View>
           <TouchableOpacity onPress ={() => {
@@ -243,7 +268,7 @@ const Closet = ({ navigation }) => {
             />
           }>
           <View style={{flexDirection:'row',alignItems: 'center',paddingTop:15}}>
-            <TouchableOpacity onPress={()=>{ navigation.navigate("MyProfile")}}>
+            <TouchableOpacity onPress={()=>{}}>
             <Image source={require('../login/profileImage/ProfileImage.jpg')} 
             style={{width:100,height:100, borderRadius:60, marginRight:10}}/>
             </TouchableOpacity>
@@ -254,7 +279,7 @@ const Closet = ({ navigation }) => {
               onPress={() => navigation.navigate("SangeuiFeed", {
                 closetData: closetData
               })}>
-              <Text style={{fontSize:20}}>상의 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.top} </Text> </Text>
+              <Text style={{fontSize:20}}>상의 <Text style={{fontSize:14, color:'#707070'}}>{topNum} </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />
@@ -273,7 +298,7 @@ const Closet = ({ navigation }) => {
               onPress={() => navigation.navigate("HaeuiFeed", {
                 closetData: closetData
               })}>
-              <Text style={{fontSize:20}}>하의 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.bottom} </Text> </Text>
+              <Text style={{fontSize:20}}>하의 <Text style={{fontSize:14, color:'#707070'}}>{bottomNum} </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />
@@ -293,7 +318,7 @@ const Closet = ({ navigation }) => {
               onPress={() => navigation.navigate("OuterFeed", {
                 closetData: closetData
               })}>
-              <Text style={{fontSize:20}}>아우터 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.outer} </Text> </Text>
+              <Text style={{fontSize:20}}>아우터 <Text style={{fontSize:14, color:'#707070'}}>{outerNum} </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />
@@ -313,7 +338,7 @@ const Closet = ({ navigation }) => {
               onPress={() => navigation.navigate("ShoesFeed", {
                 closetData: closetData
               })}>
-              <Text style={{fontSize:20}}>신발 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.shoes} </Text> </Text>
+              <Text style={{fontSize:20}}>신발 <Text style={{fontSize:14, color:'#707070'}}>{shoesNum} </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />
@@ -332,7 +357,7 @@ const Closet = ({ navigation }) => {
               onPress={() => navigation.navigate("HatFeed", {
                 closetData: closetData
               })}>
-              <Text style={{fontSize:20}}>모자 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.hat} </Text> </Text>
+              <Text style={{fontSize:20}}>모자 <Text style={{fontSize:14, color:'#707070'}}>{hatNum} </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />
@@ -352,7 +377,7 @@ const Closet = ({ navigation }) => {
               onPress={() => navigation.navigate("AccFeed", {
                 closetData: closetData
               })}>
-              <Text style={{fontSize:20}}>액세서리 <Text style={{fontSize:14, color:'#707070'}}>{numberOfClothes.acc} </Text> </Text>
+              <Text style={{fontSize:20}}>액세서리 <Text style={{fontSize:14, color:'#707070'}}>{accNum} </Text> </Text>
               <EIcon name='plus' 
               style={{padding:10, fontSize: 28 }}
               />

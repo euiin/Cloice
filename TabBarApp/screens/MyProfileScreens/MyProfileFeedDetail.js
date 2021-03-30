@@ -8,9 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
 
-const FeedDetail = ({navigation, route}) => {
+const MyProfileFeedDetail = ({ route }) => {
   const { item } = route.params;
-
   const renderSwipper = () => {
       return(
         <SwiperFlatList showPagination paginationActiveColor = "#99D1E9" paginationDefaultColor = "#dfdfdf">
@@ -27,7 +26,7 @@ const FeedDetail = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <View style={{flexDirection:'row',alignItems: 'center', marginVertical: 10,}}>
-        <TouchableOpacity onPress={()=>{ }}>
+        <TouchableOpacity onPress={()=>{}}>
         <Image source={require('../../login/profileImage/ProfileImage.jpg')} 
         style={{width:52,height:52, borderRadius:26, marginRight:10, borderColor:'#dfdfdf', borderWidth: 1}}/>
         </TouchableOpacity>
@@ -50,7 +49,7 @@ const FeedDetail = ({navigation, route}) => {
   );    
 }
 
-export default FeedDetail
+export default MyProfileFeedDetail
 
   
 

@@ -45,6 +45,7 @@ export default function AddPostScreen({navigation}) {
     setSelImgData([]);
   }, []));
 
+
   const renderSwitch=(pageNo)=> {
     switch(pageNo) {
       case 1:
@@ -60,15 +61,35 @@ export default function AddPostScreen({navigation}) {
           </AddPostContext.Provider>
           );
       case 3:
-        return <SangeuiPost/>;
+        return (
+          <AddPostContext.Provider value = {ImgData}>
+            <SangeuiPost/>
+          </AddPostContext.Provider>
+          );
       case 4:
-        return <HaeuiPost/>;
+        return (
+          <AddPostContext.Provider value = {ImgData}>
+            <HaeuiPost/>
+          </AddPostContext.Provider>
+          );
       case 5:
-        return <HaeuiPost/>;
+        return (
+          <AddPostContext.Provider value = {ImgData}>
+            <SangeuiPost/>
+          </AddPostContext.Provider>
+          );
       case 6:
-        return <HaeuiPost/>;
+        return (
+          <AddPostContext.Provider value = {ImgData}>
+            <HaeuiPost/>
+          </AddPostContext.Provider>
+          );
       default:
-        return <SangeuiPost/>;
+        return (
+          <AddPostContext.Provider value = {ImgData}>
+            <SangeuiPost/>
+          </AddPostContext.Provider>
+          );
     }
   };
 

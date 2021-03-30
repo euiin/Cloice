@@ -26,7 +26,7 @@ export function DrawerContent(props, { loginStatus }) {
                                             ToastAndroid.CENTER);
 
         signOut();
-        props.navigation.jumpTo("Home")
+        props.navigation.jumpTo("MyProfile")
     }
 
     return(// caption은 작은 글씨로(나중에 포인트 설정할때 해보자)

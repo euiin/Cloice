@@ -37,7 +37,7 @@ const HomeStackScreen = ({ navigation }) => {
           ),
           headerLeft: () => (
             <IIcon.Button name="search" color='#000000' size={25} 
-            backgroundColor="#ffffff" onPress={() => navigation.openDrawer()}>
+            backgroundColor="#ffffff" onPress={() => {}}>
             </IIcon.Button>
           )
         }} />

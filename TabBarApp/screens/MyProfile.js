@@ -36,7 +36,9 @@ export default function MyProfile({ navigation }) {
     const renderItem = ({ item,index }) => {
       return(
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress = {() => {navigation.navigate("MyProfileFeedDetail", {
+            item: item
+          })}}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Image source={{uri: item.ImageURI}} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
           </View>
@@ -58,7 +60,9 @@ export default function MyProfile({ navigation }) {
     const renderItem = ({ item,index }) => {
       return(
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress = {() => {navigation.navigate("MyProfileFeedDetail", {
+            item: item
+          })}}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Image source={{uri: item.ImageURI}} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
           </View>
@@ -165,7 +169,7 @@ export default function MyProfile({ navigation }) {
                           <View style={{flex:1}}>
                               <View style={{flexDirection:'row', justifyContent:'space-around'}}>
                                   <View style={{alignItems:'center'}}>
-                                      <Text style={{fontSize:17, fontWeight:'bold'}}>0</Text>
+                                      <Text style={{fontSize:17, fontWeight:'bold'}}>{codiFeedData.length}</Text>
                                       <Text style={{fontSize:12, color:'gray'}}>게시물</Text>
                                   </View>
                                   <View style={{alignItems:'center'}}>

@@ -75,6 +75,7 @@ const App = () => {
       signOut: async () => {
         try {
           await AsyncStorage.removeItem('userToken')
+          await AsyncStorage.removeItem('nickname')
         } catch (e) {
           console.log(e)
         }
@@ -118,7 +119,7 @@ const App = () => {
             {(loginState.userToken == null) ? (
               <Drawer.Screen name="MyProfile" component={Login} />
               ):(
-              <Drawer.Screen name="MyProfile" component={MyProfile} />)
+              <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />)
             }
           </Drawer.Navigator>
         </NavigationContainer>

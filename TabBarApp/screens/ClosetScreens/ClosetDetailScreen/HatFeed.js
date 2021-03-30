@@ -2,20 +2,32 @@ import React from 'react';
 import { View, Image, Text, Button, StyleSheet,
    TouchableOpacity, ScrollView, Dimensions, FlatList, SafeAreaView } from 'react-native';
 
-
+   import AsyncStorage from '@react-native-async-storage/async-storage';
 var { height, width } = Dimensions.get('screen');
 
 const HatFeed = ({ navigation, route }) =>{
   const { closetData } = route.params;
   const [closetDetailData, setClosetDetailData] = React.useState(closetData);
   const [number, setNumber] = React.useState(0);
+  const [nickname, setNickname] = React.useState('');
+
+  React.useEffect(() => {
+    const temp = async () => {
+      await AsyncStorage.getItem('nickname', async (err, result) => {
+        setNickname(result);
+      });
+    }
+    temp();
+  })
 
   const renderItem = ({ item, index }) => {
     if(item.category == "hat") {
       setNumber(number + 1);
       return (
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {navigation.navigate("ClothInfo", {
+            item: item,
+          })}}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Image source={{uri: item.file}} style={[{ width: (width-32) / 3 }, { height: (width-32) / 3 }, { marginBottom: 2 }, index % 3 !== 0 ? { marginLeft: 2 } : { marginLeft: 0 } ]} />
           </View>

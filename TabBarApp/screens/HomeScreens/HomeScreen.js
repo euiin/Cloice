@@ -76,7 +76,7 @@ const HomeScreen = ({navigation}) => {
                 setIsLoading(false)
             }} />}
           style={styles.feed}
-          data={feedList}
+          data={feedList.reverse()}
           key={''}
           renderItem={({ item }) => renderPost(item)}
           keyExtractor={item => item.id}

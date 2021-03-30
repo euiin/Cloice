@@ -4,8 +4,8 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ScrollView, TapGestureHandler } from 'react-native-gesture-handler';
 import { DragResizeBlock,} from 'react-native-drag-resize-elements';
 
-import SangeuiPost from './SangeuiPost';
-import HaeuiPost from './HaeuiPost';
+import SangeuiPostGallery from './SangeuiPostGallery';
+import HaeuiPostGallery from './HaeuiPostGallery';
 import {AddPostContext} from './AddPostContext';
 
 import ImagePicker from 'react-native-image-crop-picker';
@@ -51,32 +51,37 @@ const GalleryPostAdd1 = ({navigation, route}) => {
       setIndicator(true);
     })
   }
-  
 
   const renderSwitch=(pageNo)=> {
     switch(pageNo) {
       case 1:
         return (
-          <AddPostContext.Provider value = {ImgData}>
-            <SangeuiPost/>
-          </AddPostContext.Provider>
+          <SangeuiPostGallery/>
           );
       case 2:
         return (
-          <AddPostContext.Provider value = {ImgData}>
-            <HaeuiPost/>
-          </AddPostContext.Provider>
-          );
+          <HaeuiPostGallery/>
+        );
       case 3:
-        return <SangeuiPost/>;
+        return (
+          <SangeuiPostGallery/>
+          );
       case 4:
-        return <HaeuiPost/>;
+        return (
+          <HaeuiPostGallery/>
+        );
       case 5:
-        return <HaeuiPost/>;
+        return (
+          <SangeuiPostGallery/>
+          );
       case 6:
-        return <HaeuiPost/>;
+        return (
+            <HaeuiPostGallery/>
+          );
       default:
-        return <SangeuiPost/>;
+        return (
+          <SangeuiPostGallery/>
+          );
     }
   };
 

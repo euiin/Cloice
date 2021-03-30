@@ -58,25 +58,8 @@ const editClothes4 = ({ route, navigation }) => {
         justifyContent: 'center',
         marginTop: 10,
       }}>
-      <TouchableOpacity style={{
-        width: 40,
-        // backgroundColor: 'red',  나중에 얘네 고정되는걸로 고치기
-        height: 40,
-        position: 'absolute',
-        left: 0,
-        top: 0,
-      }}>
-        <Entypo
-          name="cross"
-          color="#99d1e9"
-          size={34}
-          onPress={() => navigation.navigate("Closet")}
-        />
-      </TouchableOpacity>
-
         <Image style = {{height: 260, width: 260 ,resizeMode: 'contain'}} source= {{uri: imageURI}} />
         <TouchableOpacity style={{
-          // backgroundColor:'grey',
           width: 40,
           height: 40,
           alignItems: 'flex-end',
@@ -89,7 +72,7 @@ const editClothes4 = ({ route, navigation }) => {
             name="dots-three-vertical"
             color="#99d1e9"
             size={24}
-            onPress={() => navigation.navigate('editClothes3')}
+            onPress={() => {}}
           />
         </TouchableOpacity>
       </View>

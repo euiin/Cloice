@@ -8,7 +8,6 @@ const initialLayout = { width: Dimensions.get('window').width };
 var { height, width } = Dimensions.get('screen');
 
 const SangeuiPost = () => {
-  // const { imageHandler } = React.useContext(AuthContext);
   const ImgData = React.useContext(AddPostContext);
   const renderItem = ({ item,index }) => (
       <View>

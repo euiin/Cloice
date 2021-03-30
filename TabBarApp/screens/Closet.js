@@ -202,7 +202,7 @@ const Closet = ({ navigation }) => {
       ImagePicker.openPicker({
         width: 300,
         height: 400,
-        cropping: true,
+        cropping: false,
         includeBase64: true,
       }).then(image => {
         // console.log(image);
@@ -218,7 +218,7 @@ const Closet = ({ navigation }) => {
       ImagePicker.openCamera({
         width: 300,
         height: 400,
-        cropping: true,
+        cropping: false,
         includeBase64: true
       }).then(image => {
         navigation.navigate("AddClothesStackScreen", {

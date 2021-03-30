@@ -1,16 +1,10 @@
-import React ,{ Component } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity , Image, StyleSheet, ScrollView, Dimensions, FlatList } from 'react-native';
-
-import {Container, Content, Header, Left, Body, Right} from 'native-base';
+import { Container, Content } from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import MyProfileStory from './MyProfileScreens/MyProfileStory'
-import BmrkFeedData from './MyProfileScreens/BmrkFeedData'
-import CodiFeedData from './MyProfileScreens/CodiFeedData'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Axios from 'axios'
 import { BASE_URL } from '../components'
-
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 const initialLayout = { width: Dimensions.get('window').width };
@@ -21,7 +15,6 @@ export default function MyProfile({ navigation }) {
   const [codiFeedData, setCodiFeedData] = React.useState([]);
   const [nickname, setNickname] = React.useState("");
   var email = '';
-  var introduce = '';
   
   const renderItemStory = ({ item }) => {
     return(
@@ -54,10 +47,10 @@ export default function MyProfile({ navigation }) {
 
     return(
     <FlatList style={{flexDirection : "column"}}
-        data={BmrkFeedData} 
-        renderItem={renderItem} 
-        keyExtractor={item => item.id} 
-        numColumns={3} />    
+        data={codiFeedData} 
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        numColumns={3} />
     );
   }
     
@@ -76,7 +69,7 @@ export default function MyProfile({ navigation }) {
   
     return(
       <FlatList style={{flexDirection : "column"}}
-        data={CodiFeedData}
+        data={codiFeedData}
         renderItem={renderItem} 
         keyExtractor={item => item.id} 
         numColumns={3} />    
